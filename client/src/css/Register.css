@@ -16,7 +16,7 @@ html {
 
 body {
     min-height: 100vh;
-    background-image: url('form_img.png');
+    background-image: url('../assets/registration-images/form_img.png');
     background-repeat: no-repeat;
 
 }
