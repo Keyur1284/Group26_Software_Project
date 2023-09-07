@@ -61,10 +61,10 @@ form {
     
 }
 
-a,
+/* a,
 a:visited {
     color: white;
-}
+} */
 
 input[type="text"],
 input[type="password"],

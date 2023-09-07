@@ -29,13 +29,11 @@ p {
 
 .main-container{
     display: flex;
+    text-align: left;
 }
 
 .image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    height: 120vh;
 }
 
 .fit-screen-height {
@@ -44,15 +42,16 @@ p {
     max-width: 100%;
 }
 
-
 .login-container {
     padding-left: 300px;
-    padding-top: 200px;
+    padding-top: 100px;
 }
 
 .form-label {
     color: black;
     font-weight: 700;
+    padding-left: 0;
+    margin-left: 0;
 }
 
 .forgot-pass {
@@ -62,6 +61,10 @@ p {
 
 .forgot-pass:hover {
     color: var(--primary-text-color);
+}
+
+.form-check-input{
+    display: inline;
 }
 
 .form-check-input:checked {
