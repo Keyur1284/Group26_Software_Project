@@ -1,5 +1,6 @@
 import backgroundImage from '../assets/login-images/background-image.jpg'
 import '../css/Login.css'
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
   return (
@@ -32,7 +33,7 @@ export const Login = () => {
                     </div>
                     <div className='create-account'>
                         <p className='px-3'>Not a user?</p>
-                        <a href="">Create Account</a>
+                        <Link to='/register'><a href="">Create Account</a></Link>
                     </div>
                 </form>
             </div>
