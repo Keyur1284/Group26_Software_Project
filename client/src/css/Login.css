@@ -22,7 +22,7 @@ body {
             #183059 100%);
 }
 
-p {
+.login-container p {
     color: var(--secondary-text-color);
     padding: 5px;
 }

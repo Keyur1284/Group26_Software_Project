@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import RadioButtons from "../components/RadioButtons";
 import '../css/Register.css'
+import p_1 from '../assets/registration-images/p_1.jpg'
 
 
 const USER_REGEX = /^[A-z][A-z0-9\s-_]{3,23}$/;
@@ -95,14 +96,14 @@ export const Register = () => {
       {success ? (
         <section className="b">
           <h1>Success!</h1>
-          <p>
+          <p> 
             <a href="#">Sign In</a>
           </p>
         </section>
       ) : (
-        <section className="f">
-          
-          <div className="leftside">
+        <section className="f d-flex flex-row">
+          <img src={p_1} alt="..." />
+          <div className="leftside px-5">
             <p
               ref={errRef}
               className={errMsg ? "errmsg" : "offscreen"}
@@ -110,7 +111,7 @@ export const Register = () => {
             >
               {errMsg}
             </p>
-            <h1 style={{ color: "black" }}>Register</h1>
+            <h1 className='reg text-uppercase' style={{ color: "black" }}>Register</h1>
             <form className="f1" onSubmit={handleSubmit}>
               <label htmlFor="username">
                 Username:
@@ -231,19 +232,20 @@ export const Register = () => {
                 Sign Up
               </button>
             </form>
+            <div className="alreadyregistered">
+              <p>
+                Already registered?
+                <br />
+                <span className="line">
+                  {/*put router link here*/}
+                  <a href="#" className="s" >
+                    Sign In
+                  </a>
+                </span>
+              </p>
+            </div>
           </div>
-          <div className="alreadyregistered">
-            <p>
-              Already registered?
-              <br />
-              <span className="line">
-                {/*put router link here*/}
-                <a href="#" className="s" >
-                  Sign In
-                </a>
-              </span>
-            </p>
-          </div>
+          
         </section>
       )}
     </div>

@@ -18,7 +18,6 @@ body {
     min-height: 100vh;
     background-image: url('../assets/registration-images/form_img.png');
     background-repeat: no-repeat;
-
 }
 
 .App {
@@ -37,7 +36,7 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 1rem;
+    /* padding: 1rem; */
     background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -50,14 +49,15 @@ form {
 }
 
 .s{
-    color: black !important;
+    font-weight: 500;
+    color: white !important;
     transition: color 0.3s;
 }
 
 .s:hover{
     cursor: pointer; 
-    font-size: larger;
-    color:#3F76BF !important;
+    /* font-size: larger; */
+    color:black !important;
     
 }
 
@@ -137,7 +137,8 @@ button {
 }
 
 .signin {
-    background-color: #3F76BF;
+    background-color: #212529;
+    font-weight: 600;
     color: white;
     transition: transform 0.3s ease-in-out;
 }
@@ -146,15 +147,29 @@ button {
     transform: scale(1.05); 
 }
 
+
+.f img{
+    width: 68vw;
+    height: 130vh;
+    margin: 0;
+    padding-top: 80px;
+}
+
 .f {
-    margin-left: 70%;
-    width: 100vh;
-    height: 75vh;
+    /* padding-top: 100px; */
+    /* margin-left: 75%; */
+    /* width: 1000px; */
+    /* height: 75vh; */
     background-color: white;
+}
+
+.reg{
+    padding-top: 120px;
 }
 
 .f1 {
     color: #000;
+    font-weight: 600;
 }
 
 .mang {
@@ -165,7 +180,11 @@ button {
 
 .mang:hover{ 
     cursor: pointer; 
-    font-size: larger;
+    /* font-size: larger; */
+}
+
+.mang input[type="radio"] {
+    margin-right: 10px; 
 }
 
 .emp{
@@ -176,7 +195,11 @@ button {
 
 .emp:hover{ 
     cursor: pointer; 
-    font-size: larger;
+    /* font-size: larger; */
+}
+
+.emp input[type="radio"] {
+    margin-right: 10px; 
 }
 
 
@@ -188,6 +211,7 @@ button {
 .alreadyregistered {
     color: black;
     align-self: flex-end;
+    font-weight: 600;
     /* background-color: black; */
 }
 
