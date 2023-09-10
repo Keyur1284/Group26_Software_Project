@@ -10,16 +10,16 @@ export const Header = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="d-flex flex-row justify-content-between">
-                <a className="text-decoration-none text-white link-secondary mx-2" href="#">Home</a>
-                <a className="text-decoration-none text-white link-secondary mx-2" href="#">Purchase</a>
-                <a className="text-decoration-none text-white link-secondary mx-2" href="#">Products</a>
+                <a className="text-decoration-none text-secondary link-light mx-2" href="#">Home</a>
+                <a className="text-decoration-none text-secondary link-light mx-2" href="#">Purchase</a>
+                <a className="text-decoration-none text-secondary link-light mx-2" href="#">Products</a>
                 </div>
                 
                 <div className="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Resouces
+                            <a className="nav-link text-secondary link-light dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Resources
                             </a>
                             <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li><a className="dropdown-item" href="#">User Guide</a></li>
@@ -39,7 +39,3 @@ export const Header = () => {
         </div >
     )
 }
-
-
-
-
