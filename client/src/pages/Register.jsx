@@ -17,21 +17,24 @@ const REGISTER_URL = "/register";
 
 export const Register = () => {
 
+  
   const userRef = useRef();
   const errRef = useRef();
-
+  
   const [user, setUser] = useState("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
-
+  
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
-
+  
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
-
+  
+  const [selectedOption, setSelectedOption] = useState('');
+  
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -61,34 +64,40 @@ export const Register = () => {
       setErrMsg("Invalid Entry");
       return;
     }
-    try {
-      const response = await axios.post(
-        REGISTER_URL,
-        JSON.stringify({ user, pwd }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      console.log(response?.data);
-      console.log(response?.accessToken);
-      console.log(JSON.stringify(response));
-      setSuccess(true);
-      //clear state and controlled inputs
-      //need value attrib on inputs for this
-      setUser("");
-      setPwd("");
-      setMatchPwd("");
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
-      } else {
-        setErrMsg("Registration Failed");
-      }
-      errRef.current.focus();
-    }
+    // try {
+    //   const response = await axios.post(
+    //     REGISTER_URL,
+    //     JSON.stringify({ user, pwd }),
+    //     {
+    //       headers: { "Content-Type": "application/json" },
+    //       withCredentials: true,
+    //     }
+    //   );
+    //   console.log(response?.data);
+    //   console.log(response?.accessToken);
+    //   console.log(JSON.stringify(response));
+    //   setSuccess(true);
+    //   //clear state and controlled inputs
+    //   //need value attrib on inputs for this
+    //   setUser("");
+    //   setPwd("");
+    //   setMatchPwd("");
+    // } catch (err) {
+    //   if (!err?.response) {
+    //     setErrMsg("No Server Response");
+    //   } else if (err.response?.status === 409) {
+    //     setErrMsg("Username Taken");
+    //   } else {
+    //     setErrMsg("Registration Failed");
+    //   }
+    //   errRef.current.focus();
+    // }
+
+    console.log({
+      user : user,
+      password : pwd,
+      role : selectedOption
+    });
   };
 
   return (
@@ -224,8 +233,8 @@ export const Register = () => {
                 Must match the first password input field.
               </p>
 
-              <RadioButtons></RadioButtons>
-              <button
+              <RadioButtons selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+              <button type="submit"
                 className="signin"
                 disabled={!validName || !validPwd || !validMatch ? true : false}
               >

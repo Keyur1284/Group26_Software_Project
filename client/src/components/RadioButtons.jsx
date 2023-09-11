@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-function RadioButtons() {
-  const [selectedOption, setSelectedOption] = useState('');
+function RadioButtons({ selectedOption, setSelectedOption}) {
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
