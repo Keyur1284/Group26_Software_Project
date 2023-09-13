@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -36,7 +36,7 @@ section {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    /* padding: 1rem; */
+    padding: 1rem;
     background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -46,7 +46,7 @@ form {
     justify-content: space-evenly;
     flex-grow: 1;
     padding-bottom: 1rem;
-}
+} */
 
 .s{
     font-weight: 500;
@@ -65,7 +65,7 @@ form {
 a:visited {
     color: white;
 } */
-
+/* 
 input[type="text"],
 input[type="password"],
 button,
@@ -74,16 +74,16 @@ textarea {
     font-size: 22px;
     padding: 0.25rem;
     border-radius: 0.5rem;
-}
+} */
 
-label,
+/* label,
 button {
     margin-top: 1rem;
 }
 
 button {
     padding: 0.5rem;
-}
+} */
 
 .instructions {
     font-size: 0.75rem;
