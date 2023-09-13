@@ -1,55 +1,3 @@
-/* .c-item{ 
-     height: 480px;
-} */
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600,700;1,400,700;1,600&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-body{
-  font-family: sans-serif;
-}
-
-/* #log-in {
-  margin-right: 10px;
-}
-
-#sign-up {
-  margin-left: 10px;
-}
-
-.nav-text {
-  font-size: 20px;
-  color: white;
-}
-
-.nav-text:hover {
-  color: #3080c1;
-} */
-
-/* #for-home {
-  font-size: 20px;
-  color: white;
-}
-
-.c-img {
-  height: 100%;
-  object-fit: cover;
-} */
-
-.navbar {
-  position: absolute;
-  width: 100%;
-  z-index: 100;
-  max-width: 100%;
-  background-color: rgb(44, 43, 43);
-}
-
-/* .carousel-inner {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-} */
-
-
 .carousel-item {
   
   height: 90vh;
@@ -65,118 +13,17 @@ body{
 .carousel-inner{
   font-size: 1.5rem;  
 }
-/* 
-.carousel-caption h5 {
-
-  font-size: 50px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-top: 25px;
-
-} */
-/* 
-.carousel-caption p {
-  width: 60%;
-  margin: auto;
-  font-size: 20px;
-  line-height: 1.9;
-} */
-/* 
-.carousel-caption a {
-  text-transform: uppercase;
-  padding: 10px 30px;
-  display: inline-block;
-  margin-top: 15px;
-} */
-
-/* .main-container {
-  position: relative;
-} */
-
-
-.cd-img {
-  padding: 90px 50px;
-  width: 600px;
-}
-
-.cd-text h3 {
-  font-size: 40px;
-}
-
-.cd-text p {
-  font-size: 20px;
-}
-/* 
-.center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-} */
-/* 
-.container {
-  height: 20px;
-  margin-top: 40px;
-  position: relative;
-} */
-
-/* .si-text {
-  padding-top: 40px;
-  text-align: center;
-  padding-bottom: 0px;
-  background-image: linear-gradient(to left, #005aa7, #fffde4);
-   background-image: linear-gradient(to left, #DECBA4, #3E5151); 
-} */
-
-/* .si-container {
-  height: 50px;
-  position: relative;
-  border: 3px solid black;
-  background-image: linear-gradient(to right, #005aa7, #fffde4);
-  color: white;
-  background-color: black;
-}  */
-
-/* 
-.center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-} */
-
-
-/* .carousel2 {
-  padding-top: 40px;
-  padding-bottom: 0px;
-  padding-right: 250px;
-  padding-left: 250px;
-} */
-
-.si{
-  font-family: sans-serif;
-  font-size: 2rem;
-  font-weight: bold;
-}
 
 .si-img{
   text-align: center;
-  display: flex; /* Use flexbox to center content */
+  display: flex; 
   justify-content: center; 
   align-items: center; 
-  text-align: center; 
-  font-family: 'Poppins', serif;
-  font-weight: 600;
-  font-size: 1.9rem;
-  transition: all 0.5s ease-in-out;
+  transition: transform 0.5s;
 }
 
 .si-img:hover{
-  transform: scale(1.05);
+  transform: scale(1.1);
   cursor: pointer;
 }
 
@@ -196,7 +43,6 @@ body{
   background-size:cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-blend-mode: hue;
 }
 
 
@@ -207,74 +53,4 @@ body{
     background-size:cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.footer {
-  background-color: black;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.submit-btn {
-  margin-top: 20px;
-}
-
-
-.footer-text-contact {
-  font-size: 20px;
-  margin-top: 20px;
-  color: white;
-}
-
-.contact-form {
-  width: 400px;
-  margin-left: 40px;
-}
-
-
-.sitemap {
-  font-size: 20px;
-  margin-top: 20px;
-  color: white;
-}
-
-.sitemap .link-light:hover{
-  color: grey;
-}
-
-.contact-details-text {
-  font-size: 20px;
-  margin-top: 20px;
-  color: white;
-}
-
-.custom-btn{
-  width: 120px;
-}
-
-.navbar-custom{
-  max-height: 80px;
-}
-
-@media screen and (max-width: 600px) {
-  .nav-text {
-    font-size: 10px;
-    color: white;
-  }
-
-  .carousel-item {
-    height: 30vh;
-    min-height: 150px;
-    background-color: no-repeat center center scroll;
-    -webkit-background-size: cover;
-    background-size: cover;
-  }
-
-  .carousel-caption h5 {
-
-    font-size: 50px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 10px;
-  }
 }
