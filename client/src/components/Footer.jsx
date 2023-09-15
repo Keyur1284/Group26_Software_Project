@@ -136,7 +136,7 @@ export const Footer = () => {
         </div>
       </section>
 
-      <div className="text-center bg-dark p-2">Copyright © Group26 2023</div>
+      <div className="text-center bg-dark p-2">© Xpense Tracker 2023. All Rights Reserved</div>
     </MDBFooter>
   );
 };
