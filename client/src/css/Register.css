@@ -1,89 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
-
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    font-family: 'Nunito', sans-serif;
-    font-size: 22px;
-    color: #fff;
-}
-
-
-
-body {
-    min-height: 100vh;
-    background-image: url('../assets/registration-images/form_img.png');
-    background-repeat: no-repeat;
-}
-
-.App {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 1rem 0.5rem;
-}
-
-section {
-    width: 100%;
-    max-width: 420px;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    flex-grow: 1;
-    padding-bottom: 1rem;
-} */
-
-.s{
-    font-weight: 500;
-    color: white !important;
-    transition: color 0.3s;
-}
-
-.s:hover{
-    cursor: pointer; 
-    /* font-size: larger; */
-    color:black !important;
-    
-}
-
-/* a,
+a,
 a:visited {
     color: white;
-} */
-/* 
-input[type="text"],
-input[type="password"],
-button,
-textarea {
-    font-family: 'Nunito', sans-serif;
-    font-size: 22px;
-    padding: 0.25rem;
-    border-radius: 0.5rem;
-} */
-
-/* label,
-button {
-    margin-top: 1rem;
 }
 
-button {
-    padding: 0.5rem;
-} */
 
 .instructions {
     font-size: 0.75rem;
@@ -97,7 +16,7 @@ button {
 
 .instructions>svg {
     margin-right: 0.25rem;
-}
+} 
 
 .offscreen {
     position: absolute;
@@ -130,96 +49,61 @@ button {
     display: inline-block;
     color: black;
     align-self: center;
-} 
-
-.registered {
-    color: #000;
 }
 
-.signin {
-    background-color: #212529;
-    font-weight: 600;
-    color: white;
-    transition: transform 0.3s ease-in-out;
-}
-
-.signin:hover{
-    transform: scale(1.05); 
-}
-
-
-.f img{
-    width: 68vw;
-    height: 130vh;
-    margin: 0;
-    padding-top: 80px;
-}
 
 .f {
-    /* padding-top: 100px; */
-    /* margin-left: 75%; */
-    /* width: 1000px; */
-    /* height: 75vh; */
-    background-color: white;
+    height: 92vh;
+    background-color: rgb(93, 150, 241);
 }
 
-.reg{
+.reg {
     padding-top: 120px;
 }
 
 .f1 {
     color: #000;
-    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
 }
 
 .mang {
-    padding-right: 5%;
+    /* padding-right: 5%; */
     transition: transform 0.3s ease-in-out;
+} 
 
-}
-
-.mang:hover{ 
-    cursor: pointer; 
-    /* font-size: larger; */
+.mang:hover {
+    cursor: pointer;
+    font-size: larger;
 }
 
 .mang input[type="radio"] {
-    margin-right: 10px; 
+    margin-right: 10px;
 }
 
-.emp{
-    padding-right: 5%;
+.emp {
+    /* padding-right: 5%; */
     transition: transform 0.3s ease-in-out;
-
 }
 
-.emp:hover{ 
-    cursor: pointer; 
-    /* font-size: larger; */
+.emp:hover {
+    cursor: pointer;
+    font-size: larger;
 }
 
 .emp input[type="radio"] {
-    margin-right: 10px; 
-}
-
-
-.radio {
-    padding-top: 3%;
-    padding-left: 17%;
+    margin-right: 10px;
 }
 
 .alreadyregistered {
     color: black;
     align-self: flex-end;
     font-weight: 600;
-    /* background-color: black; */
-}
-
-.leftside {
-    align-items: flex-end;
 }
 
 .registered {
-    color:black;
+    color: black;
     text-align: left;
 }
