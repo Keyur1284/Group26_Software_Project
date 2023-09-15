@@ -33,7 +33,7 @@ export const Login = () => {
 
         {/* Right Half: Login Form */}
         <div className='col-md-6 p-0 d-flex align-items-center'>
-          <div className='container bg-primary text-white'>
+          <div className='container text-white' style={{backgroundColor: "rgb(93, 150, 241)"}}>
             <div
               className='row justify-content-center align-items-center'
               style={{ height: "92vh" }}
