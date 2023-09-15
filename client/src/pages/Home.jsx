@@ -86,7 +86,7 @@ export const Home = () => {
 
             </div>
 
-            <div className="container-fluid bg-primary p-4">    
+            <div className="container-fluid p-4" style={{backgroundColor: "rgb(93, 150, 241)"}}>    
                 <div className='si display-3 text-center text-white' style={{fontWeight: "400"}}>Supporting Industries</div>
                 <div className="d-flex p-4 mt-3 justify-content-around ">
                     <div className="si-img finance rounded">
