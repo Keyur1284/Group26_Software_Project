@@ -7,7 +7,7 @@ function RadioButtons({ selectedOption, setSelectedOption}) {
   };
 
   return (
-    <div className='radio'>
+    <div className='d-flex justify-content-evenly mt-3 mb-1'>
       <label className='mang'>
         <input
           type="radio"
