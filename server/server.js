@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const {errorHandler} = require('./middlewares/errorMiddleware');
 const connectDB = require('./config/connection');
+const employeeRoutes = require('./routes/employeeRoute');
 
 dotenv.config({path: 'config.env'});
 const app = express();
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 const PORT = process.env.PORT || 8000;
+
+app.use('/api/employees', employeeRoutes);
 
 app.use(errorHandler);
 app.listen(PORT, () => { console.log(`Server running on port ${PORT}`.yellow.bold)});
