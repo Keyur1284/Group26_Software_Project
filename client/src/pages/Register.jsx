@@ -37,7 +37,7 @@ export const Register = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      userType: ""
+      userType: "employee"
     },
     onSubmit: (values) => {
       const data = {
