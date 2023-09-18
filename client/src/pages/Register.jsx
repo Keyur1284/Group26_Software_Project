@@ -37,12 +37,14 @@ export const Register = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      userType: ""
     },
     onSubmit: (values) => {
       const data = {
         name: values.name,
         email: values.email,
         password: values.password,
+        userType: values.userType
       };
       console.log(data);
     },
@@ -219,7 +221,38 @@ export const Register = () => {
                   )}
               </div>
 
-              <div className="d-grid gap-2 mt-4">
+              <div className="mb-3 d-flex justify-content-evenly">
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    id="employee"
+                    name="userType"
+                    value="employee"
+                    className="form-check-input"
+                    checked={formik.values.userType === "employee"}
+                    onChange={formik.handleChange}
+                  />
+                  <label htmlFor="employee" className="form-check-label text-dark h6" style={{ fontSize: "18px" }}>
+                    Employee
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    id="manager"
+                    name="userType"
+                    value="manager"
+                    className="form-check-input"
+                    checked={formik.values.userType === "manager"}
+                    onChange={formik.handleChange}
+                  />
+                  <label htmlFor="manager" className="form-check-label text-dark h6" style={{ fontSize: "18px" }}>
+                    Manager
+                  </label>
+                </div>
+                </div>
+
+              <div className="d-grid gap-2 mt-3">
                 <button
                   type="submit"
                   className="btn btn-dark h6"
