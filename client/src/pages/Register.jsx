@@ -1,316 +1,249 @@
-import { useRef, useState, useEffect } from "react";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import p_1 from "../assets/registration-images/p_1.jpg";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
-import RadioButtons from "../components/RadioButtons";
-import '../css/Register.css'
-import p_1 from '../assets/registration-images/p_1.jpg'
-
-
-const USER_REGEX = /^[A-z][A-z0-9\s-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*]).{8,24}$/;
-const REGISTER_URL = "/register";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { useState } from "react";
 
 export const Register = () => {
+  const formSchema = Yup.object({
+    name: Yup.string()
+      .min(4, "Username must be at least 4 characters")
+      .max(24, "Username must not exceed 24 characters")
+      .matches(
+        /^[A-z][A-z0-9\s-_]*$/,
+        "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
+      )
+      .required("Username is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(8, "Password must be at least 8 characters")
+      .max(24, "Password must not exceed 24 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*]).{8,24}$/,
+        "Password must include uppercase and lowercase letters, a number, and a special character"
+      )
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm Password is required"),
+  });
 
-
-  const userRef = useRef();
-  const errRef = useRef();
-
-  const [user, setUser] = useState("");
-  const [validName, setValidName] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
-
-  const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
-
-  const [matchPwd, setMatchPwd] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
-
-  const [selectedOption, setSelectedOption] = useState('Employee');
-
-  const [errMsg, setErrMsg] = useState("");
-
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
-
-  useEffect(() => {
-    setValidName(USER_REGEX.test(user));
-  }, [user]);
-
-  useEffect(() => {
-    setValidPwd(PWD_REGEX.test(pwd));
-    setValidMatch(pwd === matchPwd);
-  }, [pwd, matchPwd]);
-
-  useEffect(() => {
-    setErrMsg("");
-  }, [user, pwd, matchPwd]);
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    onSubmit: (values) => {
+      const data = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      };
+      console.log(data);
+    },
+    validationSchema: formSchema,
+  });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showconfirm_pwd, setShowconfirm_pwd] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const toggleconfirm_pwdVisibility = () => {
-    setShowconfirm_pwd(!showconfirm_pwd);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // if button enabled with JS hack
-    const v1 = USER_REGEX.test(user);
-    const v2 = PWD_REGEX.test(pwd);
-    if (!v1 || !v2) {
-      setErrMsg("Invalid Entry");
-      return;
-    }
-
-    console.log({
-      user: user,
-      email: e.target.email.value,
-      password: pwd,
-      role: selectedOption
-    });
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
-    <div className="container-fluid m-0 p-0">
-        <section className="f d-flex flex-row p-0 align-items-start"  style={{height: "100vh"}}>
-          <div className='col-md-6 p-0'>
-            <img
-              src={p_1}
-              className='img-fluid'
-              alt='Background'
-              style={{ height: "100vh", width: "100%" }}
-            />
-          </div>
+    <div
+      className="container-fluid"
+      style={{ backgroundColor: "rgb(93, 150, 241)" }}
+    >
+      <div className="row">
+        {/* Left Half: Image */}
+        <div className="col-md-6 p-0">
+          <img
+            src={p_1}
+            className="img-fluid"
+            alt="Background"
+            style={{ minHeight: "92vh", width: "100%" }}
+          />
+        </div>
 
-          <div className='col-md-6 p-0 d-flex align-items-center'>
-          <div className='container text-white' style={{backgroundColor: "rgb(93, 150, 241)", width: "75vh"}}>
-              <p
-                ref={errRef}
-                className={errMsg ? "errmsg" : "offscreen"}
-                aria-live="assertive"
-              >
-                {errMsg}
-              </p>
-              <h1 className='reg text-white  display-6' style={{ fontWeight: "400" }}>Create New Account</h1>
-              <form className="f1 " style={{ fontSize: "18px" }} onSubmit={handleSubmit}>
-
-                <label htmlFor="username" className="h6 mt-2">
-                  Username:
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={validName ? "valid" : "hide"}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className={validName || !user ? "hide" : "invalid"}
-                  />
-                </label>
-                <input
-                  type="text"
-                  className='form-control form-input-text'
-                  placeholder="Username"
-                  id="username"
-                  ref={userRef}
-                  autoComplete="off"
-                  onChange={(e) => setUser(e.target.value)}
-                  value={user}
-                  required
-                  aria-invalid={validName ? "false" : "true"}
-                  aria-describedby="uidnote"
-                  onFocus={() => setUserFocus(true)}
-                  onBlur={() => setUserFocus(false)}
-                />
-                <p
-                  id="uidnote"
-                  className={
-                    userFocus && user && !validName ? "instructions" : "offscreen"
-                  }
+        {/* Right Half: Registration Form */}
+        <div
+          className="col-md-6 p-0 d-flex container text-white row justify-content-center align-items-center"
+          style={{ minHeight: "92vh" }}
+        >
+          <div className="col-md-8 mt-5">
+            <h2 className="text-start display-6" style={{ fontWeight: "400" }}>
+              Create New Account
+            </h2>
+            <p className="text-start h6" style={{ fontSize: "18px" }}>
+              Track Your Expenses with Xpense Tracker
+            </p>
+            <form onSubmit={formik.handleSubmit}>
+              <div className="mb-3 mt-4">
+                <label
+                  htmlFor="exampleInputEmail1"
+                  className="form-label text-dark h6"
+                  style={{ fontSize: "18px" }}
                 >
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  4 to 24 characters.
-                  <br />
-                  Must begin with a letter.
-                  <br />
-                  Letters, numbers, underscores, hyphens, allowed.
-                </p>
+                  Username
+                </label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="User1234"
+                    className="form-control"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </div>
 
-                <div className='mt-4'>
-                  <label
-                    htmlFor='exampleInputEmail1'
-                    className='form-label h6'
-                    
-                  >
-                    Email address:
-                  </label>
-                  <div>
-                    <input
-                      type='email'
-                      name='email'
-                      placeholder='example@gmail.com'
-                      className='form-control form-input-text'
-                      id='exampleInputEmail1'
-                      aria-describedby='emailHelp'
-                    />
+                {formik.touched.name && formik.errors.name && (
+                  <div className="alert alert-danger text-center mt-2">
+                    {formik.touched.name && formik.errors.name}
                   </div>
+                )}
+              </div>
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleInputEmail1"
+                  className="form-label text-dark h6"
+                  style={{ fontSize: "18px" }}
+                >
+                  Email address
+                </label>
+                <div className="input-group">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="example@gmail.com"
+                    className="form-control"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
                 </div>
 
-                <div className='mt-4'>
-
-                  <label htmlFor="password" className="h6">
-                    Password:
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className={validPwd ? "valid" : "hide"}
-                    />
-                    <FontAwesomeIcon
-                      icon={faTimes}
-                      className={validPwd || !pwd ? "hide" : "invalid"}
-                    />
-                  </label>
-                  <div className='input-group'>
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      name="password"
-                      className='form-control form-input-text'
-                      id='exampleInputPassword1'
-                      placeholder='•••••••••••'
-                      onChange={(e) => setPwd(e.target.value)}
-                      value={pwd}
-                      required
-                      aria-invalid={validPwd ? "false" : "true"}
-                      aria-describedby="pwdnote"
-                      onFocus={() => setPwdFocus(true)}
-                      onBlur={() => setPwdFocus(false)}
-                    />
-                    <button
-                      type='button'
-                      className='btn btn-outline-white bg-white text-dark'
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? (
-                        <i className='bi bi-eye-slash-fill'></i>
-                      ) : (
-                        <i className='bi bi-eye-fill'></i>
-                      )}
-                    </button>
-
+                {formik.touched.email && formik.errors.email && (
+                  <div className="alert alert-danger text-center mt-2">
+                    {formik.touched.email && formik.errors.email}
                   </div>
-
-                  <p
-                    id="pwdnote"
-                    className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
+                )}
+              </div>
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleInputPassword1"
+                  className="form-label text-dark h6"
+                  style={{ fontSize: "18px" }}
+                >
+                  Password
+                </label>
+                <div className="input-group">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="•••••••••••"
+                    className="form-control"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-white bg-white text-dark"
+                    onClick={togglePasswordVisibility}
                   >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    8 to 24 characters.
-                    <br />
-                    Must include uppercase and lowercase letters, a number and a
-                    special character.
-                    <br />
-                    Allowed special characters:{" "}
-                    <span aria-label="exclamation mark">!</span>{" "}
-                    <span aria-label="at symbol">@</span>{" "}
-                    <span aria-label="hashtag">#</span>{" "}
-                    <span aria-label="dollar sign">$</span>{" "}
-                    <span aria-label="percent">%</span>
-                    <span aria-label="asterisk">*</span>
-                  </p>
+                    {showPassword ? (
+                      <i className="bi bi-eye-slash-fill"></i>
+                    ) : (
+                      <i className="bi bi-eye-fill"></i>
+                    )}
+                  </button>
                 </div>
 
-                <div className='mt-4'>
-
-                  <label htmlFor="confirm_pwd" className="h6">
-                    Confirm Password:
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      className={validMatch && matchPwd ? "valid" : "hide"}
-                    />
-                    <FontAwesomeIcon
-                      icon={faTimes}
-                      className={validMatch || !matchPwd ? "hide" : "invalid"}
-                    />
-                  </label>
-
-                  <div className='input-group'>
-
-                    <input
-                      type={showconfirm_pwd ? 'text' : 'password'}
-                      id="confirm_pwd"
-                      name="password"
-                      className='form-control form-input-text'
-                      placeholder='•••••••••••'
-                      onChange={(e) => setMatchPwd(e.target.value)}
-                      value={matchPwd}
-                      required
-                      aria-invalid={validMatch ? "false" : "true"}
-                      aria-describedby="confirmnote"
-                      onFocus={() => setMatchFocus(true)}
-                      onBlur={() => setMatchFocus(false)}
-                    />
-
-                    <button
-                      type='button'
-                      className='btn btn-outline-white bg-white text-dark'
-                      onClick={toggleconfirm_pwdVisibility}
-                    >
-                      {showconfirm_pwd ? (
-                        <i className='bi bi-eye-slash-fill'></i>
-                      ) : (
-                        <i className='bi bi-eye-fill'></i>
-                      )}
-                    </button>
-
+                {formik.touched.password && formik.errors.password && (
+                  <div className="alert alert-danger text-center mt-2">
+                    {formik.touched.password && formik.errors.password}
                   </div>
+                )}
+              </div>
 
-                  <p
-                    id="confirmnote"
-                    className={
-                      matchFocus && !validMatch ? "instructions" : "offscreen"
-                    }
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleInputPassword1"
+                  className="form-label text-dark h6"
+                  style={{ fontSize: "18px" }}
+                >
+                  Confirm Password
+                </label>
+                <div className="input-group">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="•••••••••••"
+                    className="form-control"
+                    value={formik.values.confirmPassword}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-outline-white bg-white text-dark"
+                    onClick={toggleConfirmPasswordVisibility}
                   >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Must match the first password input field.
-                  </p>
-
+                    {showConfirmPassword ? (
+                      <i className="bi bi-eye-slash-fill"></i>
+                    ) : (
+                      <i className="bi bi-eye-fill"></i>
+                    )}
+                  </button>
                 </div>
 
-                <div className="radiobtn mb-3">
-                <RadioButtons selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-                </div>
+                {formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword && (
+                    <div className="alert alert-danger text-center mt-2">
+                      {formik.touched.confirmPassword &&
+                        formik.errors.confirmPassword}
+                    </div>
+                  )}
+              </div>
 
-                <button type="submit" id="submit-btn"
-                  className="btn btn-dark"
-                  disabled={!validName || !validPwd || !validMatch ? true : false}
+              <div className="d-grid gap-2 mt-4">
+                <button
+                  type="submit"
+                  className="btn btn-dark h6"
+                  style={{ fontSize: "18px" }}
+                  disabled={!formik.isValid}
                 >
                   Sign Up
                 </button>
-
-                <div className='text-center text-white mt-3' style={{fontSize: "18px"}}>
-                    <p>
-                      Already registered? {"   "}
-                      <Link to='/login' className='text-white'>
-                        Sign In
-                      </Link>{" "}
-                    </p>
-                  </div>
-
-              </form>
-              
-
-
-            </div>
-
+              </div>
+              <div
+                className="create-account text-center mt-3"
+                style={{ fontSize: "18px" }}
+              >
+                <p>
+                  Already Registered? {"   "}
+                  <Link to="/login" className="text-white">
+                    Sign In
+                  </Link>{" "}
+                </p>
+              </div>
+            </form>
           </div>
-        </section>
+        </div>
+      </div>
     </div>
   );
 };
