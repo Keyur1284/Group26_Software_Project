@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { registerEmployee, reset } from "../features/auth/authSlice";
+import { registerEmployee, registerManager, reset } from "../features/auth/authSlice";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export const Register = () => {
@@ -46,22 +46,26 @@ export const Register = () => {
       confirmPassword: "",
       userType: "employee"
     },
-    onSubmit: (values) => {      
-      dispatch(registerEmployee(values));
+    onSubmit: (values) => {   
+      if(values.userType === "employee")   
+        dispatch(registerEmployee(values));
+      else if(values.userType === "manager")
+        dispatch(registerManager(values));
     },
     validationSchema: formSchema,
   });
 
+
   const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector(state => state.auth);
 
   useEffect(() => {
-      
-      if (user) {
+  
+      if(user){
         navigate("/");
       }
-  
+
       if (isSuccess) {
-        message.success("Registration Successful");
+        message.success("User Registered Successfully!");
         dispatch(reset());
         navigate("/login");
       }

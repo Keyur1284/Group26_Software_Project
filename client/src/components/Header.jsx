@@ -1,8 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
-import { useEffect } from "react";
+import { logout } from "../features/auth/authSlice";
 import { message } from "antd";
 import "../css/Homepage.css";
 
@@ -12,10 +11,20 @@ export const Header = () => {
 
   const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector((state) => state.auth);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    message.success("Logout Successful");
-    navigate("/login");
+  const handleLogout = async () => {
+    
+    try {
+      await dispatch(logout())
+      message.success("User Logged Out Successfully!")
+      navigate('/login')
+    }
+
+    catch (error)
+    {
+      console.error("Logout error: ", error)
+      message.error("Logout failed")
+    }
+
   }
 
   return (

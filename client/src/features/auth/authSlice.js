@@ -30,6 +30,25 @@ export const registerEmployee = createAsyncThunk('/auth/registerEmployee', async
     }
 })
 
+export const registerManager = createAsyncThunk('/auth/registerManager', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.registerManager(userData);
+        return response;
+    }
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+
+
 export const loginEmployee = createAsyncThunk('/auth/loginEmployee', async (userData, thunkAPI) => {
 
     try {
@@ -46,6 +65,25 @@ export const loginEmployee = createAsyncThunk('/auth/loginEmployee', async (user
         return thunkAPI.rejectWithValue(error.response.data);
     }
 })
+
+export const loginManager = createAsyncThunk('/auth/loginManager', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.loginManager(userData);
+        return response;
+    }
+    catch (error) {
+        
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+
 
 export const logout = createAsyncThunk('/auth/logout', async () => {
    await authService.logout()
@@ -73,7 +111,17 @@ const authSlice = createSlice({
                 state.isLoading = true;
             })
 
+            .addCase(registerManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
             .addCase(registerEmployee.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.message = action.payload?.message;
+            })
+
+            .addCase(registerManager.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.message = action.payload?.message;
@@ -86,11 +134,29 @@ const authSlice = createSlice({
                 state.serverErr = action.error?.message;
             })
 
+            .addCase(registerManager.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
             .addCase(loginEmployee.pending, (state) => {
                 state.isLoading = true;
             })
 
+            .addCase(loginManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
             .addCase(loginEmployee.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user = action.payload;
+                state.message = action.payload?.message;
+            })
+
+            .addCase(loginManager.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.user = action.payload;
@@ -104,13 +170,14 @@ const authSlice = createSlice({
                 state.serverErr = action.error?.message;
             })
 
-            .addCase(logout.pending, (state) => {
-                state.isLoading = true;
+            .addCase(loginManager.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
             })
 
             .addCase(logout.fulfilled, (state) => {
-                state.isLoading = false;
-                state.isSuccess = true;
                 state.user = null;
                 state.message = "User Logged Out Successfully";
             })

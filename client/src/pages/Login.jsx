@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import {message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { loginEmployee, reset } from "../features/auth/authSlice";
+import { loginEmployee, loginManager, reset } from "../features/auth/authSlice";
 
 export const Login = () => {
 
@@ -27,23 +27,28 @@ export const Login = () => {
       userType: "employee",
     },
     onSubmit: (values) => {
-      dispatch(loginEmployee(values));
+      if(values.userType === "employee")
+        dispatch(loginEmployee(values));
+      else if(values.userType === "manager")
+        dispatch(loginManager(values));
     },
     validationSchema: formSchema,
   });
+
+
 
   const {isSuccess, isError, isLoading, appErr, serverErr, user} = useSelector(state => state.auth);
 
   useEffect(() => {
 
-    if (user && !isLoading)
+    if (user)
     {
       navigate("/");
     }
     
     if (isSuccess && user)
     {
-      message.success("Login Successful");
+      message.success("User Logged In Successfully!");
       dispatch(reset());
       navigate("/");
     }
@@ -53,6 +58,7 @@ export const Login = () => {
       message.error(appErr||serverErr);
       dispatch(reset());
     }
+
   }, [dispatch, isSuccess, isError, appErr, serverErr, user])
 
   const [showPassword, setShowPassword] = useState(false);
