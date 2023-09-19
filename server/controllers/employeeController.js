@@ -39,6 +39,7 @@ const registerController = asyncHandler(async (req, res) => {
             _id: employee._id,
             name: employee.name,
             email: employee.email,
+            message: "Registeration Successful",
             token: generateToken(employee._id)
         });
     }
@@ -81,6 +82,7 @@ const loginController = asyncHandler(async (req, res) => {
             _id: employee._id,
             name: employee.name,
             email: employee.email,
+            message: "Login Successful",
             token: generateToken(employee._id)
         });
     }

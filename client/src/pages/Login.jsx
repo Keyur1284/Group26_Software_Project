@@ -1,11 +1,18 @@
 import Background from "../assets/login-images/Background.jpg";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import {message} from "antd";
+import {useDispatch, useSelector} from "react-redux";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { loginEmployee, reset } from "../features/auth/authSlice";
 
 export const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const formSchema = Yup.object({
     email: Yup.string()
       .email("Invalid email format")
@@ -17,12 +24,36 @@ export const Login = () => {
     initialValues: {
       email: "",
       password: "",
+      userType: "employee",
     },
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(loginEmployee(values));
     },
     validationSchema: formSchema,
   });
+
+  const {isSuccess, isError, isLoading, appErr, serverErr, user} = useSelector(state => state.auth);
+
+  useEffect(() => {
+
+    if (user && !isLoading)
+    {
+      navigate("/");
+    }
+    
+    if (isSuccess && user)
+    {
+      message.success("Login Successful");
+      dispatch(reset());
+      navigate("/");
+    }
+
+    if(isError)
+    {
+      message.error(appErr||serverErr);
+      dispatch(reset());
+    }
+  }, [dispatch, isSuccess, isError, appErr, serverErr, user])
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -30,13 +61,12 @@ export const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log({
-  //     email: e.target.email.value,
-  //     password: e.target.password.value,
-  //   });
-  // };
+  if (isLoading)
+  {
+    return(<div>
+      <h1>Loading...</h1>
+    </div>)
+  }
 
   return (
     <div className="container-fluid">
@@ -71,6 +101,7 @@ export const Login = () => {
                 <p className="text-start h6" style={{ fontSize: "18px" }}>
                   Track Your Expenses with Xpense Tracker
                 </p>
+
                 <form onSubmit={formik.handleSubmit}>
                   <div className="mb-3 mt-4">
                     <label
@@ -135,7 +166,39 @@ export const Login = () => {
                       </div>
                     )}
                   </div>
-                  <div className="d-grid gap-2 mt-4">
+
+                  <div className="mb-3 d-flex justify-content-evenly">
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    id="employee"
+                    name="userType"
+                    value="employee"
+                    className="form-check-input"
+                    checked={formik.values.userType === "employee"}
+                    onChange={formik.handleChange}
+                  />
+                  <label htmlFor="employee" className="form-check-label text-dark h6" style={{ fontSize: "18px" }}>
+                    Employee
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    id="manager"
+                    name="userType"
+                    value="manager"
+                    className="form-check-input"
+                    checked={formik.values.userType === "manager"}
+                    onChange={formik.handleChange}
+                  />
+                  <label htmlFor="manager" className="form-check-label text-dark h6" style={{ fontSize: "18px" }}>
+                    Manager
+                  </label>
+                </div>
+                </div>
+
+                  <div className="d-grid gap-2 mt-3">
                     <button
                       type="submit"
                       className="btn btn-dark h6"

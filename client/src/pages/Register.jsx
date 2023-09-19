@@ -1,11 +1,18 @@
 import p_1 from "../assets/registration-images/p_1.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import { useState, useEffect } from "react";
 import * as Yup from "yup";
+import { message } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { registerEmployee, reset } from "../features/auth/authSlice";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState } from "react";
 
 export const Register = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const formSchema = Yup.object({
     name: Yup.string()
       .min(4, "Username must be at least 4 characters")
@@ -39,17 +46,31 @@ export const Register = () => {
       confirmPassword: "",
       userType: "employee"
     },
-    onSubmit: (values) => {
-      const data = {
-        name: values.name,
-        email: values.email,
-        password: values.password,
-        userType: values.userType
-      };
-      console.log(data);
+    onSubmit: (values) => {      
+      dispatch(registerEmployee(values));
     },
     validationSchema: formSchema,
   });
+
+  const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector(state => state.auth);
+
+  useEffect(() => {
+      
+      if (user) {
+        navigate("/");
+      }
+  
+      if (isSuccess) {
+        message.success("Registration Successful");
+        dispatch(reset());
+        navigate("/login");
+      }
+  
+      if (isError) {
+        message.error(appErr || serverErr);
+        dispatch(reset());
+      }
+  }, [dispatch, isSuccess, isError, appErr, serverErr, user])
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -61,6 +82,15 @@ export const Register = () => {
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
+  if (isLoading)
+  {
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    )
+  }
 
   return (
     <div
@@ -80,7 +110,7 @@ export const Register = () => {
 
         {/* Right Half: Registration Form */}
         <div
-          className="col-md-6 p-0 d-flex container text-white row justify-content-center align-items-center"
+          className="col-md-6 p-0 m-0 d-flex container text-white row justify-content-center align-items-center"
           style={{ minHeight: "92vh" }}
         >
           <div className="col-md-8 mt-5">
