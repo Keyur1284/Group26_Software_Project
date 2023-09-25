@@ -5,13 +5,16 @@ import bg3 from '../assets/project-dashboard/bg-3.jpg'
 import mainbg from '../assets/project-dashboard/main-bg.jpg'
 import { MyExpPie } from '../components/MyExpPie'
 import { TotalExpPie } from '../components/TotalExpPie'
+import { Hamburger } from '../components/Hamburger'
 
 
 export const ProjectDashboard = () => {
     return (
-        <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundSize: "cover" }}>
+        <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>
             <div className="row">
-                <div className="col-3"></div>
+                <div className="col-3">
+                    <Hamburger />
+                </div>
                 <div className="col-9">
                     <div className="container"></div>
                     <div className="row me-3">
