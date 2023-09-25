@@ -7,6 +7,7 @@ import {Header} from './components/Header'
 import {Footer} from './components/Footer'
 import { ProjectDashboard } from './pages/ProjectDashboard'
 import { Expense } from './pages/Expense'
+import { AddExpense } from './pages/AddExpense'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/project/dashboard' element={<ProjectDashboard />} />
           <Route path='/expense' element={<Expense />} />
+          <Route path='/add-expense' element={<AddExpense />} />
         </Routes>
         
         <Footer />
