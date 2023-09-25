@@ -32,18 +32,18 @@ export const ExpenseCard = (props) => {
         <div className="col-md-1 d-flex align-items-center justify-content-center shadow" style={{ backgroundColor: newColor,borderRadius: "15px 0px 0px 15px"}}>
           {categoryIcon && <FontAwesomeIcon icon={categoryIcon} size="2xl" />}
         </div>
-        <div className="col-md-2 d-flex flex-column align-items-center justify-content-center shadow" style={{ backgroundColor: newColor }}>
+        <div className="col-md-3 d-flex flex-column align-items-center justify-content-center shadow" style={{ backgroundColor: newColor }}>
           <div>{props.description}</div>
           <div style={{ fontSize: "12px" }}>{props.date}</div>
         </div>
         <div
-          className="col-md-2 d-flex align-items-center justify-content-center shadow"
+          className="col-md-3 d-flex align-items-center justify-content-center shadow"
           style={{ backgroundColor: newColor }}
         >
           Rs. {props.amount}
         </div>
         <div
-          className="col-md-2 d-flex align-items-center justify-content-center shadow"
+          className="col-md-3 d-flex align-items-center justify-content-center shadow"
           style={{ backgroundColor: newColor }}
         >
           {props.status}
