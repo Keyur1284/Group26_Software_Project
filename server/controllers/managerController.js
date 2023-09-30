@@ -1,4 +1,5 @@
 const Manager = require('../models/managerModel');
+const Employee = require('../models/employeeModel');
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -96,9 +97,94 @@ const loginController = asyncHandler(async (req, res) => {
 });
 
 
+const createProjectController = asyncHandler(async (req, res) => {
+
+})
+
+
+const findEmployeesController = asyncHandler(async (req, res) => {
+
+    const regex = new RegExp(req.query.email, 'i');
+    const employees = await Employee.find({email: regex});
+
+    if (employees)
+    {
+        res.status(200).json({
+            success: true,
+            employees
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid user data'});
+        throw new Error('Invalid user data');
+    }
+})
+
+
+const sendInviteController = asyncHandler(async (req, res) => {
+
+    const {employeeId, projectId} = req.body;
+
+    const employee = await Employee.findById(employeeId);
+    const manager = await Manager.findById(req.manager._id);
+
+    if (!employee || !manager)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid user data'});
+        throw new Error('Invalid user data');
+    }
+
+    // const project = await Project.findById(projectId);
+
+    // if (!project)
+    // {
+    //     res.status(400)
+    //     // res.json({success: false, message: 'Invalid user data'});
+    //     throw new Error('Invalid user data');
+    // }
+
+    // const invite = await Invite.create({
+    //     employeeId,
+    //     projectId,
+    //     managerId: req.manager._id
+    // });
+
+    const invite = {
+        employeeId,
+        projectId,
+        managerId: req.manager._id
+    }
+
+    if (invite)
+    {
+        res.status(200).json({
+            success: true,
+            invite
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid user data'});
+        throw new Error('Invalid user data');
+    }
+})
+
+
 const generateToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: '30d'});
 }
 
 
-module.exports = {loginController, registerController};
+module.exports = {
+    loginController, 
+    registerController, 
+    findEmployeesController, 
+    createProjectController, 
+    sendInviteController
+};
