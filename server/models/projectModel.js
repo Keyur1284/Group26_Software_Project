@@ -5,7 +5,8 @@ const projectSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please enter project name'],
-        trim: true
+        trim: true,
+        unique: true
     },
     description: {
         type: String,
@@ -16,6 +17,7 @@ const projectSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Employee',
         required: [true, 'Please add employees id'],
+        default: []
     }],
     manager_id: {
         type: mongoose.Schema.Types.ObjectId,
