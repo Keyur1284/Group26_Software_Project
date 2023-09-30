@@ -1,0 +1,19 @@
+/* Custom scrollbar styles */
+.custom-scroll-container::-webkit-scrollbar {
+    width: 15px;
+}
+
+.custom-scroll-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+.custom-scroll-container::-webkit-scrollbar-thumb {
+    background: #004197;
+    border-radius: 10px;
+}
+
+.custom-scroll-container .list-group-item {
+    background-color: #B3C8E4;
+    border: 0 #fff;
+}
