@@ -20,7 +20,13 @@ const employeeSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Please enter your password'],
-    },    
+    }, 
+    projects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
+        required: false,
+        default: []
+    }],   
 }, {
     timestamps: true
 });
