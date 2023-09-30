@@ -1,6 +1,7 @@
 const Manager = require('../models/managerModel');
 const Employee = require('../models/employeeModel');
 const Project = require('../models/projectModel');
+const Invite = require('../models/inviteModel');
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -158,38 +159,28 @@ const findEmployeesController = asyncHandler(async (req, res) => {
 
 const sendInviteController = asyncHandler(async (req, res) => {
 
-    const {employeeId, projectId} = req.body;
+    const {employee_id, project_id} = req.body;
+    const manager_id =  req.manager._id;
 
-    const employee = await Employee.findById(employeeId);
-    const manager = await Manager.findById(req.manager._id);
+    const employee = await Employee.findById(employee_id);
+    const manager = await Manager.findById(manager_id);
+    const project = await Project.findById(project_id);
+    
 
-    if (!employee || !manager)
+    if (!employee || !manager || !project)
     {
         res.status(400)
-        // res.json({success: false, message: 'Invalid user data'});
-        throw new Error('Invalid user data');
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
     }
 
-    // const project = await Project.findById(projectId);
 
-    // if (!project)
-    // {
-    //     res.status(400)
-    //     // res.json({success: false, message: 'Invalid user data'});
-    //     throw new Error('Invalid user data');
-    // }
+    const invite = await Invite.create({
+        employee_id,
+        project_id,
+        manager_id
+    });
 
-    // const invite = await Invite.create({
-    //     employeeId,
-    //     projectId,
-    //     managerId: req.manager._id
-    // });
-
-    const invite = {
-        employeeId,
-        projectId,
-        managerId: req.manager._id
-    }
 
     if (invite)
     {
@@ -202,8 +193,8 @@ const sendInviteController = asyncHandler(async (req, res) => {
     else
     {
         res.status(400)
-        // res.json({success: false, message: 'Invalid user data'});
-        throw new Error('Invalid user data');
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
     }
 })
 
