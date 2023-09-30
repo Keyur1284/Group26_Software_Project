@@ -1,5 +1,6 @@
 const Manager = require('../models/managerModel');
 const Employee = require('../models/employeeModel');
+const Project = require('../models/projectModel');
 const asyncHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -99,6 +100,37 @@ const loginController = asyncHandler(async (req, res) => {
 
 const createProjectController = asyncHandler(async (req, res) => {
 
+    const {name, description, budget} = req.body;
+    const manager_id = req.manager._id;
+
+    if (!name || !budget)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Please fill all the fields'});
+        throw new Error('Please fill all the fields');
+    }
+
+    const project = await Project.create({
+        name,
+        description,
+        budget,
+        manager_id
+    });
+
+    if (project)
+    {
+        res.status(200).json({
+            success: true,
+            project
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
+    }
 })
 
 
