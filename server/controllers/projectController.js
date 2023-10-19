@@ -16,6 +16,22 @@ const createProjectController = asyncHandler(async (req, res) => {
         throw new Error('Please fill all the fields');
     }
 
+    if (budget <= 0)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Budget must be greater than 0'});
+        throw new Error('Budget must be greater than 0');
+    }
+
+    const projectNameExist = Project.findOne({name}); 
+
+    if (projectNameExist)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Project name already exists'});
+        throw new Error('Project name already exists');
+    }
+
     const project = await Project.create({
         name,
         description,
