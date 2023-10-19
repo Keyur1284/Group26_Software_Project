@@ -12,7 +12,7 @@ const {
 } = require("../middlewares/authMiddleware");
 
 
-router.post("/send-invite", managerAuthMiddleware, sendInviteController);
+router.post("/send-invite/:project_id", managerAuthMiddleware, sendInviteController);
 router.get("/view-invites", employeeAuthMiddleware, getInvitesController);
 router.post("/accept-invite", employeeAuthMiddleware, acceptInviteController);
 

@@ -7,10 +7,11 @@ const asyncHandler = require('express-async-handler');
 
 const sendInviteController = asyncHandler(async (req, res) => {
 
-    const {employee_id, project_id} = req.body;
+    const {email} = req.body;
+    const project_id = req.params.project_id;
     const manager_id =  req.manager._id;
 
-    const employee = await Employee.findById(employee_id);
+    const employee = await Employee.findOne({email});
     const manager = await Manager.findById(manager_id);
     const project = await Project.findById(project_id);
     
@@ -22,27 +23,39 @@ const sendInviteController = asyncHandler(async (req, res) => {
         throw new Error('Invalid data');
     }
 
+    const employee_id = employee._id;
+    const employeeProjects = employee.projects;
+    const projectExists = employeeProjects.includes(project_id);
 
-    const invite = await Invite.create({
-        employee_id,
-        project_id,
-        manager_id
-    });
-
-
-    if (invite)
-    {
-        res.status(200).json({
-            success: true,
-            invite
-        });
-    }
-
-    else
+    if (projectExists)
     {
         res.status(400)
-        // res.json({success: false, message: 'Invalid data'});
-        throw new Error('Invalid data');
+        // res.json({success: false, message: 'Employee is already present in the project!'});
+        throw new Error('Employee is already present in the project!');
+    }
+
+    {
+        const invite = await Invite.create({
+            employee_id,
+            project_id,
+            manager_id
+        });
+
+
+        if (invite)
+        {
+            res.status(200).json({
+                success: true,
+                invite
+            });
+        }
+
+        else
+        {
+            res.status(400)
+            // res.json({success: false, message: 'Invalid data'});
+            throw new Error('Invalid data');
+        }
     }
 })
 
@@ -50,8 +63,21 @@ const sendInviteController = asyncHandler(async (req, res) => {
 const getInvitesController = asyncHandler(async (req, res) => {
    
     const employee_id = req.employee._id;
-    const invitations = await Invite.find({employee_id});
+    let invitations = await Invite.find({employee_id});
     
+    const project_ids = [];
+    const uniqueInvites = [];
+
+    invitations.forEach(invite => {
+        if (!project_ids.find((project_id) => (String(invite.project_id) === String(project_id))))
+        {
+            project_ids.push(invite.project_id);
+            uniqueInvites.push(invite);
+        }
+    });
+
+    invitations = uniqueInvites;
+
     if (invitations.length > 0)
     {
         res.status(200).json({
@@ -87,7 +113,7 @@ const acceptInviteController = asyncHandler(async (req, res) => {
         project.employees.push(employee._id);
         await project.save();
         
-        await Invite.findByIdAndDelete(invite_id);
+        await Invite.deleteMany({project_id: invite.project_id});
         
         res.status(200).json({
             success: true,
