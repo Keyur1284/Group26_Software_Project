@@ -105,8 +105,68 @@ const sendInviteController = asyncHandler(async (req, res) => {
 })
 
 
+const getInvitesController = asyncHandler(async (req, res) => {
+   
+    const employee_id = req.employee._id;
+    const invitations = await Invite.find({employee_id});
+    
+    if (invitations.length > 0)
+    {
+        res.status(200).json({
+            success: true,
+            invitations
+        });
+    }
+
+    else
+    {
+        res.status(200).json({
+            success: true,
+            message: "No invitations found"
+        });
+    }
+});
+
+
+const acceptInviteController = asyncHandler(async (req, res) => {
+
+    const {invite_id} = req.body;
+    const employee_id = req.employee._id;
+    const invite = await Invite.findById(invite_id);
+    const project = await Project.findById(invite.project_id);
+
+    if (invite && project)
+    {
+        const employee = await Employee.findById(employee_id);
+        
+        employee.projects.push(project._id);
+        await employee.save();
+        
+        project.employees.push(employee._id);
+        await project.save();
+        
+        await Invite.findByIdAndDelete(invite_id);
+        
+        res.status(200).json({
+            success: true,
+            employee,
+            project,
+            message: "Invite accepted"
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid invite'});
+        throw new Error('Invalid invite');
+    }
+})
+
 module.exports = {
     findEmployeesController, 
     createProjectController, 
-    sendInviteController
+    sendInviteController,
+    getInvitesController,
+    acceptInviteController
 };
