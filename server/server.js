@@ -7,6 +7,7 @@ const {errorHandler, notFound} = require('./middlewares/errorMiddleware');
 const connectDB = require('./config/connection');
 const employeeRoutes = require('./routes/employeeRoute');
 const managerRoutes = require('./routes/managerRoute');
+const projectRoutes = require('./routes/projectRoute');
 
 dotenv.config({path: 'config.env'});
 const app = express();
@@ -21,6 +22,7 @@ const PORT = process.env.PORT || 8000;
 
 app.use('/api/employees', employeeRoutes);
 app.use('/api/managers', managerRoutes);
+app.use('/api/projects', projectRoutes);
 
 app.use(notFound)
 app.use(errorHandler);
