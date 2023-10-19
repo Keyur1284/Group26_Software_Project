@@ -8,6 +8,7 @@ const connectDB = require('./config/connection');
 const employeeRoutes = require('./routes/employeeRoute');
 const managerRoutes = require('./routes/managerRoute');
 const projectRoutes = require('./routes/projectRoute');
+const expenseRoutes = require('./routes/expenseRoute');
 
 dotenv.config({path: 'config.env'});
 const app = express();
@@ -23,6 +24,7 @@ const PORT = process.env.PORT || 8000;
 app.use('/api/employees', employeeRoutes);
 app.use('/api/managers', managerRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/expenses', expenseRoutes);
 
 app.use(notFound)
 app.use(errorHandler);
