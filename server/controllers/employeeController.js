@@ -160,12 +160,11 @@ const acceptInviteController = asyncHandler(async (req, res) => {
 
 const addExpenseController = asyncHandler(async (req, res) => {
 
-    const {name, date, category, amount, description, project_id} = req.body;
+    const {name, date, category, amount, description, project_id, file} = req.body;
     const employee_id = req.employee._id;
-    // const file = req.file;
 
 
-    if(!name || !date || !category || !amount || !project_id )
+    if(!name || !date || !category || !amount || !project_id || !file)
     {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
@@ -216,7 +215,8 @@ const addExpenseController = asyncHandler(async (req, res) => {
         description,
         amount,
         project_id,
-        employee_id
+        employee_id,
+        file
     });
 
     if(expense){

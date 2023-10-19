@@ -48,9 +48,8 @@ const expenseSchema = new mongoose.Schema({
         }
     },
     file: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Uploads', 
-        required: [true, 'Please provide a file'],
+        type: String, 
+        required: [true, 'Please provide a file drive link'],
     }
     
 }, {
