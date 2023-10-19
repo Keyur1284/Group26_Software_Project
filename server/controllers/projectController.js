@@ -26,6 +26,10 @@ const createProjectController = asyncHandler(async (req, res) => {
 
     if (project)
     {
+        const manager = await Manager.findById(manager_id);
+        manager.projects.push(project._id);
+        await manager.save();
+
         res.status(200).json({
             success: true,
             project
@@ -163,10 +167,62 @@ const acceptInviteController = asyncHandler(async (req, res) => {
     }
 })
 
+
+const getProjectsEmployeeController = asyncHandler(async (req, res) => {
+
+    const employee_id = req.employee._id;
+    const employee = await Employee.findById(employee_id).populate('projects');
+    const projects = employee.projects;
+
+    if (projects.length > 0)
+    {
+        res.status(200).json({
+            success: true,
+            projects
+        });
+    }
+
+    else
+    {
+        res.status(200).json({
+            success: true,
+            message: "No projects found!"
+        });
+    }
+});
+
+
+const getProjectsManagerController = asyncHandler(async (req, res) => {
+
+    const manager_id = req.manager._id;
+    const manager = await Manager.findById(manager_id).populate('projects');
+    const projects = manager.projects;
+
+    if (projects.length > 0)
+    {
+        res.status(200).json({
+            success: true,
+            projects
+        });
+    }
+
+    else
+    {
+        res.status(200).json({
+            success: true,
+            message: "No projects found!"
+        });
+    }
+
+});
+
+
 module.exports = {
     findEmployeesController, 
     createProjectController, 
     sendInviteController,
     getInvitesController,
-    acceptInviteController
+    acceptInviteController,
+    getProjectsEmployeeController,
+    getProjectsManagerController
 };
