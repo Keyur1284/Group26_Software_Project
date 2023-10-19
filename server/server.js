@@ -9,6 +9,7 @@ const employeeRoutes = require('./routes/employeeRoute');
 const managerRoutes = require('./routes/managerRoute');
 const projectRoutes = require('./routes/projectRoute');
 const expenseRoutes = require('./routes/expenseRoute');
+const inviteRoutes = require('./routes/inviteRoute');
 
 dotenv.config({path: 'config.env'});
 const app = express();
@@ -25,6 +26,7 @@ app.use('/api/employees', employeeRoutes);
 app.use('/api/managers', managerRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/expenses', expenseRoutes);
+app.use('/api/invites', inviteRoutes);
 
 app.use(notFound)
 app.use(errorHandler);
