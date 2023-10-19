@@ -79,6 +79,7 @@ const addExpenseController = asyncHandler(async (req, res) => {
 
 });
 
+
 const updateExpenseController = asyncHandler(async (req, res) => {
 
     const {name, date, category, amount, file} = req.body;
@@ -148,9 +149,57 @@ const updateExpenseController = asyncHandler(async (req, res) => {
 });
 
 
+const getExpenseEmployeeController = asyncHandler(async (req, res) => {
+
+    const employee_id = req.employee._id;
+    const project_id = req.params.project_id;
+    const expenses = await Expense.find({employee_id, project_id});
+
+    if(expenses.length > 0)
+    {
+        res.status(200).json({
+            success: true,
+            expenses
+        });
+    }
+
+    else
+    {
+        res.status(200).json({
+            success: true,
+            message: "No expenses found!"
+        });
+    }
+});
+
+
+const getExpenseManagerController = asyncHandler(async (req, res) => {
+
+    const project_id = req.params.project_id;
+    const expenses = await Expense.find({project_id});
+    
+    if (expenses.length > 0)
+    {
+        res.status(200).json({
+            success: true,
+            expenses
+        });
+    }
+
+    else
+    {
+        res.status(200).json({
+            success: true,
+            message: "No expenses found!"
+        });
+    }
+
+});
 
 
 module.exports = {
     addExpenseController,
-    updateExpenseController
+    updateExpenseController,
+    getExpenseEmployeeController,
+    getExpenseManagerController
 };
