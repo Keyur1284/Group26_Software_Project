@@ -4,20 +4,18 @@ const asyncHandler = require('express-async-handler');
 
 const addExpenseController = asyncHandler(async (req, res) => {
 
-    const {name, date, category, amount, description, file} = req.body;
+    const { name, date, category, amount, description, file } = req.body;
     const project_id = req.params.project_id;
     const employee_id = req.employee._id;
 
 
-    if(!name || !date || !category || !amount || !project_id || !file)
-    {
+    if (!name || !date || !category || !amount || !project_id || !file) {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
         throw new Error('Please fill all the fields');
     }
 
-    if (amount <= 0)
-    {
+    if (amount <= 0) {
         res.status(400)
         // res.json({success: false, message: 'Amount must be greater than 0'});
         throw new Error('Amount must be greater than 0');
@@ -29,26 +27,23 @@ const addExpenseController = asyncHandler(async (req, res) => {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1;
     const currentDay = currentDate.getDate();
-    
+
     const dateArray = date.split('-');
     const year = parseInt(dateArray[0]);
     const month = parseInt(dateArray[1]);
     const day = parseInt(dateArray[2]);
-    
-    if (year > currentYear)
-    {
+
+    if (year > currentYear) {
         res.status(400)
         throw new Error('Date must be less than or equal to current date');
     }
-    
-    if (year === currentYear && month > currentMonth)
-    {
+
+    if (year === currentYear && month > currentMonth) {
         res.status(400)
         throw new Error('Date must be less than or equal to current date');
     }
-    
-    if (year === currentYear && month === currentMonth && day > currentDay)
-    {
+
+    if (year === currentYear && month === currentMonth && day > currentDay) {
         res.status(400)
         throw new Error('Date must be less than or equal to current date');
     }
@@ -65,14 +60,14 @@ const addExpenseController = asyncHandler(async (req, res) => {
         status: 'Pending'
     });
 
-    if(expense){
+    if (expense) {
         res.status(200).json({
             success: true,
             expense
         });
     }
 
-    else{
+    else {
         res.status(400)
         // res.json({success: false, message: 'Invalid data'});
         throw new Error('Invalid data');
@@ -83,18 +78,16 @@ const addExpenseController = asyncHandler(async (req, res) => {
 
 const updateExpenseController = asyncHandler(async (req, res) => {
 
-    const {name, date, category, amount, file} = req.body;
+    const { name, date, category, amount, file } = req.body;
     const expense_id = req.params.expense_id;
 
-    if(!name || !date || !category || !amount || !file)
-    {
+    if (!name || !date || !category || !amount || !file) {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
         throw new Error('Please fill all the fields');
     }
 
-    if (amount <= 0)
-    {
+    if (amount <= 0) {
         res.status(400)
         // res.json({success: false, message: 'Amount must be greater than 0'});
         throw new Error('Amount must be greater than 0');
@@ -112,36 +105,31 @@ const updateExpenseController = asyncHandler(async (req, res) => {
     const month = parseInt(dateArray[1]);
     const day = parseInt(dateArray[2]);
 
-    if (year > currentYear)
-    {
+    if (year > currentYear) {
         res.status(400)
         throw new Error('Date must be less than or equal to current date');
     }
 
-    if (year === currentYear && month > currentMonth)
-    {
+    if (year === currentYear && month > currentMonth) {
         res.status(400)
         throw new Error('Date must be less than or equal to current date');
     }
 
-    if (year === currentYear && month === currentMonth && day > currentDay)
-    {
+    if (year === currentYear && month === currentMonth && day > currentDay) {
         res.status(400)
         throw new Error('Date must be less than or equal to current date');
     }
 
-    const updatedExpense = await Expense.findByIdAndUpdate(expense_id, req.body, {new: true});
+    const updatedExpense = await Expense.findByIdAndUpdate(expense_id, req.body, { new: true });
 
-    if (updatedExpense)
-    {
+    if (updatedExpense) {
         res.status(200).json({
             success: true,
             updatedExpense
         });
     }
 
-    else
-    {
+    else {
         res.status(400)
         // res.json({success: false, message: 'Invalid data'});
         throw new Error('Invalid data');
@@ -155,16 +143,14 @@ const deleteExpenseController = asyncHandler(async (req, res) => {
     const expense_id = req.params.expense_id;
     const deletedExpense = await Expense.findByIdAndDelete(expense_id);
 
-    if (deletedExpense)
-    {
+    if (deletedExpense) {
         res.status(200).json({
             success: true,
             deletedExpense
         });
     }
 
-    else
-    {
+    else {
         res.status(400)
         // res.json({success: false, message: 'Invalid data'});
         throw new Error('Invalid data');
@@ -177,18 +163,16 @@ const getExpenseEmployeeController = asyncHandler(async (req, res) => {
 
     const employee_id = req.employee._id;
     const project_id = req.params.project_id;
-    const expenses = await Expense.find({employee_id, project_id});
+    const expenses = await Expense.find({ employee_id, project_id });
 
-    if(expenses.length > 0)
-    {
+    if (expenses.length > 0) {
         res.status(200).json({
             success: true,
             expenses
         });
     }
 
-    else
-    {
+    else {
         res.status(200).json({
             success: true,
             message: "No expenses found!"
@@ -200,18 +184,16 @@ const getExpenseEmployeeController = asyncHandler(async (req, res) => {
 const getExpenseManagerController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const expenses = await Expense.find({project_id});
-    
-    if (expenses.length > 0)
-    {
+    const expenses = await Expense.find({ project_id });
+
+    if (expenses.length > 0) {
         res.status(200).json({
             success: true,
             expenses
         });
     }
 
-    else
-    {
+    else {
         res.status(200).json({
             success: true,
             message: "No expenses found!"
@@ -222,6 +204,46 @@ const getExpenseManagerController = asyncHandler(async (req, res) => {
 
 
 
+const acceptExpenseController = asyncHandler(async (req, res) => {
+
+    const expense_id = req.params.expense_id;
+    const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Approved' }, { new: true });
+
+    if (expense) {
+        res.status(200).json({
+            success: true,
+            expense
+        });
+    }
+
+    else {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
+    }
+
+});
+
+
+const rejectExpenseController = asyncHandler(async (req, res) => {
+
+    const expense_id = req.params.expense_id;
+    const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Rejected' }, { new: true });
+
+    if (expense) {
+        res.status(200).json({
+            success: true,
+            expense
+        });
+    }
+
+    else {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
+    }
+
+});
 
 
 module.exports = {
@@ -229,5 +251,7 @@ module.exports = {
     updateExpenseController,
     getExpenseEmployeeController,
     getExpenseManagerController,
-    deleteExpenseController
+    deleteExpenseController,
+    acceptExpenseController,
+    rejectExpenseController
 };
