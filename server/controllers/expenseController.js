@@ -1,4 +1,5 @@
 const Expense = require('../models/expenseModel');
+const employeeNotification = require('../models/employeeNotificationModel');
 const asyncHandler = require('express-async-handler');
 
 
@@ -210,10 +211,26 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
     const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Approved' }, { new: true });
 
     if (expense) {
-        res.status(200).json({
-            success: true,
-            expense
+
+        const notification = await employeeNotification.create({
+            employee_id: expense.employee_id,
+            expense_id: expense._id,
+            status: 'Approved',
+            message: 'Your expense request has been approved!'
         });
+
+        if (notification) {
+            res.status(200).json({
+                success: true,
+                expense
+            });
+        }
+
+        else {
+            res.status(400)
+            // res.json({success: false, message: 'Invalid data'});
+            throw new Error('Invalid data');
+        }
     }
 
     else {
@@ -231,11 +248,29 @@ const rejectExpenseController = asyncHandler(async (req, res) => {
     const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Rejected' }, { new: true });
 
     if (expense) {
-        res.status(200).json({
-            success: true,
-            expense
+
+        const notification = await employeeNotification.create({
+
+            employee_id: expense.employee_id,
+            expense_id: expense._id,
+            status: 'Rejected',
+            message: 'Your expense request has been rejected!'
         });
+
+        if (notification) {
+            res.status(200).json({
+                success: true,
+                expense
+            });
+        }
+
+        else {
+            res.status(400)
+            // res.json({success: false, message: 'Invalid data'});
+            throw new Error('Invalid data');
+        }
     }
+
 
     else {
         res.status(400)
