@@ -1,5 +1,7 @@
 const Expense = require('../models/expenseModel');
+const Project = require('../models/projectModel');
 const employeeNotification = require('../models/employeeNotificationModel');
+const managerNotification = require('../models/managerNotificationModel');
 const asyncHandler = require('express-async-handler');
 
 
@@ -8,7 +10,8 @@ const addExpenseController = asyncHandler(async (req, res) => {
     const { name, date, category, amount, description, file } = req.body;
     const project_id = req.params.project_id;
     const employee_id = req.employee._id;
-
+    const project = await Project.findById(project_id);
+    const manager_id = project.manager_id;
 
     if (!name || !date || !category || !amount || !project_id || !file) {
         res.status(400)
@@ -62,10 +65,26 @@ const addExpenseController = asyncHandler(async (req, res) => {
     });
 
     if (expense) {
-        res.status(200).json({
-            success: true,
-            expense
+
+        const notification = await managerNotification.create({
+            manager_id: manager_id,
+            expense_id: expense._id,
+            message: 'New expense request!'
         });
+
+        if (notification) {
+            res.status(200).json({
+                success: true,
+                expense,
+                notification
+            });
+        }
+        
+        else {
+            res.status(400)
+            // res.json({success: false, message: 'Invalid data'});
+            throw new Error('Invalid data');
+        }
     }
 
     else {
@@ -81,6 +100,10 @@ const updateExpenseController = asyncHandler(async (req, res) => {
 
     const { name, date, category, amount, file } = req.body;
     const expense_id = req.params.expense_id;
+    const expense = await Expense.findById(expense_id);
+    const project_id = expense.project_id;
+    const project = await Project.findById(project_id);
+    const manager_id = project.manager_id;
 
     if (!name || !date || !category || !amount || !file) {
         res.status(400)
@@ -124,10 +147,28 @@ const updateExpenseController = asyncHandler(async (req, res) => {
     const updatedExpense = await Expense.findByIdAndUpdate(expense_id, req.body, { new: true });
 
     if (updatedExpense) {
-        res.status(200).json({
-            success: true,
-            updatedExpense
+        
+        const notification = await managerNotification.findOneAndDelete({ expense_id });
+
+        const updatedNotification = await managerNotification.create({
+            manager_id,
+            expense_id: updatedExpense._id,
+            message: 'Expense request updated!'
         });
+
+        if (updatedNotification) {
+            res.status(200).json({
+                success: true,
+                updatedExpense,
+                updatedNotification
+            });
+        }
+
+        else {
+            res.status(400)
+            // res.json({success: false, message: 'Invalid data'});
+            throw new Error('Invalid data');
+        }
     }
 
     else {
@@ -215,14 +256,14 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
         const notification = await employeeNotification.create({
             employee_id: expense.employee_id,
             expense_id: expense._id,
-            status: 'Approved',
             message: 'Your expense request has been approved!'
         });
 
         if (notification) {
             res.status(200).json({
                 success: true,
-                expense
+                expense,
+                notification
             });
         }
 
@@ -253,14 +294,14 @@ const rejectExpenseController = asyncHandler(async (req, res) => {
 
             employee_id: expense.employee_id,
             expense_id: expense._id,
-            status: 'Rejected',
             message: 'Your expense request has been rejected!'
         });
 
         if (notification) {
             res.status(200).json({
                 success: true,
-                expense
+                expense,
+                notification
             });
         }
 
