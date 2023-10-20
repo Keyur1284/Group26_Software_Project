@@ -61,7 +61,8 @@ const addExpenseController = asyncHandler(async (req, res) => {
         amount,
         project_id,
         employee_id,
-        file
+        file,
+        status: 'Pending'
     });
 
     if(expense){
@@ -218,6 +219,9 @@ const getExpenseManagerController = asyncHandler(async (req, res) => {
     }
 
 });
+
+
+
 
 
 module.exports = {
