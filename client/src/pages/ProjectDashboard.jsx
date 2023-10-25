@@ -27,7 +27,7 @@ export const ProjectDashboard = () => {
                         <div className="row gap-4">
                             <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg1})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white'>Total Budget</h3>
-                                <h6 className='mx-3 fw-semibold h2 text-light'>1000000</h6>
+                                <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; 1000000</h6>
                                 <div className="pie">
                                     <TotalExpPie />
                                 </div>
@@ -59,7 +59,7 @@ export const ProjectDashboard = () => {
                         <div className="row my-4 gap-4">
                             <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white' >My Expense</h3>
-                                <h6 className='mx-3 fw-semibold h2 text-light'>200</h6>
+                                <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; 200</h6>
                                 <div className="pie">
                                     <MyExpPie />
                                 </div>

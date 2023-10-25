@@ -1,37 +1,87 @@
-import { ResponsiveContainer, Cell, PieChart, PolarAngleAxis, PolarRadiusAxis, PolarGrid, Pie, Legend, Tooltip } from 'recharts'
-
-const data01 = [
-    {
-        "name": "My Expense",
-        "value": 200,
-        fill: "#00A8E8"
-    },
-    {
-        "name": "Team Expense",
-        "value": 2340,
-        fill: "#0000"
-    }
-];  
+import Chart from "react-apexcharts";
 
 export const MyExpPie = () => {
-
-    return (
-        <>
-      <ResponsiveContainer height={200} aspect={2}>
-        <PieChart width={80} height={100}>
-          <PolarAngleAxis />
-          <PolarRadiusAxis />
-          <PolarGrid />
-          <Legend align="left" verticalAlign="middle" layout="vertical" wrapperStyle={{ fontWeight: 'bold', fontSize: '1.2rem' }} />
-          <Tooltip position={'average'}  />
-          <Pie data={data01} dataKey="value" nameKey="name" cx="65%" cy="55%" startAngle={90} endAngle={-270} innerRadius={40} outerRadius={80} fill="#8884d8" stroke="#fff" strokeWidth={0.5} label />
-          {
-            data01.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.fill} />
-            ))
+  const optionsRadial = {
+    plotOptions: {
+      radialBar: {
+        startAngle: 0,
+        endAngle: 360,
+        hollow: {
+          margin: 0,
+          size: "70%",
+          background: "#fff",
+          position: "front",
+          dropShadow: {
+            enabled: true,
+            top: 3,
+            left: 0,
+            blur: 4,
+            opacity: 0.25
           }
-        </PieChart>
-      </ResponsiveContainer>
-    </>
-    )
-}
+        },
+        track: {
+          background: "#fff",
+          strokeWidth: "67%",
+          margin: 0,
+          dropShadow: {
+            enabled: true,
+            top: -3,
+            left: 5,
+            blur: 4,
+            opacity: 0.25
+          }
+        },
+        dataLabels: {
+          showOn: "always",
+          name: {
+            offsetY: -20,
+            show: true,
+            color: "#888",
+            fontSize: "13px"
+          },
+          value: {
+            formatter: function (val) {
+              return val;
+            },
+            color: "#111",
+            fontSize: "30px",
+            show: true
+          }
+        }
+      }
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shade: "dark",
+        type: "horizontal",
+        shadeIntensity: 0.5,
+        gradientToColors: ["#ABE5A1"],
+        inverseColors: true,
+        stops: [0, 100]
+      }
+    },
+    stroke: {
+      lineCap: "round"
+    },
+    labels: ["Percent"]
+  };
+
+  const seriesRadial = [90];
+
+  return (
+    <div className="d-flex flew-row justify-content-end">
+          <Chart
+            options={optionsRadial}
+            series={seriesRadial}
+            type="radialBar"
+            width="350"
+          />
+    </div>
+  );
+};
+
+
+
+
+

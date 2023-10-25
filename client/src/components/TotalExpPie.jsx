@@ -1,38 +1,37 @@
-import { ResponsiveContainer, Cell, PieChart, PolarAngleAxis, PolarRadiusAxis, PolarGrid, Pie, Legend, Tooltip } from 'recharts'
-
-
-const data01 = [
-  {
-    "name": "Used",
-    "value": 29582,
-    fill: "#184FA3"
-  },
-  {
-    "name": "Unused",
-    "value": 2340,
-    fill: "#E7ECEF"
-  }
-];
+import Chart from "react-apexcharts";
 
 export const TotalExpPie = () => {
+  const optionsDoughnut = {
+    labels: ["Used", "Unused"],
+    responsive: [{
+      options: {
+        chart: {
+          width: 200
+        }
+      }
+    }],
+    colors: ["#41BBD9", "#0353A4"],
+    legend: {
+      position: 'left',
+      labels: {
+        colors: "#fff"
+      }
+    },
+    stroke: {
+      width:1
+    }
+  };
+
+  const seriesDoughnut = [100, 500];
 
   return (
-    <>
-      <ResponsiveContainer height={200} aspect={2}>
-        <PieChart width={80} height={100}>
-          <PolarAngleAxis />
-          <PolarRadiusAxis />
-          <PolarGrid />
-          <Legend align="left" verticalAlign="middle" layout="vertical" wrapperStyle={{ fontWeight: 'bold', fontSize: '1.2rem' }} />
-          <Tooltip />
-          <Pie data={data01} dataKey="value" nameKey="name" cx="65%" cy="55%" startAngle={90} endAngle={-270} innerRadius={40} outerRadius={80} fill="#8884d8" stroke="#fff" strokeWidth={0} label />
-          {
-            data01.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.fill} />
-            ))
-          }
-        </PieChart>
-      </ResponsiveContainer>
-    </>
-  )
-}
+    <div className="mt-5 d-flex flex-row justify-content-end me-5">
+      <Chart
+        options={optionsDoughnut}
+        series={seriesDoughnut}
+        type="donut"
+        width="350"
+      />
+    </div>
+  );
+};
