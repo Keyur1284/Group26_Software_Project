@@ -9,16 +9,18 @@ const details = [
     status: "Pending",
     category: "Travel",
     date: "21-9-23",
+    addedBy: "User1"
   },
-  // {
-  //   id: 1,
-  //   ind: 1,
-  //   description: "Trip to Mumbai",
-  //   amount: 41000,
-  //   status: "Approved",
-  //   category: "Travel",
-  //   date: "21-9-23"
-  // },
+  {
+    id: 1,
+    ind: 1,
+    description: "Trip to Mumbai",
+    amount: 41000,
+    status: "Approved",
+    category: "Travel",
+    date: "21-9-23",
+    addedBy: "User2"
+  },
   {
     id: 2,
     ind: 2,
@@ -27,6 +29,7 @@ const details = [
     status: "Approved",
     category: "Food",
     date: "21-9-23",
+    addedBy: "User3"
   },
   {
     id: 3,
@@ -36,6 +39,7 @@ const details = [
     status: "Pending",
     category: "Accommodation",
     date: "21-9-23",
+    addedBy: "User4"
   },
   {
     id: 4,
@@ -45,10 +49,11 @@ const details = [
     status: "Pending",
     category: "Other",
     date: "21-9-23",
+    addedBy: "User5"
   },
 ];
 
-export const DisplayExpense = () => {
+export const DisplayExpense = (props) => {
   return details.map((detail) => (
     <ExpenseCard
       key={detail.id}
@@ -58,6 +63,8 @@ export const DisplayExpense = () => {
       status={detail.status}
       category={detail.category}
       date={detail.date}
+      userType={props.userType}
+      addedBy={detail.addedBy}
     />
   ));
 };
