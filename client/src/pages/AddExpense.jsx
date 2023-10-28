@@ -39,11 +39,11 @@ export const AddExpense = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-3" style={{ backgroundImage: `url(${mainbg})` }}>
+      <div className="row" style={{ backgroundImage: `url(${mainbg})` }}>
+        <div className="col-md-3">
 
         </div>
-        <div className="col-md-6 d-flex flex-column align-items-center justify-content-center" style={{
+        <div className="col-md-6 m-5 rounded rounded-4 d-flex flex-column align-items-center justify-content-center" style={{
           backgroundColor: "rgb(93, 150, 245)",
           minHeight: "100vh",
         }}>
@@ -207,7 +207,7 @@ export const AddExpense = () => {
             </form>
           </div>
         </div>
-        <div className="col-md-3" style={{ backgroundImage: `url(${mainbg})` }}>
+        <div className="col-md-3">
 
         </div>
       </div>
