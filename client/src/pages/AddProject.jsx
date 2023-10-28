@@ -32,9 +32,9 @@ export const AddProject = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
+      <div className="row" style={{minHeight: "92vh"}}>
         <div
-          className="col-md-7 p-0"
+          className="col-md-6 p-0"
           style={{ backgroundImage: `url(${mainbg})`, backgroundSize: "cover", backgroundRepeat: "no-repeat"}}>
           <div className="d-flex flex-column align-items-center justify-content-center"
             style={{ display: "flex", alignItems: "center", height: "100%"}}>
@@ -46,11 +46,11 @@ export const AddProject = () => {
           </div>
         </div>
 
-        <div className="col-md-5 d-flex align-items-center" style={{ backgroundColor: "rgb(93, 150, 245)" }}>
+        <div className="col-md-6 d-flex align-items-center" style={{ backgroundColor: "rgb(93, 150, 245)" }}>
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-md-10 mt-5 mb-5">
-                <p className="text-center text-white display-6" style={{ fontWeight: "600" }}>
+                <p className="text-center text-white display-6" style={{ fontWeight: "400" }}>
                   Create New Project
                 </p>
                 <form onSubmit={formik.handleSubmit}>
