@@ -34,7 +34,7 @@ const createProjectController = asyncHandler(async (req, res) => {
 
     const project = await Project.create({
         name,
-        description,
+        description: description || "No description provided.",
         budget,
         manager_id
     });
