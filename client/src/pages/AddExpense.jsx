@@ -1,13 +1,17 @@
 import { useFormik } from "formik";
 import { useRef } from "react";
 import * as Yup from "yup";
+import mainbg from "../assets/project-dashboard/main-bg.jpg";
 
 export const AddExpense = () => {
   const formSchema = Yup.object({
     name: Yup.string().required("Name is required"),
-    category: Yup.string().required("Category is required"),
+    category: Yup.string(
+      
+    ).required("Category is required"),
     amount: Yup.number().required("Amount is required"),
     Date: Yup.date().required("Date is required"),
+    driveLink: Yup.string().required("Drive-Link is required"),
   });
 
   const ref = useRef();
@@ -23,6 +27,7 @@ export const AddExpense = () => {
       description: "",
       amount: "",
       Date: "",
+      driveLink: "",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -35,69 +40,20 @@ export const AddExpense = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div
-          className="col-md-6 p-0 img-fluid"
-          style={{
-            backgroundColor: "black",
-            height: "auto",
-            minHeight: "100vh",
-          }}
-        >
-          <div className="h-100 d-flex flex-column align-items-center justify-content-center">
-            <form onSubmit={formik.handleSubmit}>
-              <div>
-                <label
-                  className="form-label"
-                  htmlFor="customFile"
-                  style={{ color: "white", fontSize: "22px" }}
-                >
-                  Attach your file here
-                </label>
-                <div className="input-group">
-                  <input
-                    type="file"
-                    name="file"
-                    ref={ref}
-                    placeholder="No file chosen"
-                    className="form-control"
-                    value={formik.values.file}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                </div>
-              </div>
+        <div className="col-md-3" style={{ backgroundImage: `url(${mainbg})` }}>
 
-              <div className="mt-4">
-                <button
-                  type="submit"
-                  className="btn btn-light"
-                  onClick={reset}
-                  style={{ fontSize: "22px" }}
-                >
-                  Clear Attachment
-                </button>
-              </div>
-            </form>
-          </div>
         </div>
-
-        <div
-          className="col-md-6 d-flex flex-column align-items-center justify-content-center"
-          style={{
-            backgroundColor: "rgb(93, 150, 245)",
-            minHeight: "92vh",
-          }}
-        >
+        <div className="col-md-6 d-flex flex-column align-items-center justify-content-center" style={{
+          backgroundColor: "rgb(93, 150, 245)",
+          minHeight: "100vh",
+        }}>
           <div className="col-md-10 mt-5 mb-5">
             <p className="text-center text-white display-6" style={{ fontWeight: "400" }}>
               Add your Expense
             </p>
             <form onSubmit={formik.handleSubmit}>
-              <div className="mb-3 mt-5">
-                <label
-                  className="form-label text-dark"
-                  style={{ fontSize: "22px" }}
-                >
+              <div className="mb-3 mt-4">
+                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
                   Name
                 </label>
                 <div className="input-group">
@@ -118,12 +74,8 @@ export const AddExpense = () => {
                 )}
               </div>
 
-              <div className="mb-3 mt-5">
-                <label
-                  htmlFor="date"
-                  className="form-label text-dark"
-                  style={{ fontSize: "22px" }}
-                >
+              <div className="mb-3 mt-4">
+                <label htmlFor="date" className="form-label text-dark" style={{ fontSize: "22px" }}>
                   Date
                 </label>
                 <div className="input-group">
@@ -143,11 +95,8 @@ export const AddExpense = () => {
                 )}
               </div>
 
-              <div className="mb-3 mt-5">
-                <label
-                  className="form-label text-dark"
-                  style={{ fontSize: "22px" }}
-                >
+              <div className="mb-3 mt-4">
+                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
                   Category
                 </label>
                 <div className="input-group">
@@ -175,11 +124,8 @@ export const AddExpense = () => {
                 )}
               </div>
 
-              <div className="mb-3 mt-5">
-                <label
-                  className="form-label text-dark"
-                  style={{ fontSize: "22px" }}
-                >
+              <div className="mb-3 mt-4">
+                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
                   Amount
                 </label>
                 <div className="input-group">
@@ -200,11 +146,30 @@ export const AddExpense = () => {
                 )}
               </div>
 
-              <div className="mb-3 mt-5">
-                <label
-                  className="form-label text-dark"
-                  style={{ fontSize: "22px" }}
-                >
+              <div className="mb-3 mt-4">
+                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
+                  Drive-Link
+                </label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    name="driveLink"
+                    placeholder="Drive Link"
+                    className="form-control"
+                    value={formik.values.driveLink}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </div>
+                {formik.touched.driveLink && formik.errors.driveLink && (
+                  <div className="alert alert-danger text-center mt-2">
+                    {formik.touched.driveLink && formik.errors.driveLink}
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-3 mt-4">
+                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
                   Description
                 </label>
                 <div className="input-group">
@@ -220,7 +185,7 @@ export const AddExpense = () => {
                 </div>
               </div>
 
-              <div className="d-flex gap-5 mt-5">
+              <div className="d-flex gap-5 mt-4">
                 <button
                   type="submit"
                   className="btn btn-dark"
@@ -241,6 +206,9 @@ export const AddExpense = () => {
               </div>
             </form>
           </div>
+        </div>
+        <div className="col-md-3" style={{ backgroundImage: `url(${mainbg})` }}>
+
         </div>
       </div>
     </div>
