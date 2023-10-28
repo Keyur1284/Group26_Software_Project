@@ -1,34 +1,56 @@
+import { useEffect } from "react";
 import { useFormik } from "formik";
-import { useRef } from "react";
 import * as Yup from "yup";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
-import projectImage from "../assets/addProject-images/AddProject-pic.png"; // Import the local image
+import projectImage from "../assets/addProject-images/AddProject-pic.png"; 
+import { message } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { createProject, reset } from "../features/project/projectSlice";
 
 export const AddProject = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const formSchema = Yup.object({
-    projectName: Yup.string().required("Project Name is required"),
-    projectAmount: Yup.number().required("Project Amount is required"),
-    areaLimit: Yup.string().required("Area Limit is required"),
+    name: Yup.string().required("Project Name is required"),
+    budget: Yup.number().required("Project Amount is required"),
+    // areaLimit: Yup.string().required("Area Limit is required"),
+    description: Yup.string()
   });
-
-  const ref = useRef();
-
-  const reset = () => {
-    ref.current.value = "";
-  };
 
   const formik = useFormik({
     initialValues: {
-      projectName: "",
-      projectAmount: "",
-      areaLimit: "",
+      name: "",
+      budget: "",
+      // areaLimit: "",
       description: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(createProject(values));
     },
     validationSchema: formSchema,
   });
+
+  const {isSuccess, isError, isLoading, appErr, serverErr} = useSelector(state => state.project);
+
+  useEffect(() => {
+
+    if (isSuccess)
+    {
+      message.success("Project Created Successfully!");
+      dispatch(reset());
+      navigate('/project')
+    }
+
+    if (isError)
+    {
+      message.error(appErr||serverErr);
+      dispatch(reset())
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   return (
     <div className="container-fluid">
@@ -60,16 +82,16 @@ export const AddProject = () => {
                     </label>
                     <input
                       type="text"
-                      name="projectName"
+                      name="name"
                       placeholder="Project Name"
                       className="form-control"
-                      value={formik.values.projectName}
+                      value={formik.values.name}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.projectName && formik.errors.projectName && (
+                    {formik.touched.name && formik.errors.name && (
                       <div className="alert alert-danger text-center mt-2">
-                        {formik.touched.projectName && formik.errors.projectName}
+                        {formik.touched.name && formik.errors.name}
                       </div>
                     )}
                   </div>
@@ -80,21 +102,21 @@ export const AddProject = () => {
                     </label>
                     <input
                       type="number"
-                      name="projectAmount"
+                      name="budget"
                       placeholder="Budget Amount"
                       className="form-control"
-                      value={formik.values.projectAmount}
+                      value={formik.values.budget}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.projectAmount && formik.errors.projectAmount && (
+                    {formik.touched.budget && formik.errors.budget && (
                       <div className="alert alert-danger text-center mt-2">
-                        {formik.touched.projectAmount && formik.errors.projectAmount}
+                        {formik.touched.budget && formik.errors.budget}
                       </div>
                     )}
                   </div>
 
-                  <div className="mb-3 mt-4">
+                  {/* <div className="mb-3 mt-4">
                     <label className="form-label text-dark" style={{ fontSize: "20px" }}>
                       Area Limit
                     </label>
@@ -112,7 +134,7 @@ export const AddProject = () => {
                         {formik.touched.areaLimit && formik.errors.areaLimit}
                       </div>
                     )}
-                  </div>
+                  </div> */}
 
                   <div className="mb-3 mt-4">
                     <label className="form-label text-dark" style={{ fontSize: "20px" }}>
