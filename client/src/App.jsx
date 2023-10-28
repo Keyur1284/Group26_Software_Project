@@ -9,7 +9,7 @@ import { ProjectDashboard } from './pages/ProjectDashboard'
 import { Expense } from './pages/Expense'
 import { AddExpense } from './pages/AddExpense'
 import { Project } from './pages/Project'
-
+import { AddProject } from './pages/AddProject'
 
 function App() {
   
@@ -28,6 +28,7 @@ function App() {
           <Route path='/expense' element={<Expense />} />
           <Route path='/add-expense' element={<AddExpense />} />
           <Route path='/project' element={<Project />} />
+          <Route path='/add-project' element={<AddProject />} />
         </Routes>
         
         <Footer />
