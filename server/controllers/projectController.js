@@ -23,7 +23,7 @@ const createProjectController = asyncHandler(async (req, res) => {
         throw new Error('Budget must be greater than 0');
     }
 
-    const projectNameExist = Project.findOne({name}); 
+    const projectNameExist = await Project.findOne({name}); 
 
     if (projectNameExist)
     {
