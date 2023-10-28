@@ -4,6 +4,7 @@ import { DisplayExpense } from "../components/DisplayExpense";
 import { Hamburger } from "../components/Hamburger";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Expense = () => {
   const [selectedFilter, setSelectedFilter] = useState("all");
@@ -38,15 +39,11 @@ export const Expense = () => {
                 </div>
               </div>
               <div className="col-md-3 d-flex align-items-center justify-content-end">
-                <div className="mr-3">
-                  <button
-                    type="button"
-                    className="btn btn-dark btn-rounded"
-                    style={{ fontSize: "20px" }}
-                  >
-                    <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
-                  </button>
-                </div>
+              <div className="mr-3">
+                <Link to="/add-expense" className="btn btn-dark btn-rounded" style={{ fontSize: "20px" }}>
+                  <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
+                </Link>
+              </div>
               </div>
             </div>
             <div className="row d-flex align-items-center mb-3">
@@ -113,17 +110,7 @@ export const Expense = () => {
                   <FontAwesomeIcon icon={faHistory} style={{ marginRight: "10px" }} /> Expense History
                 </div>
               </div>
-              <div className="col-md-3 d-flex align-items-center justify-content-end">
-                <div className="mr-3">
-                  <button
-                    type="button"
-                    className="btn btn-dark btn-rounded"
-                    style={{ fontSize: "20px" }}
-                  >
-                    <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
-                  </button>
-                </div>
-              </div>
+              
             </div>
             <div className="row d-flex align-items-center mb-3">
               <div className="col-md-3"></div>
