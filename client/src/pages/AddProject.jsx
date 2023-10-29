@@ -16,7 +16,7 @@ export const AddProject = () => {
   const formSchema = Yup.object({
     name: Yup.string().required("Project Name is required"),
     budget: Yup.number().required("Project Amount is required"),
-    // areaLimit: Yup.string().required("Area Limit is required"),
+    alertLimit: Yup.number().required("Alert Limit is required"),
     description: Yup.string()
   });
 
@@ -24,7 +24,7 @@ export const AddProject = () => {
     initialValues: {
       name: "",
       budget: "",
-      // areaLimit: "",
+      alertLimit: "",
       description: "",
     },
     onSubmit: (values) => {
@@ -116,25 +116,25 @@ export const AddProject = () => {
                     )}
                   </div>
 
-                  {/* <div className="mb-3 mt-4">
+                  <div className="mb-3 mt-4">
                     <label className="form-label text-dark" style={{ fontSize: "20px" }}>
-                      Area Limit
+                      Alert Limit
                     </label>
                     <input
-                      type="text"
-                      name="areaLimit"
-                      placeholder="Area Limit"
+                      type="number"
+                      name="alertLimit"
+                      placeholder="Alert Limit"
                       className="form-control"
-                      value={formik.values.areaLimit}
+                      value={formik.values.alertLimit}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.areaLimit && formik.errors.areaLimit && (
+                    {formik.touched.alertLimit && formik.errors.alertLimit && (
                       <div className="alert alert-danger text-center mt-2">
-                        {formik.touched.areaLimit && formik.errors.areaLimit}
+                        {formik.touched.alertLimit && formik.errors.alertLimit}
                       </div>
                     )}
-                  </div> */}
+                  </div>
 
                   <div className="mb-3 mt-4">
                     <label className="form-label text-dark" style={{ fontSize: "20px" }}>
