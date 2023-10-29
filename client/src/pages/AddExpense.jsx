@@ -1,24 +1,15 @@
 import { useFormik } from "formik";
-import { useRef } from "react";
 import * as Yup from "yup";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 
 export const AddExpense = () => {
   const formSchema = Yup.object({
     name: Yup.string().required("Name is required"),
-    category: Yup.string(
-      
-    ).required("Category is required"),
+    category: Yup.string().required("Category is required"),
     amount: Yup.number().required("Amount is required"),
-    Date: Yup.date().required("Date is required"),
+    date: Yup.date().required("Date is required"),
     driveLink: Yup.string().required("Drive-Link is required"),
   });
-
-  const ref = useRef();
-
-  const reset = () => {
-    ref.current.value = "";
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -26,7 +17,7 @@ export const AddExpense = () => {
       category: "",
       description: "",
       amount: "",
-      Date: "",
+      date: "",
       driveLink: "",
     },
     onSubmit: (values) => {
@@ -43,7 +34,7 @@ export const AddExpense = () => {
         <div className="col-md-3">
 
         </div>
-        <div className="col-md-6 m-5 rounded rounded-4 d-flex flex-column align-items-center justify-content-center" style={{
+        <div className="col-md-6 my-5 rounded rounded-4 d-flex flex-column align-items-center justify-content-center" style={{
           backgroundColor: "rgb(93, 150, 245)",
           minHeight: "100vh",
         }}>
@@ -81,16 +72,16 @@ export const AddExpense = () => {
                 <div className="input-group">
                   <input
                     type="date"
-                    name="Date"
+                    name="date"
                     className="form-control"
-                    value={formik.values.Date}
+                    value={formik.values.date}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                 </div>
-                {formik.touched.Date && formik.errors.Date && (
+                {formik.touched.date && formik.errors.date && (
                   <div className="alert alert-danger text-center mt-2">
-                    {formik.touched.Date && formik.errors.Date}
+                    {formik.touched.date && formik.errors.date}
                   </div>
                 )}
               </div>
