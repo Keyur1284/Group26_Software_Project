@@ -40,7 +40,7 @@ export const Expense = () => {
               </div>
               <div className="col-md-3 d-flex align-items-center justify-content-end">
               <div className="mr-3">
-                <Link to="/add-expense" className="btn btn-dark btn-rounded" style={{ fontSize: "20px" }}>
+                <Link to="/add-expense" className="btn btn-dark btn-rounded rounded-pill shadow" style={{ fontSize: "25px" }}>
                   <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
                 </Link>
               </div>
