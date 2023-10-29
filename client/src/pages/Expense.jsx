@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faPlus, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { DisplayExpense } from "../components/DisplayExpense";
-import { Hamburger } from "../components/Hamburger";
+import { Hamburger4 } from "../components/Hamburger_4";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Link } from "react-router-dom";
 
@@ -40,7 +40,7 @@ export const Expense = () => {
       <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>
         <div className="row">
           <div className="col-md-3">
-            <Hamburger />
+            <Hamburger4 />
           </div>
           <div className="col-md-9">
             <div className="row d-flex align-items-center mb-3" style={{ marginTop: "-2.5vh" }}>

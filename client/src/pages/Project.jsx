@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
-import { Hamburger } from "../components/Hamburger";
+import { Hamburger2 } from "../components/Hamburger_2";
 
 export const Project = () => {
   const colors = ["#163763", "#3452B9", "#005483", "#8E8E8E", "#3C3C3C"];
@@ -36,7 +36,7 @@ export const Project = () => {
     >
       <div className="row">
         <div className="col-3">
-          <Hamburger />
+          <Hamburger2 />
         </div>
         <div className="col-9 px-4" style={{marginTop: "-1vh"}}>
           <div style={{ minHeight: "85vh" }}>
