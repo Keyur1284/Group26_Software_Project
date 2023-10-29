@@ -2,6 +2,7 @@ import v1 from '../assets/error-images/Vector1.svg';
 import v2 from '../assets/error-images/Vector2.svg';
 import man from '../assets/error-images/myAvatar.svg';
 import HomeIcon from '@mui/icons-material/Home';
+import LoginIcon from '@mui/icons-material/Login';
 import { Link } from 'react-router-dom';
 
 export const Er401 = () => {
@@ -26,10 +27,10 @@ export const Er401 = () => {
                 }
               }>
                    <div className="d-flex col-6 p-5 flex-column text-center" style={{marginTop: "-5vh"}}>     
-                       <div style={
+                       <div className='display-1' style={
                         {
                           color: "white",
-                          fontSize: "300px",
+                          fontSize: "250px",
                           fontWeight: "400",
                           wordWrap: "break-word",
                           marginBottom: "10px" 
@@ -39,7 +40,7 @@ export const Er401 = () => {
                         {
                           marginTop: "0px",
                           color: "white",
-                          fontSize: "60px",
+                          fontSize: "50px",
                           fontWeight: "400",
                           wordWrap: "break-word",
                         }
@@ -107,12 +108,12 @@ export const Er401 = () => {
 
                 <div className='gray' style={
                   {
-                    width: "1300px",
+                    width: "100%",
                     backgroundColor: "#EEF8FF",
-                    height: "40%"
+                    height: "70%"
                   }
                 }>
-                    <div className='text-center d-flex justify-content-evenly align-items-center' style={
+                    <div className='text-center d-flex flex-column align-items-center' style={
                       {
                         marginTop: "25px",
                         color: "#0085FF",
@@ -124,10 +125,18 @@ export const Er401 = () => {
                         <div>
                       ACCESS IS ALLOWED ONLY FOR REGISTERED USERS
                       </div>
-                      <div> 
-                      <Link to='/' style={{textDecoration: "none"}}> GO BACK TO {"  "}
-                    <HomeIcon sx={{ fontSize: 40, marginBottom: "1vh" }} /> </Link>
-                    </div>  
+                      <div className='d-flex w-75 mt-2 justify-content-evenly'>
+                        <div> 
+                          <Link to='/' style={{textDecoration: "none"}}> GO BACK TO {"  "}
+                          <HomeIcon sx={{ fontSize: 40, marginBottom: "1vh" }} /> </Link>
+                        </div> 
+                        <div> 
+                          <Link to='/login' style={{textDecoration: "none"}}> LOGIN {"  "}
+                          <LoginIcon sx={{ fontSize: 40, marginBottom: "1vh" }} />
+                           </Link>
+                        </div>
+                      </div>
+                       
                     </div>
                 </div>
             </div>
