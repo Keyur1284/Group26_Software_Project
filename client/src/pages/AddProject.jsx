@@ -72,7 +72,7 @@ export const AddProject = () => {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-md-10 mt-5 mb-5">
-                <p className="text-center text-white display-6" style={{ fontWeight: "400" }}>
+                <p className="text-center text-white display-6" style={{ fontWeight: "400", textShadow: "2px 2px 4px rgba(0,0,0,0.6)" }}>
                   Create New Project
                 </p>
                 <form onSubmit={formik.handleSubmit}>
@@ -154,7 +154,7 @@ export const AddProject = () => {
                   <div className="d-flex gap-5 mt-4">
                     <button
                       type="submit"
-                      className="btn btn-dark"
+                      className="btn btn-dark rounded-pill shadow-lg"
                       style={{ fontSize: "22px" }}
                       disabled={!formik.isValid}
                     >
@@ -163,7 +163,7 @@ export const AddProject = () => {
 
                     <button
                       type="button"
-                      className="btn btn-dark"
+                      className="btn btn-dark rounded-pill shadow-lg"
                       onClick={() => formik.resetForm()}
                       style={{ fontSize: "22px" }}
                     >
