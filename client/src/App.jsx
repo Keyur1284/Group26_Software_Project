@@ -10,6 +10,7 @@ import { Expense } from './pages/Expense'
 import { AddExpense } from './pages/AddExpense'
 import { Project } from './pages/Project'
 import { AddProject } from './pages/AddProject'
+import { MyProfile} from './pages/MyProfile'
 
 function App() {
   
@@ -29,6 +30,7 @@ function App() {
           <Route path='/add-expense' element={<AddExpense />} />
           <Route path='/project' element={<Project />} />
           <Route path='/add-project' element={<AddProject />} />
+          <Route path='/MyProfile' element={<MyProfile />} />
         </Routes>
         
         <Footer />
