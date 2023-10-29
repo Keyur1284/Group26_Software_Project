@@ -1,21 +1,30 @@
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faPlus, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { DisplayExpense } from "../components/DisplayExpense";
 import { Hamburger } from "../components/Hamburger";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const Expense = () => {
-  const [selectedFilter, setSelectedFilter] = useState("all");
 
-  // const filterExpenses = (filterOption) => {
-  // };
+  const [selectedDateOption, setSelectedDateOption] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const handleFilterChange = (event) => {
-    const newFilter = event.target.value;
-    setSelectedFilter(newFilter);
-    // filterExpenses(newFilter);
+  const handleDateChangeOption = (event) => {
+    const newDate = event.target.value;
+    setSelectedDateOption(newDate);
+  };
+
+  const handleDateChange = (event) => {
+    const newDate = event.target.value;
+    setSelectedDate(newDate);
+  };
+
+  const handleCategoryChange = (event) => {
+    const newCategory = event.target.value;
+    setSelectedCategory(newCategory);
   };
 
   const user = "employee";
@@ -39,21 +48,21 @@ export const Expense = () => {
                 </div>
               </div>
               <div className="col-md-3 d-flex align-items-center justify-content-end">
-              <div className="mr-3">
-                <Link to="/add-expense" className="btn btn-dark btn-rounded" style={{ fontSize: "20px" }}>
-                  <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
-                </Link>
-              </div>
+                <div className="mr-3">
+                  <Link to="/add-expense" className="btn btn-dark btn-rounded rounded-pill shadow-lg" style={{ fontSize: "25px" }}>
+                    <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px"}}/> Add Expense
+                  </Link>
+                </div>
               </div>
             </div>
             <div className="row d-flex align-items-center mb-3">
               <div className="col-md-3"></div>
               <div className="col-md-9 d-flex align-items-center justify-content-end">
                 <div className="d-flex align-items-center">
-                  <FontAwesomeIcon icon={faFilter} size="2xl" />
+                  <FontAwesomeIcon icon={faFilter} size="2xl" style={{ marginRight: "10px" }} /> 
                   <select
-                    value={selectedFilter}
-                    onChange={handleFilterChange}
+                    value={selectedDateOption}
+                    onChange={handleDateChangeOption}
                     className="form-select form-select-lg rounded-pill"
                     style={{
                       backgroundColor: "white", 
@@ -61,11 +70,59 @@ export const Expense = () => {
                       cursor: "pointer",
                     }}
                   > 
-                    <option>None</option>
-                    <option>Date</option>
-                    <option>Category</option>
+                    <option value="">None</option>
+                    <option value="date">Date</option>
                   </select>
                 </div>
+                {selectedDateOption === "date" && (
+                  <div className="d-flex align-items-center" style={{ marginLeft: "8px"}}>
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      className="form-control rounded-pill"
+                      style={{
+                        backgroundColor: "white", 
+                        color: "#000000", 
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}> 
+                  <select
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white", 
+                      color: "#000000", 
+                      cursor: "pointer",
+                    }}
+                  > 
+                    <option value="">None</option>
+                    <option value="travel">Travel</option>
+                    <option value="food">Food</option>
+                    <option value="accommodation">Accommodation</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                {selectedCategory === "category" && (
+                  <div className="d-flex align-items-center">
+                    <input
+                      type="text"
+                      value={selectedCategory}
+                      onChange={handleCategoryChange}
+                      className="form-control rounded-pill"
+                      placeholder="Category"
+                      style={{
+                        backgroundColor: "white", 
+                        color: "#000000", 
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
@@ -85,8 +142,7 @@ export const Expense = () => {
                 Delete
               </div>
             </div>
-            <DisplayExpense
-              userType={user} />
+            <DisplayExpense userType={user} />
           </div>
         </div>
       </div>
@@ -110,16 +166,15 @@ export const Expense = () => {
                   <FontAwesomeIcon icon={faHistory} style={{ marginRight: "10px" }} /> Expense History
                 </div>
               </div>
-              
             </div>
             <div className="row d-flex align-items-center mb-3">
               <div className="col-md-3"></div>
               <div className="col-md-9 d-flex align-items-center justify-content-end">
                 <div className="d-flex align-items-center">
-                  <FontAwesomeIcon icon={faFilter} size="2xl" />
+                  <FontAwesomeIcon icon={faFilter} size="2xl" style={{ marginRight: "10px" }} /> 
                   <select
-                    value={selectedFilter}
-                    onChange={handleFilterChange}
+                    value={selectedDateOption}
+                    onChange={handleDateChangeOption}
                     className="form-select form-select-lg rounded-pill"
                     style={{
                       backgroundColor: "white", 
@@ -127,11 +182,59 @@ export const Expense = () => {
                       cursor: "pointer",
                     }}
                   > 
-                    <option>None</option>
-                    <option>Date</option>
-                    <option>Category</option>
+                    <option value="">None</option>
+                    <option value="date">Date</option>
                   </select>
                 </div>
+                {selectedDateOption === "date" && (
+                  <div className="d-flex align-items-center" style={{ marginLeft: "8px"}}>
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      className="form-control rounded-pill"
+                      style={{
+                        backgroundColor: "white", 
+                        color: "#000000", 
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
+                )}
+                <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}> 
+                  <select
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white", 
+                      color: "#000000", 
+                      cursor: "pointer",
+                    }}
+                  > 
+                    <option value="">None</option>
+                    <option value="travel">Travel</option>
+                    <option value="food">Food</option>
+                    <option value="accommodation">Accommodation</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                {selectedCategory === "category" && (
+                  <div className="d-flex align-items-center">
+                    <input
+                      type="text"
+                      value={selectedCategory}
+                      onChange={handleCategoryChange}
+                      className="form-control rounded-pill"
+                      placeholder="Category"
+                      style={{
+                        backgroundColor: "white", 
+                        color: "#000000", 
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             </div>
             <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
@@ -142,7 +245,7 @@ export const Expense = () => {
                 Amount
               </div>
               <div className="col-md-2 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
-                Added by
+                Added By
               </div>
               <div className="col-md-2 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
                 Status
@@ -154,12 +257,10 @@ export const Expense = () => {
                 Delete
               </div>
             </div>
-            <DisplayExpense
-              userType={user} />
+            <DisplayExpense userType={user} />
           </div>
         </div>
       </div>
     );
   }
-  
 };
