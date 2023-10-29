@@ -10,6 +10,8 @@ import { Expense } from './pages/Expense'
 import { AddExpense } from './pages/AddExpense'
 import { Project } from './pages/Project'
 import { AddProject } from './pages/AddProject'
+import { Er401 } from './pages/Er401'
+import { Er403 } from './pages/Er403'
 
 function App() {
   
@@ -29,6 +31,8 @@ function App() {
           <Route path='/add-expense' element={<AddExpense />} />
           <Route path='/project' element={<Project />} />
           <Route path='/add-project' element={<AddProject />} />
+          <Route path='/error401' element={<Er401 />} />
+          <Route path='/error403' element={<Er403 />} />
         </Routes>
         
         <Footer />
