@@ -6,10 +6,10 @@ const asyncHandler = require('express-async-handler');
 
 const createProjectController = asyncHandler(async (req, res) => {
 
-    const {name, description, budget} = req.body;
+    const {name, description, budget, alertLimit} = req.body;
     const manager_id = req.manager._id;
 
-    if (!name || !budget)
+    if (!name || !budget || !alertLimit)
     {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
@@ -21,6 +21,13 @@ const createProjectController = asyncHandler(async (req, res) => {
         res.status(400)
         // res.json({success: false, message: 'Budget must be greater than 0'});
         throw new Error('Budget must be greater than 0');
+    }
+
+    if (alertLimit <= 0 || alertLimit >= 100)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Alert limit must be greater than 0 and less than 100'});
+        throw new Error('Alert limit must be greater than 0 and less than 100');
     }
 
     const projectNameExist = await Project.findOne({name}); 
@@ -36,6 +43,7 @@ const createProjectController = asyncHandler(async (req, res) => {
         name,
         description: description || "No description provided.",
         budget,
+        alertLimit,
         manager_id
     });
 
