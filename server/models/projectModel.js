@@ -28,11 +28,10 @@ const projectSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please enter the budget'],
     },
-    
-    /*add notification alert limit*/
-
-    
-    
+    alertLimit: {
+        type: Number,
+        required: [true, 'Please enter the alert limit'],
+    }
 }, {
     timestamps: true
 });
