@@ -8,8 +8,14 @@ import { Link } from "react-router-dom";
 
 export const Expense = () => {
 
+  const [selectedDateOption, setSelectedDateOption] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const handleDateChangeOption = (event) => {
+    const newDate = event.target.value;
+    setSelectedDateOption(newDate);
+  };
 
   const handleDateChange = (event) => {
     const newDate = event.target.value;
@@ -55,8 +61,8 @@ export const Expense = () => {
                 <div className="d-flex align-items-center">
                   <FontAwesomeIcon icon={faFilter} size="2xl" style={{ marginRight: "10px" }} /> 
                   <select
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    value={selectedDateOption}
+                    onChange={handleDateChangeOption}
                     className="form-select form-select-lg rounded-pill"
                     style={{
                       backgroundColor: "white", 
@@ -68,7 +74,7 @@ export const Expense = () => {
                     <option value="date">Date</option>
                   </select>
                 </div>
-                {selectedDate === "date" && (
+                {selectedDateOption === "date" && (
                   <div className="d-flex align-items-center" style={{ marginLeft: "8px"}}>
                     <input
                       type="date"
@@ -167,8 +173,8 @@ export const Expense = () => {
                 <div className="d-flex align-items-center">
                   <FontAwesomeIcon icon={faFilter} size="2xl" style={{ marginRight: "10px" }} /> 
                   <select
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    value={selectedDateOption}
+                    onChange={handleDateChangeOption}
                     className="form-select form-select-lg rounded-pill"
                     style={{
                       backgroundColor: "white", 
@@ -180,7 +186,7 @@ export const Expense = () => {
                     <option value="date">Date</option>
                   </select>
                 </div>
-                {selectedDate === "date" && (
+                {selectedDateOption === "date" && (
                   <div className="d-flex align-items-center" style={{ marginLeft: "8px"}}>
                     <input
                       type="date"
