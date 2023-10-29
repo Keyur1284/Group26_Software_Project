@@ -186,13 +186,6 @@ export const Expense = () => {
                   <FontAwesomeIcon icon={faHistory} style={{ marginRight: "10px" }} /> Expense History
                 </div>
               </div>
-                <div className="col-md-3 d-flex align-items-center justify-content-end">
-                  <div className="mr-3">
-                    <Link to="/add-expense" className="btn btn-dark btn-rounded rounded-pill shadow-lg" style={{ fontSize: "25px" }}>
-                      <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
-                    </Link>
-                  </div>
-                </div>
             </div>
             <div className="row d-flex align-items-center mb-3">
               <div className="col-md-12 d-flex align-items-center justify-content-end">
