@@ -12,6 +12,7 @@ import { Project } from "./pages/Project";
 import { AddProject } from "./pages/AddProject";
 import { Er401 } from "./pages/Er401";
 import { Er403 } from "./pages/Er403";
+import { Er404 } from "./pages/Er404";
 import { useSelector } from "react-redux";
 import { MyProfile} from './pages/MyProfile'
 import { ExpenseDetails } from "./pages/ExpenseDetails";
@@ -36,9 +37,11 @@ function App() {
                 <Route path="/expense" element={<Expense />} />
                 <Route path="/add-expense" element={<AddExpense />} />
                 <Route path="/project" element={<Project />} />
-                <Route path="*" element={<Er403 />} />
+                <Route path="/add-project" element={<Er403 />} />
+                <Route path='/employee-search' element={<Er403 />} />
                 <Route path='/profile' element={<MyProfile />} />
                 <Route path='/expense-details' element={<ExpenseDetails />} />
+                <Route path='*' element={<Er404 />} />
               </Routes>
             </>
           ) : (
@@ -56,6 +59,7 @@ function App() {
                 <Route path='/profile' element={<MyProfile />} />
                 <Route path='/employee-search' element={<EmployeeSearch />} />
                 <Route path='/expense-details' element={<ExpenseDetails />} />
+                <Route path='*' element={<Er404 />} />
               </Routes>
             </>
           )
