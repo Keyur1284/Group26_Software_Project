@@ -5,18 +5,15 @@ import main_bg from "../assets/project-dashboard/main-bg.jpg";
 import Profile_pic from "../assets/MyProfile-img/Profile.png";
 
 const inlineStyles1 = {
-  backgroundColor: "#D9D9D9", // Replace 'red' with your desired background color
+  backgroundColor: "#D9D9D9",
 };
 const inlineStyles2 = {
-  backgroundColor: "#FFFFFF", // Replace 'red' with your desired background color
+  backgroundColor: "#FFFFFF", 
 };
 const textStyles = {
-  textDecoration: "none", // Initial state without underline
-  transition: "text-decoration 0.01s", // Smooth transition
 
-  // Apply underline on hover
   ":hover": {
-    textDecoration: "underline",
+    backgroundColor:"#D9D9D9",
   },
 };
 
@@ -44,9 +41,9 @@ export const MyProfile = () => {
                     fontWeight: "bold",
                     color: "#2D91E6",
                     cursor: "pointer",
-                    // "& :hover": {
-                    //   textDecoration: "underline"
-                    // }
+                    "& :hover": {
+                      backgroundColor: "underline"
+                    }
                   }}
                 >
                   <p style={textStyles}>Profile</p>
@@ -106,25 +103,25 @@ export const MyProfile = () => {
               </div>
               <div className="col-md-6">
                 <div className="mt-3 mr-4 ml-3 mb-3 pt-5">
-                  <h2 className="p-2" style={inlineStyles1}>
+                  <h2 className="p-2 rounded-pill" style={inlineStyles1}>
                     First Name:
                   </h2>
-                  <h2 className="p-2" style={inlineStyles2}>
+                  <h2 className="p-2 rounded-pill" style={inlineStyles2}>
                     Last Name:
                   </h2>
-                  <h2 className="p-2" style={inlineStyles1}>
+                  <h2 className="p-2 rounded-pill" style={inlineStyles1}>
                     Gmail:
                   </h2>
-                  <h2 className="p-2" style={inlineStyles2}>
+                  <h2 className="p-2 rounded-pill" style={inlineStyles2}>
                     Birth Date:
                   </h2>
-                  <h2 className="p-2" style={inlineStyles1}>
+                  <h2 className="p-2 rounded-pill" style={inlineStyles1}>
                     Contact Number:
                   </h2>
-                  <h2 className="p-2" style={inlineStyles2}>
+                  <h2 className="p-2 rounded-pill" style={inlineStyles2}>
                     Joining Date:
                   </h2>
-                  <h2 className="p-2" style={inlineStyles1}>
+                  <h2 className="p-2 rounded-pill mb-5" style={inlineStyles1}>
                     Role:
                   </h2>
                 </div>

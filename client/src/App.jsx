@@ -35,7 +35,7 @@ function App() {
                 <Route path="/add-expense" element={<AddExpense />} />
                 <Route path="/project" element={<Project />} />
                 <Route path="*" element={<Er403 />} />
-                <Route path='/MyProfile' element={<MyProfile />} />
+                <Route path='/profile' element={<MyProfile />} />
               </Routes>
             </>
           ) : (
@@ -50,7 +50,7 @@ function App() {
                 <Route path="/add-expense" element={<AddExpense />} />
                 <Route path="/project" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />
-                <Route path='/MyProfile' element={<MyProfile />} />
+                <Route path='/profile' element={<MyProfile />} />
               </Routes>
             </>
           )
