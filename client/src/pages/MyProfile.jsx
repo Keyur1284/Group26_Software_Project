@@ -1,6 +1,9 @@
 import main_bg from "../assets/project-dashboard/main-bg.jpg";
 import Profile_pic from "../assets/MyProfile-img/Profile.png";
 import { Hamburger4 } from "../components/Hamburger_4";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelopeOpenText, faLock,faUser,faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import '../css/Profile.css';
 
 const inlineStyles1 = {
   backgroundColor: "#D9D9D9",
@@ -12,16 +15,15 @@ const inlineStyles2 = {
   fontSize: "4vh",
   fontWeight: 400
 };
-const textStyles = {
 
-  ":hover": {
-    backgroundColor:"#D9D9D9",
-  },
+const textStyles = {
+  fontSize: "4vh",
+  fontWeight: 400
 };
 
 const divStyle = {
-  borderRadius: '10px', // Adjust the value for the desired border radius
-  padding: '20px',     // Add any other styles you need
+  borderRadius: '10px', 
+  padding: '20px',     
   backgroundColor: 'lightgray',
 };
 
@@ -59,7 +61,10 @@ export const MyProfile = () => {
                     }
                   }}
                 >
-                  <p style={textStyles}>Profile</p>
+                  
+                  <p  className="subNav">
+                    <FontAwesomeIcon className="mx-2" icon={faUser} />
+                  Profile</p>
                 </span>
               </div>
               <div className="display-6">
@@ -69,13 +74,12 @@ export const MyProfile = () => {
                     fontSize: "3vh",
                     color: "#2D91E6",
                     cursor: "pointer",
-
-                    // ":hover": {
-                    //   textDecoration: "underline"
-                    // }
                   }}
                 >
-                  <p style={textStyles}>Edit Profile</p>
+                  
+                  <p className="subNav">
+                    <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
+                    Edit Profile</p>
                 </span>
               </div>
               <div className="display-6">
@@ -85,12 +89,12 @@ export const MyProfile = () => {
                     fontSize: "3vh",
                     color: "#2D91E6",
                     cursor: "pointer",
-                    // "& :hover": {
-                    //   textDecoration: "underline"
-                    // }
                   }}
                 >
-                  <p style={textStyles}>Reset Password</p>
+                  
+                  <p className="subNav">
+                  <FontAwesomeIcon className="mx-2" icon={faLock} />
+                  Reset Password</p>
                 </span>
               </div>
               <div className="display-6">
@@ -100,12 +104,12 @@ export const MyProfile = () => {
                     fontSize: "3vh",
                     color: "#2D91E6",
                     cursor: "pointer",
-                    // "& :hover": {
-                    //   textDecoration: "underline"
-                    // }
                   }}
                 >
-                  <p style={textStyles}>Invites</p>
+                  
+                  <p  className="subNav " >
+                  <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
+                  Invites</p>
                 </span>
               </div>
             </div>
@@ -115,8 +119,7 @@ export const MyProfile = () => {
                   style={{ width: "200px", height: "200px" }}
                   src={Profile_pic}
                 />
-                <div className="col-md-6 lead d-flex align-items-center justify-content-center p-4" style={{fontWeight:"bold"}}>Employee</div>
-              </div>
+                </div>
               <div className="col-md-8">
                 <div className="mt-3 mr-4 ml-3 mb-3 pt-5 p-3">
                   <h2 className="p-3 rounded-pill" style={inlineStyles1}>
