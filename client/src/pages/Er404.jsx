@@ -92,7 +92,7 @@ export const Er404 = () => {
                       }
                     }>
                         <div>
-                        YOU DON'T HAVE PERMISSION TO ACCESS ON THIS SERVER
+                        YOU'VE GONE OFF SCRIPT !
                       </div>
                       <div className='mt-2'> 
                       <Link to='/' style={{textDecoration: "none"}}> GO BACK TO {"  "}
