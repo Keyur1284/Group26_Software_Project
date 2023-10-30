@@ -9,6 +9,21 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 
 const role = 'manager';
+const status = 'rejected'
+
+let statusClassName;
+let statusText;
+
+if (status === "rejected") {
+    statusClassName = "bg-danger";
+    statusText = "Rejected";
+} else if (status === "accepted") {
+    statusClassName = "bg-success";
+    statusText = "Accepted";
+} else if (status === "pending") {
+    statusClassName = "bg-warning";
+    statusText = "Pending";
+}
 
 export const ExpenseDetails = () => {
     return (
@@ -28,39 +43,41 @@ export const ExpenseDetails = () => {
                         </div>
                     </div>
                     <div className="row gap-5">
-                        <div className="col-md-5 shadow-lg rounded-4" style={{ minHeight: 400, minWidth: 530 }}>
-                            <div className="heading text-center rounded-4 py-1 mt-2 text-light" style={{ backgroundColor: "#304D6D" }}>
-                                <h1>Description</h1>
+                        <div className="col-md-5 rounded-4" style={{ minWidth: 530 }}>
+                            <div className="row shadow-lg rounded-4 px-2">
+                                <div className="heading text-center rounded-4 py-1 mt-2 text-light" style={{ backgroundColor: "#304D6D" }}>
+                                    <h1>Description</h1>
+                                </div>
+                                <div className="desc rounded-4 my-2 py-2 px-4" style={{ backgroundColor: "#B3C8E4", minHeight: 200 }}>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae alias, magni illo doloremque placeat aliquid nobis porro asperiores voluptatibus repellendus numquam culpa?</p>
+                                </div>
                             </div>
-                            <div className="desc rounded-4 my-2 py-2 px-4" style={{ backgroundColor: "#B3C8E4", minHeight: 310 }}>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae alias, magni illo doloremque placeat aliquid nobis porro asperiores voluptatibus repellendus numquam culpa?</p>
-                            </div>
+                            {role === 'manager' ?
+                                <div className="text-center">
+                                    <div className="btn btn-primary mt-4" style={{ width: '98%' }}>View Bill</div>
+                                    <div className="btn btn-success m-2 mx-1" style={{ width: '48%' }}>Accept</div>
+                                    <div className="btn btn-danger m-2 mx-1" style={{ width: '48%' }}>Reject</div>
+                                </div>
+                                :
+                                <div className="text-center">
+                                    <div className="d-flex justify-content-center">
+                                        <div className="btn btn-primary mt-3" style={{ width: '98%' }}>View Bill</div>
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <div className="status mt-3" style={{ width: '98%' }}>
+                                            <h6 className={`py-2 ${statusClassName} rounded text-light`}>Status: {statusText}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
                         </div>
                         <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, minWidth: 530 }}>
                             <h1 className="text-light">Contribution in Total Budget</h1>
                             <PortionInTotalPie />
                         </div>
                     </div>
-                    {role === 'manager' ?
-                        <div className="verifyexpense mt-4 d-flex justify-content-between">
-                            <div className="item-1">
-                                <button className="btn btn-success me-2">Accept</button>
-                                <button className="btn btn-danger">Reject</button>
-                            </div>
-                            <div className="item-2 me-4">
-                                <button className="btn btn-primary">View Bill</button>
-                            </div>
-                        </div>
-                        :
-                        <div className="d-flex justify-content-between mt-4">
-                            <div className="item-1">
-                                <h4 >Status: Pending</h4>
-                            </div>
-                            <div className="item-2 me-4">
-                                <button className="btn btn-primary">View Bill</button>
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
         </div>
