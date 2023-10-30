@@ -86,6 +86,7 @@ const loginController = asyncHandler(async (req, res) => {
             name: employee.name,
             email: employee.email,
             message: "Login Successful",
+            role: "employee",
             token: generateToken(employee._id)
         });
     }
