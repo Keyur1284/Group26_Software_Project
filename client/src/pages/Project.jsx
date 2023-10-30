@@ -1,30 +1,21 @@
-import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Hamburger2 } from "../components/Hamburger_2";
 
+const projects = [
+  { name: "Project 1", managerName: "Manager 1"},
+  { name: "Project 2", managerName: "Manager 2"},
+  { name: "Project 3", managerName: "Manager 3"},
+  { name: "Project 4", managerName: "Manager 4"},
+  { name: "Project 5", managerName: "Manager 5"},
+]
+
 export const Project = () => {
+
+  const navigate = useNavigate();
   const colors = ["#163763", "#3452B9", "#005483", "#8E8E8E", "#3C3C3C"];
-  const [buttons, setButtons] = useState([]);
-  const lastButtonRef = useRef(null);
 
-  const addNewButton = () => {
-    const newIndex = buttons.length % colors.length;
-    const newButtons = [
-      ...buttons,
-      {
-        projectName: `Project ${buttons.length + 1}`,
-        managerName: `Manager ${buttons.length + 1}`,
-        color: colors[newIndex],
-      },
-    ];
-    setButtons(newButtons);
-  };
-
-  useEffect(() => {
-    if (lastButtonRef.current) {
-      lastButtonRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [buttons]);
+  const role = "manager";
 
   return (
     <div
@@ -41,14 +32,13 @@ export const Project = () => {
         <div className="col-9 px-4" style={{marginTop: "-1vh"}}>
           <div style={{ minHeight: "85vh" }}>
             <div className="row">
-              {buttons.map((button, index) => (
+              {projects.map((project, index) => (
                 <button
                   key={index}
-                  ref={index === buttons.length - 1 ? lastButtonRef : null}
                   style={{
                     margin: "0.5%",
                     padding: "2.5%",
-                    backgroundColor: button.color,
+                    backgroundColor:  colors[index % colors.length],
                     color: "#fff",
                     border: "none",
                     borderRadius: "20px",
@@ -58,12 +48,11 @@ export const Project = () => {
                     boxShadow: "0px 4px 8px rgba(5, 5, 5, 5)",
                   }}
                 >
-                  {button.name}
-                  <div style={{ fontSize: "32px" }}>{button.projectName}</div>
-                  <div style={{ fontSize: "20px" }}>{button.managerName}</div>
+                  <div style={{ fontSize: "32px" }}>{project.name}</div>
+                  <div style={{ fontSize: "20px" }}>{project.managerName}</div>
                 </button>
               ))}
-              <button
+              {role == "manager" && <button
                 style={{
                   position: "absolute",
                   bottom: "25px",
@@ -77,10 +66,10 @@ export const Project = () => {
                   color: "#fff",
                   cursor: "pointer",
                 }}
-                onClick={addNewButton}
+                onClick={() => navigate("/add-project")}
               >
                 +
-              </button>
+              </button>}
             </div>
           </div>
         </div>
