@@ -65,22 +65,6 @@ function App() {
             </Routes>
           </>
         )}
-
-        <Header />
-        
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/project/dashboard' element={<ProjectDashboard />} />
-          <Route path='/expense' element={<Expense />} />
-          <Route path='/add-expense' element={<AddExpense />} />
-          <Route path='/project' element={<Project />} />
-          <Route path='/add-project' element={<AddProject />} />
-          <Route path='/MyProfile' element={<MyProfile />} />
-        </Routes>
-        
-        <Footer />
       </Router>
     </>
   );
