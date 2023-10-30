@@ -14,6 +14,8 @@ import { Er401 } from "./pages/Er401";
 import { Er403 } from "./pages/Er403";
 import { useSelector } from "react-redux";
 import { MyProfile} from './pages/MyProfile'
+import { ExpenseDetails } from "./pages/ExpenseDetails";
+import { EmployeeSearch } from "./pages/EmployeeSearch";
 
 function App() {
   
@@ -36,6 +38,7 @@ function App() {
                 <Route path="/project" element={<Project />} />
                 <Route path="*" element={<Er403 />} />
                 <Route path='/profile' element={<MyProfile />} />
+                <Route path='/expense-details' element={<ExpenseDetails />} />
               </Routes>
             </>
           ) : (
@@ -51,6 +54,8 @@ function App() {
                 <Route path="/project" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />
                 <Route path='/profile' element={<MyProfile />} />
+                <Route path='/employee-search' element={<EmployeeSearch />} />
+                <Route path='/expense-details' element={<ExpenseDetails />} />
               </Routes>
             </>
           )

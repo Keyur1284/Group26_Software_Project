@@ -6,7 +6,9 @@ import mainbg from '../assets/project-dashboard/main-bg.jpg'
 import { MyExpPie } from '../components/MyExpPie'
 import { TotalExpPie } from '../components/TotalExpPie'
 import { Hamburger4 } from '../components/Hamburger_4'
+import { EmpDistributionPie } from '../components/EmpDistributionPie'
 
+const role = 'manager';
 
 export const ProjectDashboard = () => {
     return (
@@ -57,13 +59,22 @@ export const ProjectDashboard = () => {
                         </div>
 
                         <div className="row my-4 gap-4">
-                            <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
+                            { role === 'employee' ?
+                                <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white' >My Expense</h3>
                                 <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; 200</h6>
                                 <div className="pie">
-                                    <MyExpPie />
+                                    <MyExpPie/>
                                 </div>
                             </div>
+                            :
+                            <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
+                                <h3 className='mx-3 my-3 fw-bold display-6 text-white' >Exployee Expense Distribuion</h3>
+                                <div className="pie">
+                                    <EmpDistributionPie/>
+                                </div>
+                            </div>
+                            }
                             <div className="col-md-5 py-2 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg3})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <div className="container my-3">
                                     <div className="row justify-content-md-center">
