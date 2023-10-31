@@ -285,7 +285,7 @@ export const MyProfile = () => {
                     Gmail : {profile?.email}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles2}>
-                    Birth Date : {profile?.bod}
+                    Birth Date : {profile?.dob}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles1}>
                     Contact No. : {profile?.contactNo}
