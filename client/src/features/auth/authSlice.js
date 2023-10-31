@@ -84,6 +84,23 @@ export const loginManager = createAsyncThunk('/auth/loginManager', async (userDa
 })
 
 
+export const getManagerProfile = createAsyncThunk('/auth/getManagerProfile', async (_, thunkAPI) => {
+
+    const token = thunkAPI.getState().auth.user.token;
+    const response = await authService.getManagerProfile(token);
+    return response;
+
+});
+
+
+export const getEmployeeProfile = createAsyncThunk('/auth/getEmployeeProfile', async (_, thunkAPI) => {
+
+    const token = thunkAPI.getState().auth.user.token;
+    const response = await authService.getEmployeeProfile(token);
+    return response;
+
+});
+
 
 export const logout = createAsyncThunk('/auth/logout', async () => {
    await authService.logout()
@@ -181,6 +198,41 @@ const authSlice = createSlice({
                 state.user = null;
                 state.message = "User Logged Out Successfully";
             })
+
+            .addCase(getManagerProfile.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(getManagerProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.profile = action.payload.manager;
+            })
+
+            .addCase(getManagerProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(getEmployeeProfile.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(getEmployeeProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.profile = action.payload.employee;
+            })
+
+            .addCase(getEmployeeProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
     }
 })
 
