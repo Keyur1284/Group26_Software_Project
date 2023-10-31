@@ -19,6 +19,7 @@ import { ExpenseDetails } from "./pages/ExpenseDetails";
 import { EmployeeSearch } from "./pages/EmployeeSearch";
 import { Announcement } from "./pages/Announcement";
 import { TeamMembers } from "./pages/TeamMembers";
+import { Invitations } from "./pages/Invitations";
 
 function App() {
   
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/add-project" element={<Er403 />} />
                 <Route path='/employee-search' element={<Er403 />} />
                 <Route path='/profile' element={<MyProfile />} />
+                <Route path='/invites' element={<Invitations />} />
                 <Route path='/expense-details' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
                 <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
