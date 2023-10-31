@@ -20,7 +20,7 @@ const createAnnouncementController = asyncHandler(async (req, res) => {
     const announcement = await Announcement.create({
         project_id,
         message,
-        name
+        name,
     });
 
     if (announcement)
@@ -48,6 +48,10 @@ const getAnnouncementsController = asyncHandler(async (req, res) => {
     const manager = await Manager.findById(manager_id);
 
     const announcements = await Announcement.find({project_id});
+
+    announcements.sort((a, b) => {
+        return b.createdAt - a.createdAt;
+    });
 
     if (announcements)
     {
