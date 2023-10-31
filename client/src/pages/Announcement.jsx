@@ -6,6 +6,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
 import { createAnnouncement, getAnnouncements, reset, clearAnnouncements } from "../features/announcement/announcementSlice"; 
 
 
@@ -44,6 +46,117 @@ export const Announcement = () => {
     dispatch(clearAnnouncements());
     dispatch(getAnnouncements(projectId));
   }, [dispatch, projectId]);
+
+  if( isLoading ) {
+    return (
+      <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight: "92vh" }}>
+      <div className="row">
+        <div className="col-3">
+          <Hamburger4 />
+        </div>
+        <div className="col-9 px-4">
+          <ul className="nav nav-underline rounded">
+            <li className="nav-item">
+              <Link
+                className="nav-link active"
+                aria-current="page"
+                style={{ color: "blue",fontSize: "20px"  }}
+                to={`/projects/${projectId}/announcements`}
+              >
+                Stream
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" style={{ color: "black",fontSize: "20px"  }} to={`/projects/${projectId}/dashboard`}>
+                Dashboard
+              </Link>
+            </li>
+            <li className="nav-item">
+            <Link
+                  className="nav-link"
+                  style={{ color: "black" ,fontSize: "20px" }}
+                  to={`/projects/${projectId}/team-members`}
+                >
+                  Team Members
+                </Link>
+            </li>
+          </ul>
+          <div className="row mt-4">
+              <div className="col-md-12">
+                <div
+                  className="card bg-primary"
+                  style={{
+                    height: "35vh",
+                    backgroundImage: `url(${ig})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  <div className="card-body d-flex flex-column text-white">
+                    <h3 className="card-title mt-auto mb-2">{projectName}</h3>
+                    <h5>{managerName}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row mt-4">
+              <div className="col-md-12">
+                <div
+                  className="input-group"
+                  style={{
+                    height: "7vh",
+                  }}
+                >
+                  <textarea
+                    name="message"
+                    value={formik.values.message}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    className="form-control"
+                    placeholder="Type your announcement here"
+                  />
+                  <div className="input-group-append px-2">
+                    <button
+                      type = "submit"
+                      style={{
+                        height: "8vh",
+                      }}
+                      className="btn btn-primary"
+                      onClick={formik.handleSubmit}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row mt-4">
+              <div className="col-md-12">
+                <div className="card mb-3">
+                  <div className="card-body">
+                    <h4 className="card-title mb-4" style={{ color: "blue" }}>
+                      Announcements
+                    </h4>
+                    
+                    <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                      <Skeleton variant="rounded" width="68vw" height="13vh" />
+                    </Typography>
+                    <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                      <Skeleton variant="rounded" width="68vw" height="13vh" />
+                    </Typography>
+                    <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                      <Skeleton variant="rounded" width="68vw" height="13vh" />
+                    </Typography>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight: "92vh" }}>
