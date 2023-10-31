@@ -14,4 +14,17 @@ const createProject = async (projectData, token) => {
         return response.data;
 }
 
-export const projectService = { createProject }
+const getProjectsManager = async (token) => {
+    
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+    
+        const response = await axios.get(`${baseURL}/projects/projects-manager`, config);
+        return response.data;
+}
+
+export const projectService = { createProject, getProjectsManager }
