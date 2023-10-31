@@ -96,7 +96,7 @@ export const Project = () => {
                 <button
                   key={index}
                   style={{
-                    margin: "0.5%",
+                    marginTop: index == 0 ? "0.5%" : "3vh",
                     padding: "2.5%",
                     backgroundColor:  colors[index % colors.length],
                     color: "#fff",
