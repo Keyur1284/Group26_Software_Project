@@ -203,7 +203,7 @@ const getMembersController = asyncHandler(async (req, res) => {
         res.status(200).json({
             success: true,
             employees: [],
-            manager: manager.firstName + " " + manager.lastName,
+            manager,
             message: "No employees found!"
         });
     }
