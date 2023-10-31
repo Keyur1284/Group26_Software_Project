@@ -33,8 +33,8 @@ export const Register = () => {
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
-    birthDate:Yup.date().required("Birth Date is required"),
-    contactNumber:Yup.string().required("Contact Number is required"),
+    dob:Yup.date().required("Birth Date is required"),
+    contactNo:Yup.string().required("Contact Number is required"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .max(24, "Password must not exceed 24 characters")
@@ -54,14 +54,14 @@ export const Register = () => {
       firstName: "",
       lastName:"",
       email: "",
-      birthDate: "",
-      contactNumber: "",
+      dob: "",
+      contactNo: "",
       password: "",
       confirmPassword: "",
       userType: "employee"
     },
     onSubmit: (values) => { 
-      // console.log(values);  
+
       if(values.userType === "employee")   
         dispatch(registerEmployee(values));
       else if(values.userType === "manager")
@@ -232,18 +232,18 @@ export const Register = () => {
                 <div className="input-group">
                   <input
                     type="date"
-                    name="birthDate"
+                    name="dob"
                     placeholder="Birth Date"
                     className="form-control"
-                    value={formik.values.birthDate}
+                    value={formik.values.dob}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                 </div>
 
-                {formik.touched.birthDate && formik.errors.birthDate && (
+                {formik.touched.dob && formik.errors.dob && (
                   <div className="alert alert-danger text-center mt-2">
-                    {formik.touched.birthDate && formik.errors.birthDate}
+                    {formik.touched.dob && formik.errors.dob}
                   </div>
                 )}
               </div>
@@ -259,18 +259,18 @@ export const Register = () => {
                 <div className="input-group">
                   <input
                     type="tel"
-                    name="contactNumber"
+                    name="contactNo"
                     placeholder="999XXXXXXX"
                     className="form-control"
-                    value={formik.values.contactNumber}
+                    value={formik.values.contactNo}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                 </div>
 
-                {formik.touched.contactNumber && formik.errors.contactNumber && (
+                {formik.touched.contactNo && formik.errors.contactNo && (
                   <div className="alert alert-danger text-center mt-2">
-                    {formik.touched.contactNumber && formik.errors.contactNumber}
+                    {formik.touched.contactNo && formik.errors.contactNo}
                   </div>
                 )}
               </div>
