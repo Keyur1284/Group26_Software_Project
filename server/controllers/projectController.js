@@ -122,6 +122,7 @@ const getProjectsEmployeeController = asyncHandler(async (req, res) => {
     {
         res.status(200).json({
             success: true,
+            projects: [],
             message: "No projects found!"
         });
     }
@@ -160,6 +161,7 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
     {
         res.status(200).json({
             success: true,
+            projects: [],
             message: "No projects found!"
         });
     }
