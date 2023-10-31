@@ -169,9 +169,51 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
 });
 
 
+const getMembersController = asyncHandler(async (req, res) => {
+    
+    const projectId = req.params.projectId;
+    const project = await Project.findById(projectId).populate('employees');
+    const employees = project.employees;
+    const manager = await Manager.findById(project.manager_id);
+
+    if (employees.length > 0)
+    {
+        const modifiedEmployees = [];
+
+        for (let i = 0; i < employees.length; i++)
+        {
+            const employee = employees[i];
+            const modifiedEmployee = {
+                ...employee._doc,
+                password: undefined,
+                projects: undefined
+            };
+            modifiedEmployees.push(modifiedEmployee);
+        }
+
+        res.status(200).json({
+            success: true,
+            manager,
+            employees: modifiedEmployees
+        });
+    }
+
+    else
+    {
+        res.status(200).json({
+            success: true,
+            employees: [],
+            manager: manager.firstName + " " + manager.lastName,
+            message: "No employees found!"
+        });
+    }
+});
+
+
 module.exports = {
     findEmployeesController, 
     createProjectController, 
     getProjectsEmployeeController,
-    getProjectsManagerController
+    getProjectsManagerController,
+    getMembersController
 };
