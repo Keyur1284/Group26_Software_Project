@@ -114,6 +114,11 @@ export const Project = () => {
                   <div style={{ fontSize: "20px" }}>{project.managerName}</div>
                 </button>
               ))}
+
+              {
+                projects.length == 0 && <div className="display-1 mx-5">No projects found!</div>
+              }
+
               {user.role == "manager" && <button
                 style={{
                   position: "absolute",
