@@ -98,9 +98,23 @@ const getProjectsEmployeeController = asyncHandler(async (req, res) => {
 
     if (projects.length > 0)
     {
+        const modifiedProjects = [];
+
+        for (let i = 0; i < projects.length; i++)
+        {
+            const project = projects[i];
+            const manager = await Manager.findById(project.manager_id);
+            const managerName = manager.firstName + " " + manager.lastName;
+            const modifiedProject = {
+                ...project._doc,
+                managerName
+            };
+            modifiedProjects.push(modifiedProject);
+        }
+
         res.status(200).json({
             success: true,
-            projects
+            projects: modifiedProjects
         });
     }
 
@@ -122,9 +136,23 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
 
     if (projects.length > 0)
     {
+        const modifiedProjects = [];
+
+        for (let i = 0; i < projects.length; i++)
+        {
+            const project = projects[i];
+            const manager = await Manager.findById(project.manager_id);
+            const managerName = manager.firstName + " " + manager.lastName;
+            const modifiedProject = {
+                ...project._doc,
+                managerName
+            };
+            modifiedProjects.push(modifiedProject);
+        }
+
         res.status(200).json({
             success: true,
-            projects
+            projects: modifiedProjects
         });
     }
 
