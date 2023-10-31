@@ -14,17 +14,27 @@ export const Register = () => {
   const navigate = useNavigate();
 
   const formSchema = Yup.object({
-    name: Yup.string()
+    firstName: Yup.string()
       .min(4, "Username must be at least 4 characters")
       .max(24, "Username must not exceed 24 characters")
       .matches(
         /^[A-z][A-z0-9\s-_]*$/,
         "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
       )
-      .required("Username is required"),
+      .required("First Name is required"),
+      lastName: Yup.string()
+      .min(4, "Username must be at least 4 characters")
+      .max(24, "Username must not exceed 24 characters")
+      .matches(
+        /^[A-z][A-z0-9\s-_]*$/,
+        "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
+      )
+      .required("Last Name is required"),
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
+    birthDate:Yup.date().required("Birth Date is required"),
+    contactNumber:Yup.string().required("Contact Number is required"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .max(24, "Password must not exceed 24 characters")
@@ -36,17 +46,22 @@ export const Register = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
+
   });
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      firstName: "",
+      lastName:"",
       email: "",
+      birthDate: "",
+      contactNumber: "",
       password: "",
       confirmPassword: "",
       userType: "employee"
     },
-    onSubmit: (values) => {   
+    onSubmit: (values) => { 
+      // console.log(values);  
       if(values.userType === "employee")   
         dispatch(registerEmployee(values));
       else if(values.userType === "manager")
@@ -108,14 +123,14 @@ export const Register = () => {
             src={p_1}
             className="img-fluid"
             alt="Background"
-            style={{ minHeight: "92vh", width: "100%" }}
+            style={{ minHeight: "120vh", width: "100%" }}
           />
         </div>
 
         {/* Right Half: Registration Form */}
         <div
           className="col-md-6 p-0 m-0 d-flex container text-white row justify-content-center align-items-center"
-          style={{ minHeight: "92vh" }}
+          style={{ minHeight: "120vh" }}
         >
           <div className="col-md-8 mt-5">
             <h2 className="text-start display-6" style={{ fontWeight: "400" }}>
@@ -131,26 +146,54 @@ export const Register = () => {
                   className="form-label text-dark h6"
                   style={{ fontSize: "18px" }}
                 >
-                  Username
+                  First Name
                 </label>
                 <div className="input-group">
                   <input
                     type="text"
-                    name="name"
-                    placeholder="User1234"
+                    name="firstName"
+                    placeholder="First Name"
                     className="form-control"
-                    value={formik.values.name}
+                    value={formik.values.firstName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                 </div>
 
-                {formik.touched.name && formik.errors.name && (
+                {formik.touched.firstName && formik.errors.firstName && (
                   <div className="alert alert-danger text-center mt-2">
-                    {formik.touched.name && formik.errors.name}
+                    {formik.touched.firstName && formik.errors.firstName}
                   </div>
                 )}
               </div>
+
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleInputEmail1"
+                  className="form-label text-dark h6"
+                  style={{ fontSize: "18px" }}
+                >
+                  Last Name
+                </label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    className="form-control"
+                    value={formik.values.lastName}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </div>
+
+                {formik.touched.lastName && formik.errors.lastName && (
+                  <div className="alert alert-danger text-center mt-2">
+                    {formik.touched.lastName && formik.errors.lastName}
+                  </div>
+                )}
+              </div>
+
               <div className="mb-3">
                 <label
                   htmlFor="exampleInputEmail1"
@@ -177,6 +220,61 @@ export const Register = () => {
                   </div>
                 )}
               </div>
+
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleInputEmail1"
+                  className="form-label text-dark h6"
+                  style={{ fontSize: "18px" }}
+                >
+                  Birth Date
+                </label>
+                <div className="input-group">
+                  <input
+                    type="date"
+                    name="birthDate"
+                    placeholder="Birth Date"
+                    className="form-control"
+                    value={formik.values.birthDate}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </div>
+
+                {formik.touched.birthDate && formik.errors.birthDate && (
+                  <div className="alert alert-danger text-center mt-2">
+                    {formik.touched.birthDate && formik.errors.birthDate}
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleInputEmail1"
+                  className="form-label text-dark h6"
+                  style={{ fontSize: "18px" }}
+                >
+                  Contact Number
+                </label>
+                <div className="input-group">
+                  <input
+                    type="tel"
+                    name="contactNumber"
+                    placeholder="999XXXXXXX"
+                    className="form-control"
+                    value={formik.values.contactNumber}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </div>
+
+                {formik.touched.contactNumber && formik.errors.contactNumber && (
+                  <div className="alert alert-danger text-center mt-2">
+                    {formik.touched.contactNumber && formik.errors.contactNumber}
+                  </div>
+                )}
+              </div>
+
               <div className="mb-3">
                 <label
                   htmlFor="exampleInputPassword1"
