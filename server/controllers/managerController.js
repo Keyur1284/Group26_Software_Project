@@ -104,6 +104,35 @@ const loginController = asyncHandler(async (req, res) => {
 });
 
 
+const getManagerProfileController = asyncHandler(async (req, res) => {
+
+    const manager = await Manager.findById(req.manager._id);
+
+    if (manager)
+    {
+        res.status(200).json({
+            success: true,
+            manager: {
+                firstName: manager.firstName,
+                lastName: manager.lastName,
+                dob: manager.dob,
+                contactNo: manager.contactNo,
+                email: manager.email,
+                joiningDate: manager.createdAt.toISOString().split('T')[0],
+                role: "Manager"
+            }
+        });
+    }
+
+    else
+    {
+        res.status(404)
+        // res.json({success: false, message: 'Employee not found'});
+        throw new Error('Manager not found');
+    }
+
+});
+
 const generateToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: '30d'});
 }
@@ -111,5 +140,6 @@ const generateToken = (_id) => {
 
 module.exports = {
     loginController, 
-    registerController
+    registerController,
+    getManagerProfileController
 };
