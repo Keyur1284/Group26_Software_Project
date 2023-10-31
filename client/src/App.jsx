@@ -18,6 +18,7 @@ import { MyProfile} from './pages/MyProfile'
 import { ExpenseDetails } from "./pages/ExpenseDetails";
 import { EmployeeSearch } from "./pages/EmployeeSearch";
 import { Announcement } from "./pages/Announcement";
+import { TeamMembers } from "./pages/TeamMembers";
 
 function App() {
   
@@ -44,6 +45,7 @@ function App() {
                 <Route path='/profile' element={<MyProfile />} />
                 <Route path='/expense-details' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
+                <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
                 <Route path='*' element={<Er404 />} />
               </Routes>
             </>
@@ -63,6 +65,7 @@ function App() {
                 <Route path='/employee-search' element={<EmployeeSearch />} />
                 <Route path='/expense-details' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
+                <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
                 <Route path='*' element={<Er404 />} />
               </Routes>
             </>
