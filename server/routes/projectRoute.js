@@ -5,6 +5,7 @@ const {
     createProjectController,
     getProjectsEmployeeController,
     getProjectsManagerController,
+    getMembersController
 } = require("../controllers/projectController");
 
 const {
@@ -17,5 +18,6 @@ router.get("/find-employees", managerAuthMiddleware, findEmployeesController);
 router.post("/create-project", managerAuthMiddleware, createProjectController);
 router.get("/projects-employee", employeeAuthMiddleware, getProjectsEmployeeController);
 router.get("/projects-manager", managerAuthMiddleware, getProjectsManagerController);
+router.get("/get-members/:projectId", getMembersController);
 
 module.exports = router;
