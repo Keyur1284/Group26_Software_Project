@@ -87,7 +87,8 @@ const loginController = asyncHandler(async (req, res) => {
         res.status(200).json({
             success: true,
             _id: manager._id,
-            name: manager.name,
+            firstName: manager.firstName,
+            lastName: manager.lastName,
             email: manager.email,
             message: "Login Successful",
             role: "manager",
