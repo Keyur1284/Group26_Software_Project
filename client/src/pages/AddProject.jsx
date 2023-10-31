@@ -41,7 +41,7 @@ export const AddProject = () => {
     {
       message.success("Project Created Successfully!");
       dispatch(reset());
-      navigate('/project')
+      navigate('/projects')
     }
 
     if (isError)

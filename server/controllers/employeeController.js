@@ -9,9 +9,9 @@ const bcrypt = require('bcryptjs');
 
 const registerController = asyncHandler(async (req, res) => {
 
-    const {name, email, password} = req.body;
+    const {firstName, lastName, email, dob, contactNo, password} = req.body;
 
-    if (!name || !email || !password)
+    if (!firstName || !lastName || !email || !password || !dob || !contactNo)
     {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
@@ -30,7 +30,10 @@ const registerController = asyncHandler(async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const employee = await Employee.create({
-        name,
+        firstName,
+        lastName,
+        dob,
+        contactNo,
         email,
         password: hashedPassword
     });
@@ -39,11 +42,15 @@ const registerController = asyncHandler(async (req, res) => {
     {
         res.status(200).json({
             success: true,
-            _id: employee._id,
-            name: employee.name,
-            email: employee.email,
-            message: "Registeration Successful",
-            token: generateToken(employee._id)
+            employee: {
+                _id: employee._id,
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                dob: employee.dob,
+                contactNo: employee.contactNo,
+                email: employee.email
+            },
+            message: "Registeration Successful"
         });
     }
 
@@ -83,7 +90,8 @@ const loginController = asyncHandler(async (req, res) => {
         res.status(200).json({
             success: true,
             _id: employee._id,
-            name: employee.name,
+            firstName: employee.firstName,
+            lastName: employee.lastName,
             email: employee.email,
             message: "Login Successful",
             role: "employee",
@@ -100,6 +108,36 @@ const loginController = asyncHandler(async (req, res) => {
 });
 
 
+const getEmployeeProfileController = asyncHandler(async (req, res) => {
+
+    const employee = await Employee.findById(req.employee._id);
+
+    if (employee)
+    {
+        res.status(200).json({
+            success: true,
+            employee: {
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                dob: employee.dob,
+                contactNo: employee.contactNo,
+                email: employee.email,
+                joiningDate: employee.createdAt.toISOString().split('T')[0],
+                role: "Employee"
+            }
+        });
+    }
+
+    else
+    {
+        res.status(404)
+        // res.json({success: false, message: 'Employee not found'});
+        throw new Error('Employee not found');
+    }
+
+});
+
+
 const generateToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: '30d'});
 }
@@ -108,5 +146,6 @@ const generateToken = (_id) => {
 
 module.exports = {
     loginController, 
-    registerController
+    registerController,
+    getEmployeeProfileController
 };

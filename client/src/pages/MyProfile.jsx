@@ -1,6 +1,6 @@
 import main_bg from "../assets/project-dashboard/main-bg.jpg";
 import Profile_pic from "../assets/MyProfile-img/Profile.png";
-import { Hamburger4 } from "../components/Hamburger_4";
+import { Hamburger2 } from "../components/Hamburger_2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpenText, faLock,faUser,faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import '../css/Profile.css';
@@ -35,7 +35,7 @@ export const MyProfile = () => {
         <div
           className="col-md-3"
         >
-          <Hamburger4 />
+          <Hamburger2 />
         </div>
         <div className="col-md-8 mx-5 rounded rounded-3 bg-light">
           <div

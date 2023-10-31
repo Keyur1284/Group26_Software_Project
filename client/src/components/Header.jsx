@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
 import { message } from "antd";
@@ -56,16 +57,16 @@ export const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/">
-                Purchase
+              <Link className="nav-link" aria-current="page" to="/projects">
+                Menu
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" aria-current="page" to="/">
-                Products
+                Notifications
               </Link>
-            </li>
-            <li className="nav-item dropdown">
+            </li> */}
+            {/* <li className="nav-item dropdown">
               <a
                 className="nav-link text-secondary link-light dropdown-toggle"
                 href="#"
@@ -96,10 +97,10 @@ export const Header = () => {
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
             <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/">
+              <Link className="nav-link" aria-current="page" to="/about-us">
                 About Us
               </Link>
             </li>
@@ -107,8 +108,9 @@ export const Header = () => {
 
           {user ? (
             <div className="d-flex align-items-center">
+              <Link to='/notifications'><NotificationsActiveIcon sx={{fontSize: 30}} className="text-light"/></Link>
               <div className="text-light mx-3" style={{ fontSize: "18px" }}>
-                {user.name}
+                {user.firstName} {user.lastName}
               </div>
               <button
                 className="btn btn-danger"

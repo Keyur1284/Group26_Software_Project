@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
@@ -12,14 +12,18 @@ import { Project } from "./pages/Project";
 import { AddProject } from "./pages/AddProject";
 import { Er401 } from "./pages/Er401";
 import { Er403 } from "./pages/Er403";
+import { Er404 } from "./pages/Er404";
 import { useSelector } from "react-redux";
 import { MyProfile} from './pages/MyProfile'
 import { ExpenseDetails } from "./pages/ExpenseDetails";
 import { EmployeeSearch } from "./pages/EmployeeSearch";
+import { Announcement } from "./pages/Announcement";
+import { TeamMembers } from "./pages/TeamMembers";
 
 function App() {
   
   const { user } = useSelector((state) => state.auth);
+  // const { projectId } = useParams();
 
   return (
     <>
@@ -32,13 +36,17 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/project/dashboard" element={<ProjectDashboard />} />
-                <Route path="/expense" element={<Expense />} />
-                <Route path="/add-expense" element={<AddExpense />} />
-                <Route path="/project" element={<Project />} />
-                <Route path="*" element={<Er403 />} />
+                <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
+                <Route path="/projects/:projectId/expenses" element={<Expense />} />
+                <Route path="/projects/:projectId/add-expense" element={<AddExpense />} />
+                <Route path="/projects" element={<Project />} />
+                <Route path="/add-project" element={<Er403 />} />
+                <Route path='/employee-search' element={<Er403 />} />
                 <Route path='/profile' element={<MyProfile />} />
                 <Route path='/expense-details' element={<ExpenseDetails />} />
+                <Route path='/projects/:projectId/announcements' element={<Announcement />} />
+                <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
+                <Route path='*' element={<Er404 />} />
               </Routes>
             </>
           ) : (
@@ -48,14 +56,17 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/project/dashboard" element={<ProjectDashboard />} />
-                <Route path="/expense" element={<Expense />} />
-                <Route path="/add-expense" element={<AddExpense />} />
-                <Route path="/project" element={<Project />} />
+                <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
+                <Route path="/projects/:projectId/expenses" element={<Expense />} />
+                <Route path="/projects/:projectId/add-expense" element={<AddExpense />} />
+                <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />
                 <Route path='/profile' element={<MyProfile />} />
                 <Route path='/employee-search' element={<EmployeeSearch />} />
                 <Route path='/expense-details' element={<ExpenseDetails />} />
+                <Route path='/projects/:projectId/announcements' element={<Announcement />} />
+                <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
+                <Route path='*' element={<Er404 />} />
               </Routes>
             </>
           )

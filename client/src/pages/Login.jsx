@@ -41,16 +41,16 @@ export const Login = () => {
 
   useEffect(() => {
 
-    if (user)
-    {
-      navigate("/");
-    }
-    
     if (isSuccess && user)
     {
       message.success("User Logged In Successfully!");
+      navigate("/projects");
       dispatch(reset());
-      navigate("/");
+    }
+
+    if (user)
+    {
+      navigate("/projects");
     }
 
     if(isError)

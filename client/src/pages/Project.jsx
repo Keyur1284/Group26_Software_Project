@@ -1,30 +1,80 @@
-import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Hamburger2 } from "../components/Hamburger_2";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
+import { getProjectsManager, getProjectsEmployee, reset } from "../features/project/projectSlice";
 
 export const Project = () => {
-  const colors = ["#163763", "#3452B9", "#005483", "#8E8E8E", "#3C3C3C"];
-  const [buttons, setButtons] = useState([]);
-  const lastButtonRef = useRef(null);
 
-  const addNewButton = () => {
-    const newIndex = buttons.length % colors.length;
-    const newButtons = [
-      ...buttons,
-      {
-        projectName: `Project ${buttons.length + 1}`,
-        managerName: `Manager ${buttons.length + 1}`,
-        color: colors[newIndex],
-      },
-    ];
-    setButtons(newButtons);
-  };
+  const dispatch = useDispatch();
+  const { isLoading, isSuccess, isError, appErr, serverErr, projects} = useSelector(state => state.project);
+  const { user } = useSelector(state => state.auth);
+
+  const navigate = useNavigate();
+  const colors = ["#163763", "#3452B9", "#005483", "#8E8E8E", "#3C3C3C"];
 
   useEffect(() => {
-    if (lastButtonRef.current) {
-      lastButtonRef.current.scrollIntoView({ behavior: "smooth" });
+  
+    if (user.role == "manager")
+      dispatch(getProjectsManager());
+
+    else
+      dispatch(getProjectsEmployee());
+
+  }, [dispatch]);
+
+  useEffect(() => {
+    
+    if (isSuccess || isError)
+    {
+      dispatch(reset());
     }
-  }, [buttons]);
+
+  }, [isSuccess, isError, appErr, serverErr]);
+
+  if (isLoading)
+  {
+    return (
+      <div
+      className="px-3 py-3"
+      style={{
+        backgroundImage: `url(${mainbg})`,
+        backgroundRepeat: "repeat",
+        minHeight: "92vh"
+      }}
+    >
+      <div className="row">
+        <div className="col-3">
+          <Hamburger2 />
+        </div>
+        <div className="col-9" style={{marginTop: "-1vh"}}>
+          <div style={{ minHeight: "85vh" }}>
+            <div className="row">
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    )
+  }
 
   return (
     <div
@@ -32,6 +82,7 @@ export const Project = () => {
       style={{
         backgroundImage: `url(${mainbg})`,
         backgroundRepeat: "repeat",
+        minHeight: "92vh"
       }}
     >
       <div className="row">
@@ -39,16 +90,15 @@ export const Project = () => {
           <Hamburger2 />
         </div>
         <div className="col-9 px-4" style={{marginTop: "-1vh"}}>
-          <div style={{ minHeight: "85vh" }}>
+          <div>
             <div className="row">
-              {buttons.map((button, index) => (
+              {projects.map((project, index) => (
                 <button
                   key={index}
-                  ref={index === buttons.length - 1 ? lastButtonRef : null}
                   style={{
-                    margin: "0.5%",
+                    marginTop: index == 0 ? "0.5%" : "3vh",
                     padding: "2.5%",
-                    backgroundColor: button.color,
+                    backgroundColor:  colors[index % colors.length],
                     color: "#fff",
                     border: "none",
                     borderRadius: "20px",
@@ -57,13 +107,14 @@ export const Project = () => {
                     textAlign: "left",
                     boxShadow: "0px 4px 8px rgba(5, 5, 5, 5)",
                   }}
+
+                  onClick={() => navigate(`/projects/${project._id}/announcements`)}
                 >
-                  {button.name}
-                  <div style={{ fontSize: "32px" }}>{button.projectName}</div>
-                  <div style={{ fontSize: "20px" }}>{button.managerName}</div>
+                  <div style={{ fontSize: "32px" }}>{project.name}</div>
+                  <div style={{ fontSize: "20px" }}>{project.managerName}</div>
                 </button>
               ))}
-              <button
+              {user.role == "manager" && <button
                 style={{
                   position: "absolute",
                   bottom: "25px",
@@ -77,10 +128,10 @@ export const Project = () => {
                   color: "#fff",
                   cursor: "pointer",
                 }}
-                onClick={addNewButton}
+                onClick={() => navigate("/add-project")}
               >
                 +
-              </button>
+              </button>}
             </div>
           </div>
         </div>
