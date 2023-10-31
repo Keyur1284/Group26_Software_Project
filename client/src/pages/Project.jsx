@@ -107,6 +107,8 @@ export const Project = () => {
                     textAlign: "left",
                     boxShadow: "0px 4px 8px rgba(5, 5, 5, 5)",
                   }}
+
+                  onClick={() => navigate(`/projects/${project._id}/announcements`)}
                 >
                   <div style={{ fontSize: "32px" }}>{project.name}</div>
                   <div style={{ fontSize: "20px" }}>{project.managerName}</div>
