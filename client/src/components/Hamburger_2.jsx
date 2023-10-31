@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faListCheck,faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,14 +26,14 @@ export const Hamburger2 = () => {
   };
 
   const buttons = [
-    { icon: faListCheck, text: 'My Project' },
-    { icon: faUser, text: 'Profile' },
+    { icon: faListCheck, text: 'My Project', link : `/projects` },
+    { icon: faUser, text: 'Profile' , link : `/profile`},
   ];
 
   return (
     <div>
       {buttons.map((button, index) => (
-        <div key={button.text} className="d-flex flex-column">
+        <Link to = {button.link} key={button.text} className='text-decoration-none' > <div  className="d-flex flex-column">
           <div
             className="btn btn-primary rounded-4 my-button mb-3 fs-4"
             style={buttonStates[index].isHovered ? { ...buttonStyle, ...hoverStyle } : buttonStyle}
@@ -42,6 +43,7 @@ export const Hamburger2 = () => {
             <FontAwesomeIcon icon={button.icon} size="lg" /> {button.text}
           </div>
         </div>
+        </Link>
       ))}
     </div>
   );
