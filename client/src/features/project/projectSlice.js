@@ -31,16 +31,38 @@ export const createProject = createAsyncThunk('/project/createProject', async (p
         }
 })
 
-export const getProjectsManager = createAsyncThunk('/project/getProjectsManager', async (thunkAPI) => {
+
+export const getProjectsManager = createAsyncThunk('/project/getProjectsManager', async (_, thunkAPI) => {
 
     try {
         const token = thunkAPI.getState().auth.user.token;
-        const response = await projectService.getProjects(token);
+        const response = await projectService.getProjectsManager(token);
         return response;
     }
 
     catch (error) {
             
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+
+});
+
+
+export const getProjectsEmployee = createAsyncThunk('/project/getProjectsEmployee', async (_, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await projectService.getProjectsEmployee(token);
+        return response;
+    }
+
+    catch (error) {
+                
             if (!error.response)
             {
                 throw error;
@@ -48,8 +70,8 @@ export const getProjectsManager = createAsyncThunk('/project/getProjectsManager'
     
             return thunkAPI.rejectWithValue(error.response.data);
         }
-
 });
+
 
 const projectSlice = createSlice({
     name: "project",
@@ -97,6 +119,23 @@ const projectSlice = createSlice({
         })
 
         .addCase(getProjectsManager.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.appErr = action.payload?.message;
+            state.serverErr = action.error?.message;
+        })
+
+        .addCase(getProjectsEmployee.pending, (state) => {
+            state.isLoading = true;
+        })
+
+        .addCase(getProjectsEmployee.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.projects = action.payload.projects;
+        })
+
+        .addCase(getProjectsEmployee.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.appErr = action.payload?.message;
