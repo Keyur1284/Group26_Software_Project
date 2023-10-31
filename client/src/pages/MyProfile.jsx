@@ -50,13 +50,13 @@ export const MyProfile = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if(isSuccess)
+    
+    if (isSuccess || isError)
     {
       dispatch(reset());
     }
-  }, [dispatch]);
 
-  // const loading = true;
+  }, [isSuccess, isError, appErr, serverErr]);
 
   if(isLoading){
     return (
@@ -276,25 +276,25 @@ export const MyProfile = () => {
               <div className="col-md-8">
                 <div className="mt-3 mr-4 ml-3 mb-3 pt-5 p-3">
                   <h2 className="p-3 rounded-pill" style={inlineStyles1}>
-                    First Name : {profile.firstName}
+                    First Name : {profile?.firstName}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles2}>
-                    Last Name : {profile.lastName}
+                    Last Name : {profile?.lastName}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles1}>
-                    Gmail : {profile.email}
+                    Gmail : {profile?.email}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles2}>
-                    Birth Date : {profile.bod}
+                    Birth Date : {profile?.bod}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles1}>
-                    Contact No. : {profile.contactNo}
+                    Contact No. : {profile?.contactNo}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles2}>
-                    Joining Date : {profile.joiningDate}
+                    Joining Date : {profile?.joiningDate}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill " style={inlineStyles1}>
-                    Role : {profile.role}
+                    Role : {profile?.role}
                   </h2>
                 </div>
               </div>
