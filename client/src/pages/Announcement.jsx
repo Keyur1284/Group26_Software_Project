@@ -23,10 +23,10 @@ export const Announcement = () => {
         <Hamburger4 />
       </div>
       <div className="col-9 px-4">
-        <ul class="nav nav-underline rounded">
-          <li class="nav-item">
+        <ul className="nav nav-underline rounded">
+          <li className="nav-item">
             <a
-              class="nav-link active"
+              className="nav-link active"
               aria-current="page"
               style={{ color: "blue" }}
               href="#"
@@ -34,13 +34,13 @@ export const Announcement = () => {
               Stream
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" style={{ color: "black" }} href="#">
+          <li className="nav-item">
+            <a className="nav-link" style={{ color: "black" }} href="#">
               Dashboard
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" style={{ color: "black" }} href="#">
+          <li className="nav-item">
+            <a className="nav-link" style={{ color: "black" }} href="#">
               Team Members
             </a>
           </li>
@@ -102,10 +102,9 @@ export const Announcement = () => {
                   .slice()
                   .reverse()
                   .map((announcement, index) => (
-                    <div class="card mb-2">
+                    <div className="card mb-2" key={index}>
                       <div
-                        class="card-body py-2"
-                        key={index}
+                        className="card-body py-2"
                         style={{ fontSize: "17px" }}
                       >
                         {announcement.split("\n").map((line, i) => (
