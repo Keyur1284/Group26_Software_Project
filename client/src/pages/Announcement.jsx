@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import ig from "../assets/announcement-images/projectbg.jpg";
 import mainbg from '../assets/project-dashboard/main-bg.jpg'
 import { Hamburger4 } from "../components/Hamburger_4";
 
 export const Announcement = () => {
+
+  const { projectId } = useParams();
+
   const [announcement, setAnnouncement] = useState("");
   const [announcements, setAnnouncements] = useState([]);
 
@@ -25,19 +29,19 @@ export const Announcement = () => {
       <div className="col-9 px-4">
         <ul className="nav nav-underline rounded">
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link active"
               aria-current="page"
               style={{ color: "blue" }}
-              href="#"
+              to={`/projects/${projectId}/announcements`}
             >
               Stream
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" style={{ color: "black" }} href="#">
+            <Link className="nav-link" style={{ color: "black" }} to={`/projects/${projectId}/dashboard`}>
               Dashboard
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             <a className="nav-link" style={{ color: "black" }} href="#">
