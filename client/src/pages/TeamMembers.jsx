@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Hamburger4 } from "../components/Hamburger_4";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { FaUser } from "react-icons/fa";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
@@ -15,6 +16,7 @@ export const TeamMembers = () => {
   const dispatch = useDispatch();
 
   const { manager, employees, isLoading, isSuccess, isError, appErr, serverErr } = useSelector((state) => state.team);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getMembers(projectId));
@@ -186,8 +188,8 @@ export const TeamMembers = () => {
                     </h3>
                   </div>
                   <div>
-                    <h4 className="card-title px-1 py-3 text-white font-weight-bold">
-                      <ManageAccountsIcon sx={{fontSize: 40}} /> {" "} {manager.firstName || manager.name} {manager.lastName}
+                    <h4 className="card-title px-1 py-3 align-items-center d-flex text-white font-weight-bold">
+                      <ManageAccountsIcon sx={{fontSize: 40, marginRight: "1vh"}} /> {manager.firstName} {manager.lastName}
                     </h4>
                   </div>
                 </div>
@@ -204,9 +206,14 @@ export const TeamMembers = () => {
               >
                 <div className="card-body d-flex flex-column">
                   <div className="card py-1" style={{ background: "#5C91D8" }}>
+                    <div className="d-flex justify-content-between align-items-center">
                     <h3 className="card-title px-3 text-white font-weight-bold">
                       Team Members
                     </h3>
+                    {user.role == "manager" && <Link to={ `/projects/${projectId}/invite-employee`} className="text-decoration-none"><h3 className="card-title px-3 mt-2 text-white font-weight-bold">
+                      <PersonAddIcon sx={{fontSize: 40}}/> Invite Members
+                    </h3></Link>}
+                    </div>
                   </div>
                   <div className="members">
                     {employees.map((employee, index) => (
@@ -217,6 +224,16 @@ export const TeamMembers = () => {
                         <FaUser /> {" "} {employee.firstName || employee.name} {employee.lastName}
                       </h4>
                     ))}
+
+                    {employees.length === 0 && (
+                      <h4
+                        className="card-title px-1 py-3 text-white font-weight-bold"
+                      >
+                        No employees have been added to this project yet.
+                      </h4>
+                    )}
+
+
                   </div>
                 </div>
               </div>
