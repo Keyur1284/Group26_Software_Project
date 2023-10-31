@@ -36,7 +36,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
-                <Route path="/projects/:projectId/expense" element={<Expense />} />
+                <Route path="/projects/:projectId/expenses" element={<Expense />} />
                 <Route path="/projects/:projectId/add-expense" element={<AddExpense />} />
                 <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<Er403 />} />
@@ -55,7 +55,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
-                <Route path="/projects/:projectId/expense" element={<Expense />} />
+                <Route path="/projects/:projectId/expenses" element={<Expense />} />
                 <Route path="/projects/:projectId/add-expense" element={<AddExpense />} />
                 <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />

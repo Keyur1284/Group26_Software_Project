@@ -44,13 +44,13 @@ export const Login = () => {
     if (isSuccess && user)
     {
       message.success("User Logged In Successfully!");
-      navigate("/project");
+      navigate("/projects");
       dispatch(reset());
     }
 
     if (user)
     {
-      navigate("/project");
+      navigate("/projects");
     }
 
     if(isError)
