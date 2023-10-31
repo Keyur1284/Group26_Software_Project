@@ -1,19 +1,49 @@
-import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import ig from "../assets/announcement-images/announcementbg.png";
 import mainbg from '../assets/project-dashboard/main-bg.jpg'
 import { Hamburger4 } from "../components/Hamburger_4";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { createAnnouncement, getAnnouncements, reset, clearAnnouncements } from "../features/announcement/announcementSlice"; 
 
-const announcement_data = [
-  "Announcement 1",
-  "Announcement 2 Line 1\n Announcement 2 Line 2",
-  "Announcement 3",
-];
 
-export const Announcement = () => {
-
+export const Announcement = () => {  
+  
   const { projectId } = useParams();
+  const dispatch = useDispatch();
+  const { announcements, isLoading, isSuccess, isError, appErr, serverErr, projectName, managerName } = useSelector(state => state.announcement);
+  const { user } = useSelector(state => state.auth);
 
+  const formSchema = Yup.object({
+    message: Yup.string()
+  });  
+
+  const formik = useFormik({
+    initialValues: {
+      message: "",
+    },  
+    onSubmit: (values) => {
+      
+      const announcement = {
+        message: values.message,
+        projectId,
+        name: user.firstName + " " + user.lastName,
+      }  
+
+      dispatch(createAnnouncement(announcement));
+
+      formik.resetForm();
+      dispatch(reset());
+    },  
+    validationSchema: formSchema,
+  });  
+
+  useEffect(() => {
+    dispatch(clearAnnouncements());
+    dispatch(getAnnouncements(projectId));
+  }, [dispatch, projectId]);
 
   return (
     <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight: "92vh" }}>
@@ -60,8 +90,8 @@ export const Announcement = () => {
                 }}
               >
                 <div className="card-body d-flex flex-column text-white">
-                  <h3 className="card-title mt-auto mb-2">Project_Name</h3>
-                  <h5>Manger_Name</h5>
+                  <h3 className="card-title mt-auto mb-2">{projectName}</h3>
+                  <h5>{managerName}</h5>
                 </div>
               </div>
             </div>
@@ -75,15 +105,21 @@ export const Announcement = () => {
                 }}
               >
                 <textarea
+                  name="message"
+                  value={formik.values.message}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   className="form-control"
                   placeholder="Type your announcement here"
                 />
                 <div className="input-group-append px-2">
                   <button
+                    type = "submit"
                     style={{
                       height: "8vh",
                     }}
                     className="btn btn-primary"
+                    onClick={formik.handleSubmit}
                   >
                     Submit
                   </button>
@@ -98,16 +134,15 @@ export const Announcement = () => {
                   <h4 className="card-title mb-4" style={{ color: "blue" }}>
                     Announcements
                   </h4>
-                  {announcement_data.map((announcement, index) => (
-                    <div class="card mb-2">
-                      <div
-                        class="card-body py-2 mb-2"
-                        key={index}
-                        style={{ fontSize: "18px" }}
-                      >
-                        {announcement.split("\n").map((line, i) => (
-                          <div key={i}>{line}</div>
-                        ))}
+                  {announcements.map((announcement, index) => (
+                    <div key={index} className="card mb-3">
+                      <div className="card-body">
+                        <h5 className="card-title">{announcement.message}</h5>
+                        <p className="card-text">
+                          <small className="text-muted">
+                            {announcement.name} | {new Date(announcement.createdAt).toLocaleString()}
+                          </small>
+                        </p>
                       </div>
                     </div>
                   ))}
