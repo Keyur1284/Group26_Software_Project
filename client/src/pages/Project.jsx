@@ -1,21 +1,80 @@
 import { useNavigate } from "react-router-dom";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Hamburger2 } from "../components/Hamburger_2";
-
-const projects = [
-  { name: "Project 1", managerName: "Manager 1"},
-  { name: "Project 2", managerName: "Manager 2"},
-  { name: "Project 3", managerName: "Manager 3"},
-  { name: "Project 4", managerName: "Manager 4"},
-  { name: "Project 5", managerName: "Manager 5"},
-]
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
+import { getProjectsManager, getProjectsEmployee, reset } from "../features/project/projectSlice";
 
 export const Project = () => {
+
+  const dispatch = useDispatch();
+  const { isLoading, isSuccess, isError, appErr, serverErr, projects} = useSelector(state => state.project);
+  const { user } = useSelector(state => state.auth);
 
   const navigate = useNavigate();
   const colors = ["#163763", "#3452B9", "#005483", "#8E8E8E", "#3C3C3C"];
 
-  const role = "manager";
+  useEffect(() => {
+  
+    if (user.role == "manager")
+      dispatch(getProjectsManager());
+
+    else
+      dispatch(getProjectsEmployee());
+
+  }, [dispatch]);
+
+  useEffect(() => {
+    
+    if (isSuccess || isError)
+    {
+      dispatch(reset());
+    }
+
+  }, [isSuccess, isError, appErr, serverErr]);
+
+  if (isLoading)
+  {
+    return (
+      <div
+      className="px-3 py-3"
+      style={{
+        backgroundImage: `url(${mainbg})`,
+        backgroundRepeat: "repeat",
+        minHeight: "92vh"
+      }}
+    >
+      <div className="row">
+        <div className="col-3">
+          <Hamburger2 />
+        </div>
+        <div className="col-9" style={{marginTop: "-1vh"}}>
+          <div style={{ minHeight: "85vh" }}>
+            <div className="row">
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="70vw" height="15vh" />
+              </Typography>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    )
+  }
 
   return (
     <div
@@ -23,6 +82,7 @@ export const Project = () => {
       style={{
         backgroundImage: `url(${mainbg})`,
         backgroundRepeat: "repeat",
+        minHeight: "92vh"
       }}
     >
       <div className="row">
@@ -30,7 +90,7 @@ export const Project = () => {
           <Hamburger2 />
         </div>
         <div className="col-9 px-4" style={{marginTop: "-1vh"}}>
-          <div style={{ minHeight: "85vh" }}>
+          <div>
             <div className="row">
               {projects.map((project, index) => (
                 <button
@@ -52,7 +112,7 @@ export const Project = () => {
                   <div style={{ fontSize: "20px" }}>{project.managerName}</div>
                 </button>
               ))}
-              {role == "manager" && <button
+              {user.role == "manager" && <button
                 style={{
                   position: "absolute",
                   bottom: "25px",
