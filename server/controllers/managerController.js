@@ -6,9 +6,9 @@ const bcrypt = require('bcryptjs');
 
 const registerController = asyncHandler(async (req, res) => {
 
-    const {name, email, password} = req.body;
+    const {firstName, lastName, email, dob, contactNo, password} = req.body;
 
-    if (!name || !email || !password)
+    if (!firstName || !lastName || !email || !password || !dob || !contactNo)
     {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
@@ -27,7 +27,10 @@ const registerController = asyncHandler(async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const manager = await Manager.create({
-        name,
+        firstName,
+        lastName,
+        dob,
+        contactNo,
         email,
         password: hashedPassword
     });
@@ -36,11 +39,15 @@ const registerController = asyncHandler(async (req, res) => {
     {
         res.status(200).json({
             success: true,
-            _id: manager._id,
-            name: manager.name,
-            email: manager.email,
-            message: "Registeration Successful",
-            token: generateToken(manager._id)
+            manager: {
+                _id: manager._id,
+                firstName: manager.firstName,
+                lastName: manager.lastName,
+                dob: manager.dob,
+                contactNo: manager.contactNo,
+                email: manager.email
+            },
+            message: "Registeration Successful"
         });
     }
 
