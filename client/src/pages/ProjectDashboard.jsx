@@ -7,10 +7,14 @@ import { MyExpPie } from '../components/MyExpPie'
 import { TotalExpPie } from '../components/TotalExpPie'
 import { Hamburger4 } from '../components/Hamburger_4'
 import { EmpDistributionPie } from '../components/EmpDistributionPie'
+import { useSelector } from 'react-redux'
 
-const role = 'manager';
 
 export const ProjectDashboard = () => {
+
+    const { user } = useSelector(state => state.auth);
+    const role = user.role;
+
     return (
         <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>
             <div className="row">
