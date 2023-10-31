@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faPlus, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { DisplayExpense } from "../components/DisplayExpense";
 import { Hamburger4 } from "../components/Hamburger_4";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Expense = () => {
+
+  const { projectId } = useParams();
+
   const [selectedDateOption, setSelectedDateOption] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -32,9 +36,10 @@ export const Expense = () => {
     setSelectedCategory(newCategory);
   };
 
-  const user = "employee";
-
-  if(user === "employee")
+  const { user } = useSelector((state) => state.auth);
+  const role = user.role;
+  
+  if (role == "employee")
   {
     return (
       <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>
@@ -54,7 +59,7 @@ export const Expense = () => {
               </div>
                 <div className="col-md-3 d-flex align-items-center justify-content-end">
                   <div className="mr-3">
-                    <Link to="/add-expense" className="btn btn-dark btn-rounded rounded-pill shadow-lg" style={{ fontSize: "25px" }}>
+                    <Link to={`/projects/${projectId}/add-expense`} className="btn btn-dark btn-rounded rounded-pill shadow-lg" style={{ fontSize: "25px" }}>
                       <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
                     </Link>
                   </div>
@@ -162,7 +167,7 @@ export const Expense = () => {
                 Delete
               </div>
             </div>
-            <DisplayExpense userType={user} />
+            <DisplayExpense userType={role} />
           </div>
         </div>
       </div>
@@ -292,7 +297,7 @@ export const Expense = () => {
                 Delete
               </div>
             </div>
-            <DisplayExpense userType={user} />
+            <DisplayExpense userType={role} />
           </div>
         </div>
       </div>
