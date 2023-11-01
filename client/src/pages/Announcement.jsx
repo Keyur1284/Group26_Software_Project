@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
-import { createAnnouncement, getAnnouncements, reset, clearAnnouncements } from "../features/announcement/announcementSlice"; 
+import { createAnnouncement, getAnnouncements, reset } from "../features/announcement/announcementSlice"; 
 
 
 export const Announcement = () => {  
@@ -37,17 +37,24 @@ export const Announcement = () => {
       dispatch(createAnnouncement(announcement));
 
       formik.resetForm();
-      dispatch(reset());
     },  
     validationSchema: formSchema,
   });  
 
   useEffect(() => {
-    dispatch(clearAnnouncements());
+    
     dispatch(getAnnouncements(projectId));
   }, [dispatch, projectId]);
 
-  if( isLoading ) {
+  useEffect(() => {
+
+    if (isSuccess || isError) 
+    {
+      dispatch(reset());
+    }
+  }, [dispatch, isSuccess, isError]);
+
+  if ( isLoading && announcements.length === 0) {
     return (
       <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight: "92vh" }}>
       <div className="row">
@@ -64,11 +71,6 @@ export const Announcement = () => {
                 to={`/projects/${projectId}/announcements`}
               >
                 Stream
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" style={{ color: "black",fontSize: "20px"  }} to={`/projects/${projectId}/dashboard`}>
-                Dashboard
               </Link>
             </li>
             <li className="nav-item">
@@ -92,9 +94,13 @@ export const Announcement = () => {
                     backgroundPosition: "center",
                   }}
                 >
-                  <div className="card-body d-flex flex-column text-white">
-                    <h3 className="card-title mt-auto mb-2">{projectName}</h3>
-                    <h5>{managerName}</h5>
+                  <div className="card-body d-flex justify-content-end flex-column text-white">
+                  <Typography component="div" variant="h1" style={{marginTop: "20vh"}}>
+                      <Skeleton variant="rounded" width="35%" height="5vh" />
+                    </Typography>
+                    <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                      <Skeleton variant="rounded" width="35%" height="5vh" />
+                    </Typography>
                   </div>
                 </div>
               </div>
@@ -174,11 +180,6 @@ export const Announcement = () => {
               to={`/projects/${projectId}/announcements`}
             >
               Stream
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" style={{ color: "black",fontSize: "20px"  }} to={`/projects/${projectId}/dashboard`}>
-              Dashboard
             </Link>
           </li>
           <li className="nav-item">

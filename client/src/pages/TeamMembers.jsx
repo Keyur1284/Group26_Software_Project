@@ -50,15 +50,6 @@ export const TeamMembers = () => {
             </li>
             <li className="nav-item">
               <Link
-                className="nav-link"
-                style={{ color: "black" ,fontSize: "20px" }}
-                to={`/projects/${projectId}/dashboard`}
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
                 className="nav-link active"
                 aria-current="page"
                 style={{ color: "blue",fontSize: "20px"  }}
@@ -150,15 +141,6 @@ export const TeamMembers = () => {
                 to={`/projects/${projectId}/announcements`}
               >
                 Stream
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                style={{ color: "black" ,fontSize: "20px" }}
-                to={`/projects/${projectId}/dashboard`}
-              >
-                Dashboard
               </Link>
             </li>
             <li className="nav-item">
