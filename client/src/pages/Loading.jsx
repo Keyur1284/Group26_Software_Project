@@ -1,4 +1,3 @@
-import React from "react";
 import main_bg from "../assets/project-dashboard/main-bg.jpg";
 import FadeLoader from "react-spinners/FadeLoader";
 
@@ -21,8 +20,8 @@ export const Loading = () => {
                 loading={true}
               />
             </div>
-            <div className="m-3 p-3 d-flex justify-content-center display-2    ">
-              Your Page is Loading.....
+            <div className="m-3 p-3 d-flex justify-content-center display-1">
+              Your page is loading...
             </div>
           </div>
         </div>
