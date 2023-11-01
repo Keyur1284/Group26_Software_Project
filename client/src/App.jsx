@@ -64,7 +64,7 @@ function App() {
                 <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />
                 <Route path='/profile' element={<MyProfile />} />
-                <Route path='/employee-search' element={<EmployeeSearch />} />
+                <Route path='/projects/:projectId/invite-employee' element={<EmployeeSearch />} />
                 <Route path='/expense-details' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
                 <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
