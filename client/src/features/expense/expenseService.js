@@ -16,5 +16,17 @@ const createExpense = async (expenseData, token) => {
     return response.data;
 }
 
+const getExpenseEmployee = async (projectId, token) => {
 
-export const expenseService = { createExpense }
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(`${baseURL}/expenses/expenses-employee/${projectId}`, config);
+    return response.data;
+}
+
+export const expenseService = { createExpense, getExpenseEmployee }
