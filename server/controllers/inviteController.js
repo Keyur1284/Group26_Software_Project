@@ -93,9 +93,9 @@ const getInvitesController = asyncHandler(async (req, res) => {
 
 const acceptInviteController = asyncHandler(async (req, res) => {
 
-    const {invite_id} = req.body;
+    const {inviteId} = req.body;
     const employee_id = req.employee._id;
-    const invite = await Invite.findById(invite_id);
+    const invite = await Invite.findById(inviteId);
     const project = await Project.findById(invite.project_id);
 
     if (invite && project)
@@ -114,7 +114,7 @@ const acceptInviteController = asyncHandler(async (req, res) => {
             success: true,
             employee,
             project,
-            message: "Invite accepted"
+            message: "Invite accepted successfully!"
         });
     }
 
