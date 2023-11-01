@@ -4,6 +4,7 @@ import projectReducer from '../features/project/projectSlice'
 import announcementReducer from '../features/announcement/announcementSlice';
 import teamReducer from '../features/team/teamSlice';
 import inviteReducer from '../features/invite/inviteSlice';
+import expenseReducer from '../features/expense/expenseSlice';
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         project: projectReducer,
         announcement: announcementReducer,
         team: teamReducer,
-        invite: inviteReducer
+        invite: inviteReducer,
+        expense: expenseReducer
     }
 })
