@@ -7,6 +7,7 @@ import { clearAnnouncements } from "../features/announcement/announcementSlice";
 import { clearEmployeesAndInvitations } from "../features/invite/inviteSlice";
 import { clearProjects } from "../features/project/projectSlice";
 import { clearTeam } from "../features/team/teamSlice";
+import { clearExpenses } from "../features/expense/expenseSlice";
 import { message } from "antd";
 import "../css/Homepage.css";
 
@@ -24,6 +25,7 @@ export const Header = () => {
       dispatch(clearEmployeesAndInvitations())
       dispatch(clearProjects())
       dispatch(clearTeam())
+      dispatch(clearExpenses())
       message.success("User Logged Out Successfully!")
       navigate('/login')
     }
