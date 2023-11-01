@@ -50,6 +50,25 @@ export const getExpenseEmployee = createAsyncThunk("expense/getExpenseEmployee",
 });
 
 
+export const getExpenseManager = createAsyncThunk("expense/getExpenseManager", async (projectId, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await expenseService.getExpenseManager(projectId, token);
+        return response;
+    }
+    catch (error) {
+        
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
+
 const announcementSlice = createSlice({
     name: "expense",
     initialState,
@@ -61,6 +80,9 @@ const announcementSlice = createSlice({
             state.message = "";
             state.appErr = "";
             state.serverErr = "";
+        },
+        clearExpenses: (state) => {
+            state.expenses = [];
         }
     },
     extraReducers: (builder) => {
@@ -101,9 +123,26 @@ const announcementSlice = createSlice({
                 state.appErr = action.payload?.message;
                 state.serverErr = action.error?.message;
             })
+
+            .addCase(getExpenseManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(getExpenseManager.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.expenses = action.payload.expenses;
+            })
+
+            .addCase(getExpenseManager.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
     }
 })
 
 
-export const { reset } = announcementSlice.actions;
+export const { reset, clearExpenses } = announcementSlice.actions;
 export default announcementSlice.reducer;
