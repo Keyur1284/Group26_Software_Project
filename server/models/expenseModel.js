@@ -48,7 +48,7 @@ const expenseSchema = new mongoose.Schema({
             message: 'Status is invalid!'
         }
     },
-    file: {
+    driveLink: {
         type: String, 
         required: [true, 'Please provide a file drive link'],
     }
