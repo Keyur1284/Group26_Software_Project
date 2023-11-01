@@ -41,7 +41,7 @@ export const InviteCard = () => {
     }
   }, [dispatch, isSuccess, isError]);
 
-  if (isLoading)
+  if (isLoading && !invitations)
   {
     return (
       <>
