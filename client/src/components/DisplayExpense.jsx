@@ -1,70 +1,42 @@
 import { ExpenseCard } from "./ExpenseCard";
-
-const details = [
-  {
-    id: 0,
-    ind: 0,
-    description: "Trip to Goa",
-    amount: 21000,
-    status: "Pending",
-    category: "Travel",
-    date: "21-9-23",
-    addedBy: "User1"
-  },
-  {
-    id: 1,
-    ind: 1,
-    description: "Trip to Mumbai",
-    amount: 41000,
-    status: "Approved",
-    category: "Travel",
-    date: "21-9-23",
-    addedBy: "User2"
-  },
-  {
-    id: 2,
-    ind: 2,
-    description: "Dinner in Mumbai",
-    amount: 5100,
-    status: "Approved",
-    category: "Food",
-    date: "21-9-23",
-    addedBy: "User3"
-  },
-  {
-    id: 3,
-    ind: 3,
-    description: "Accommodation",
-    amount: 10000,
-    status: "Pending",
-    category: "Accommodation",
-    date: "21-9-23",
-    addedBy: "User4"
-  },
-  {
-    id: 4,
-    ind: 4,
-    description: "Extra Expense",
-    amount: 20000,
-    status: "Pending",
-    category: "Other",
-    date: "21-9-23",
-    addedBy: "User5"
-  },
-];
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getExpenseEmployee, reset } from "../features/expense/expenseSlice";
 
 export const DisplayExpense = (props) => {
-  return details.map((detail) => (
+
+  const { projectId } = useParams();
+  const dispatch = useDispatch();
+  const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
+
+  useEffect(() => {
+    dispatch(getExpenseEmployee(projectId));
+  }, [dispatch, projectId]);
+
+  useEffect(() => {
+    
+    if (isSuccess || isError)
+    {
+      dispatch(reset());
+    }
+
+  }, [isSuccess, isError]);
+
+  return( <>
+  {expenses.map((expense, index) => (
     <ExpenseCard
-      key={detail.id}
-      ind={detail.ind}
-      description={detail.description}
-      amount={detail.amount}
-      status={detail.status}
-      category={detail.category}
-      date={detail.date}
+      key={expense._id}
+      ind={index}
+      name={expense.name}
+      amount={expense.amount}
+      status={expense.status}
+      category={expense.category}
+      date={new Date(expense.date).toLocaleDateString()}
       userType={props.userType}
-      addedBy={detail.addedBy}
+      addedBy={expense.employee_id.firstName + " " + expense.employee_id.lastName}
     />
-  ));
+  ))}
+  </>
+  )
 };

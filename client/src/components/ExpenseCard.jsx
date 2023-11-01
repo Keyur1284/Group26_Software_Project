@@ -35,7 +35,7 @@ export const ExpenseCard = (props) => {
             {categoryIcon && <FontAwesomeIcon icon={categoryIcon} size="2xl" />}
           </div>
           <div className="col-md-3 d-flex flex-column align-items-center justify-content-center shadow" style={{ backgroundColor: newColor }}>
-            <div>{props.description}</div>
+            <div>{props.name}</div>
             <div style={{ fontSize: "12px" }}>{props.date}</div>
           </div>
           <div
