@@ -108,7 +108,7 @@ const acceptInviteController = asyncHandler(async (req, res) => {
         project.employees.push(employee._id);
         await project.save();
         
-        await Invite.deleteMany({project_id: invite.project_id});
+        await Invite.deleteMany({project_id: invite.project_id , employee_id: invite.employee_id});
         
         res.status(200).json({
             success: true,
