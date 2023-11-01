@@ -42,6 +42,10 @@ const teamSlice = createSlice({
             state.message = "";
             state.appErr = "";
             state.serverErr = "";
+        },
+        clearTeam: (state) => {
+            state.manager = "";
+            state.employees = [];
         }
     },
     extraReducers: (builder) => {
@@ -69,5 +73,5 @@ const teamSlice = createSlice({
 })
 
 
-export const { reset } = teamSlice.actions;
+export const { reset, clearTeam } = teamSlice.actions;
 export default teamSlice.reducer;

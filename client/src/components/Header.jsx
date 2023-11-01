@@ -3,6 +3,10 @@ import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
+import { clearAnnouncements } from "../features/announcement/announcementSlice";
+import { clearEmployeesAndInvitations } from "../features/invite/inviteSlice";
+import { clearProjects } from "../features/project/projectSlice";
+import { clearTeam } from "../features/team/teamSlice";
 import { message } from "antd";
 import "../css/Homepage.css";
 
@@ -16,6 +20,10 @@ export const Header = () => {
     
     try {
       await dispatch(logout())
+      dispatch(clearAnnouncements())
+      dispatch(clearEmployeesAndInvitations())
+      dispatch(clearProjects())
+      dispatch(clearTeam())
       message.success("User Logged Out Successfully!")
       navigate('/login')
     }

@@ -58,6 +58,9 @@ const announcementSlice = createSlice({
             state.message = "";
             state.appErr = "";
             state.serverErr = "";
+        },
+        clearAnnouncements: (state) => {
+            state.announcements = [];
         }
     },
     extraReducers: (builder) => {
@@ -105,5 +108,5 @@ const announcementSlice = createSlice({
 })
 
 
-export const { reset } = announcementSlice.actions;
+export const { reset, clearAnnouncements } = announcementSlice.actions;
 export default announcementSlice.reducer;
