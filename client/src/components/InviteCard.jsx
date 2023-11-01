@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import '../css/Invites.css';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInvites, reset } from '../features/invite/inviteSlice';
+import { getInvites, reset, acceptInvite } from '../features/invite/inviteSlice';
 import Skeleton from '@mui/material/Skeleton';
+import { message } from 'antd';
 
 const CardStyle = {
   backgroundColor: "#295CAA",
@@ -18,13 +20,20 @@ const ButtonStyle = {
 export const InviteCard = () => {
 
   const dispatch = useDispatch();
-  const { invitations, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.invite);
+  const navigate = useNavigate();
+  const { invitations, isSuccess, result, isLoading, isError, appErr, serverErr } = useSelector((state) => state.invite);
 
   useEffect(() => {
     dispatch(getInvites());
   }, [dispatch]);
 
   useEffect(() => {
+
+    if (isSuccess && result)
+    {
+      message.success(result);
+      navigate('/projects');
+    }
 
     if (isSuccess || isError) 
     {
@@ -66,7 +75,11 @@ export const InviteCard = () => {
                     type="button"
                     className="InviteBtn rounded rounded-3 p-2 me-3"
                     onClick={() => {
-                      console.log(invite._id);
+                      const data = {
+                        inviteId: invite._id
+                      }
+                     
+                      dispatch(acceptInvite(data));
                     }
                     }
                   >
@@ -77,6 +90,14 @@ export const InviteCard = () => {
             </div>
           </div>
         ))}
+
+        {
+          invitations.length == 0 &&
+          <div className="p-4 " >
+            <div className="display-1 mx-5">No invites found!</div>
+          </div>
+        }
+
       </div>
     </div>
   );
