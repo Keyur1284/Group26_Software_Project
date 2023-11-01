@@ -7,55 +7,61 @@ const asyncHandler = require('express-async-handler');
 
 const sendInviteController = asyncHandler(async (req, res) => {
 
-    const {email} = req.body;
+    const {employees} = req.body;
     const project_id = req.params.project_id;
     const manager_id =  req.manager._id;
-
-    const employee = await Employee.findOne({email});
     const manager = await Manager.findById(manager_id);
     const project = await Project.findById(project_id);
+    const invitations = [];
+
+    for (let i = 0; i < employees.length; i++)
+    {
+        const employee_id = employees[i]._id;
+        const employee = await Employee.findById(employee_id);
     
+        if (!employee || !manager || !project)
+        {
+            res.status(400)
+            // res.json({success: false, message: 'Invalid data'});
+            throw new Error('Invalid data');
+        }
 
-    if (!employee || !manager || !project)
-    {
-        res.status(400)
-        // res.json({success: false, message: 'Invalid data'});
-        throw new Error('Invalid data');
-    }
+        const employeeProjects = employee.projects;
+        const projectExists = employeeProjects.includes(project_id);
 
-    const employee_id = employee._id;
-    const employeeProjects = employee.projects;
-    const projectExists = employeeProjects.includes(project_id);
+        if (projectExists)
+        {
+            res.status(400)
+            // res.json({success: false, message: 'Employee is already present in the project!'});
+            throw new Error(`Employee ${employee.firstName + " " + employee.lastName} is already present in the project!`);
+        }
 
-    if (projectExists)
-    {
-        res.status(400)
-        // res.json({success: false, message: 'Employee is already present in the project!'});
-        throw new Error('Employee is already present in the project!');
-    }
-
-    {
         const invite = await Invite.create({
             employee_id,
             project_id,
             manager_id
         });
 
-
         if (invite)
         {
-            res.status(200).json({
-                success: true,
-                invite
-            });
+            invitations.push(invite);
         }
+    }
 
-        else
-        {
-            res.status(400)
-            // res.json({success: false, message: 'Invalid data'});
-            throw new Error('Invalid data');
-        }
+    if (invitations.length > 0)
+    {
+        res.status(200).json({
+            success: true,
+            message: "Invitations sent successfully!",
+            invitations
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
     }
 })
 
