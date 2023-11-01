@@ -205,21 +205,12 @@ const getExpenseEmployeeController = asyncHandler(async (req, res) => {
 
     const employee_id = req.employee._id;
     const project_id = req.params.project_id;
-    const expenses = await Expense.find({ employee_id, project_id });
+    const expenses = await Expense.find({ employee_id, project_id }).populate('employee_id', 'firstName lastName');
 
-    if (expenses.length > 0) {
-        res.status(200).json({
-            success: true,
-            expenses
-        });
-    }
-
-    else {
-        res.status(200).json({
-            success: true,
-            message: "No expenses found!"
-        });
-    }
+    res.status(200).json({
+        success: true,
+        expenses
+    });
 });
 
 
