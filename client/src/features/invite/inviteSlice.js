@@ -103,6 +103,10 @@ const inviteSlice = createSlice({
             state.result = "";
             state.appErr = "";
             state.serverErr = "";
+        },
+        clearEmployeesAndInvitations: (state) => {
+            state.employees = [];
+            state.invitations = [];
         }
     },
     extraReducers: (builder) => {
@@ -181,5 +185,5 @@ const inviteSlice = createSlice({
 })
 
 
-export const { reset } = inviteSlice.actions;
+export const { reset, clearEmployeesAndInvitations } = inviteSlice.actions;
 export default inviteSlice.reducer; 

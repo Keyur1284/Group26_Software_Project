@@ -23,6 +23,8 @@ export const EmployeeSearch = () => {
     serverErr,
   } = useSelector((state) => state.invite);
 
+  const { employees: employees2 } = useSelector((state) => state.team);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [matchingEmployees, setMatchingEmployees] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
@@ -35,7 +37,14 @@ export const EmployeeSearch = () => {
       const filteredEmployees = employees.filter((employee) =>
         employee.email.toLowerCase().includes(term.toLowerCase())
       );
-      setMatchingEmployees(filteredEmployees);
+      
+      const filteredEmployees2 = filteredEmployees.filter((employee) => {
+        return !employees2.some(
+          (employee2) => employee2.email === employee.email
+        );
+      });
+
+      setMatchingEmployees(filteredEmployees2);
     } else {
       setMatchingEmployees([]);
     }
@@ -154,7 +163,7 @@ export const EmployeeSearch = () => {
                 {employee.email}
               </p>
             ))}
-          {matchingEmployees.length === 0 && searchTerm.trim() !== "" && (
+          {isSuccess && matchingEmployees.length === 0 && searchTerm.trim() !== "" && (
             <p className="rounded my-1 p-2 bg-light" style={{ width: "90%" }}>
               No matching employees found
             </p>

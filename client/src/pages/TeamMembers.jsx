@@ -207,7 +207,7 @@ export const TeamMembers = () => {
                       </h4>
                     ))}
 
-                    {employees.length === 0 && (
+                    {isSuccess && employees.length === 0 && (
                       <h4
                         className="card-title px-1 py-3 text-white font-weight-bold"
                       >
