@@ -7,13 +7,13 @@ const asyncHandler = require('express-async-handler');
 
 const addExpenseController = asyncHandler(async (req, res) => {
 
-    const { name, date, category, amount, description, file } = req.body;
+    const { name, date, category, amount, description, driveLink } = req.body;
     const project_id = req.params.project_id;
     const employee_id = req.employee._id;
     const project = await Project.findById(project_id);
     const manager_id = project.manager_id;
 
-    if (!name || !date || !category || !amount || !project_id || !file) {
+    if (!name || !date || !category || !amount || !project_id || !driveLink) {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
         throw new Error('Please fill all the fields');
@@ -60,7 +60,7 @@ const addExpenseController = asyncHandler(async (req, res) => {
         amount,
         project_id,
         employee_id,
-        file,
+        driveLink,
         status: 'Pending'
     });
 
@@ -98,14 +98,14 @@ const addExpenseController = asyncHandler(async (req, res) => {
 
 const updateExpenseController = asyncHandler(async (req, res) => {
 
-    const { name, date, category, amount, file } = req.body;
+    const { name, date, category, amount, driveLink } = req.body;
     const expense_id = req.params.expense_id;
     const expense = await Expense.findById(expense_id);
     const project_id = expense.project_id;
     const project = await Project.findById(project_id);
     const manager_id = project.manager_id;
 
-    if (!name || !date || !category || !amount || !file) {
+    if (!name || !date || !category || !amount || !driveLink) {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
         throw new Error('Please fill all the fields');
