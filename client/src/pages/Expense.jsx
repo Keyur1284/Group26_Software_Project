@@ -42,7 +42,7 @@ export const Expense = () => {
   const { expenses, isSuccess, isLoading } = useSelector((state) => state.expense);
   const role = user.role;
 
-  if (isLoading)
+  if (isLoading && expenses.length == 0)
   {
     return (
       <>
@@ -351,7 +351,7 @@ export const Expense = () => {
             {
               expenses.length == 0 && <div className="display-1">No expenses found!</div>
             }
-            <DisplayExpense userType={role} />
+            <DisplayExpense />
           </div>
         </div>
       </div>

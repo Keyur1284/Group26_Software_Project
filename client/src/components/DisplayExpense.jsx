@@ -2,16 +2,24 @@ import { ExpenseCard } from "./ExpenseCard";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getExpenseEmployee, reset } from "../features/expense/expenseSlice";
+import { getExpenseEmployee, getExpenseManager, reset } from "../features/expense/expenseSlice";
 
-export const DisplayExpense = (props) => {
+export const DisplayExpense = () => {
 
   const { projectId } = useParams();
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const role = user.role;
   const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
 
   useEffect(() => {
-    dispatch(getExpenseEmployee(projectId));
+
+    if (role == "employee")
+      dispatch(getExpenseEmployee(projectId));
+
+    else if (role == "manager")
+      dispatch(getExpenseManager(projectId));
+    
   }, [dispatch, projectId]);
 
   useEffect(() => {
@@ -33,7 +41,7 @@ export const DisplayExpense = (props) => {
       status={expense.status}
       category={expense.category}
       date={new Date(expense.date).toLocaleDateString()}
-      userType={props.userType}
+      userType={user.role}
       addedBy={expense.employee_id.firstName + " " + expense.employee_id.lastName}
     />
   ))}
