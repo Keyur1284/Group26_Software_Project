@@ -92,7 +92,6 @@ export const InviteCard = () => {
         ))}
 
         {
-          isSuccess &&
           invitations.length == 0 &&
           <div className="p-4 " >
             <div className="display-1 mx-5">No invites found!</div>
