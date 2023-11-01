@@ -42,4 +42,18 @@ const getInvites = async (token) => {
     return response.data;
 }
 
-export const inviteService = { getEmployees, sendInvite, getInvites };
+const acceptInvite = async (inviteId, token) => {
+    
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+    
+        const response = await axios.post(`${baseURL}/invites/accept-invite/`, inviteId, config);
+        return response.data;
+}
+
+
+export const inviteService = { getEmployees, sendInvite, getInvites, acceptInvite};

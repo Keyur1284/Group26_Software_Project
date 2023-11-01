@@ -72,6 +72,26 @@ export const getInvites = createAsyncThunk("invite/getInvites", async (_, thunkA
 })
 
 
+export const acceptInvite = createAsyncThunk("invite/acceptInvite", async (inviteId, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await inviteService.acceptInvite(inviteId, token);
+        return response;
+    }
+
+    catch (error) {
+        
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
+
 const inviteSlice = createSlice({
     name: "invite",
     initialState,
@@ -135,6 +155,23 @@ const inviteSlice = createSlice({
         })
 
         .addCase(getInvites.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.appErr = action.payload?.message;
+            state.serverErr = action.error?.message;
+        })
+
+        .addCase(acceptInvite.pending, (state) => {
+            state.isLoading = true;
+        })
+
+        .addCase(acceptInvite.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.result = action.payload.message;
+        })
+
+        .addCase(acceptInvite.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.appErr = action.payload?.message;
