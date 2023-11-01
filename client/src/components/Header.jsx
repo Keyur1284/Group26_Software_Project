@@ -109,9 +109,9 @@ export const Header = () => {
           {user ? (
             <div className="d-flex align-items-center">
               <Link to='/notifications'><NotificationsActiveIcon sx={{fontSize: 30}} className="text-light"/></Link>
-              <div className="text-light mx-3" style={{ fontSize: "18px" }}>
+              <Link to='/profile' className="text-decoration-none"> <div className="text-light mx-3" style={{ fontSize: "18px" }}>
                 {user.firstName} {user.lastName}
-              </div>
+              </div> </Link>
               <button
                 className="btn btn-danger"
                 onClick={handleLogout}
