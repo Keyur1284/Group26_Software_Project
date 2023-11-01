@@ -22,7 +22,7 @@ export const TeamMembers = () => {
     dispatch(getMembers(projectId));
   }, [dispatch, projectId]);
 
-  if (isLoading) {
+  if (isLoading && !manager) {
     return (
       <>
         <div
