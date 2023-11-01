@@ -163,7 +163,7 @@ export const EmployeeSearch = () => {
                 {employee.email}
               </p>
             ))}
-          {matchingEmployees.length === 0 && searchTerm.trim() !== "" && (
+          {isSuccess && matchingEmployees.length === 0 && searchTerm.trim() !== "" && (
             <p className="rounded my-1 p-2 bg-light" style={{ width: "90%" }}>
               No matching employees found
             </p>
