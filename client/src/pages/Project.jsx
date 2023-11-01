@@ -35,7 +35,7 @@ export const Project = () => {
 
   }, [isSuccess, isError, appErr, serverErr]);
 
-  if (isLoading)
+  if (isLoading && projects.length == 0)
   {
     return (
       <div
