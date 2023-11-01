@@ -70,8 +70,7 @@ const createProjectController = asyncHandler(async (req, res) => {
 
 const findEmployeesController = asyncHandler(async (req, res) => {
 
-    const regex = new RegExp(req.query.email, 'i');
-    const employees = await Employee.find({email: regex});
+    const employees = await Employee.find({}).select('email _id');
 
     if (employees)
     {
