@@ -1,5 +1,8 @@
-import React from "react";
+import { useEffect } from 'react';
 import '../css/Invites.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getInvites, reset } from '../features/invite/inviteSlice';
+import Skeleton from '@mui/material/Skeleton';
 
 const CardStyle = {
   backgroundColor: "#295CAA",
@@ -12,63 +15,47 @@ const ButtonStyle = {
   backgroundColor: "#B3C8E4",
 };
 
-const Button = {
-  backgroundColor: "#295CAA",
-  fontSize: "3vh",
-  fontWeight: 400,
-};
+export const InviteCard = () => {
 
-const inlineStyles1 = {
-  backgroundColor: "#D9D9D9",
-  fontSize: "4vh",
-  fontWeight: 400,
-};
-const inlineStyles2 = {
-  backgroundColor: "#FFFFFF",
-  fontSize: "4vh",
-  fontWeight: 400,
-};
+  const dispatch = useDispatch();
+  const { invitations, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.invite);
 
-const textStyles = {
-  fontSize: "4vh",
-  fontWeight: 400,
-};
+  useEffect(() => {
+    dispatch(getInvites());
+  }, [dispatch]);
 
-const divStyle = {
-  borderRadius: "10px",
-  padding: "20px",
-  backgroundColor: "lightgray",
-};
+  useEffect(() => {
 
-export const InviteCard = (props) => {
-
-  const invitesDetails = [
-    
+    if (isSuccess || isError) 
     {
-      id: 1,
-      projectName: "project2",
-      managerName: "Manager 2"
-    },
-    {
-      id: 2,
-      projectName: "project3",
-      managerName: "Manager 3"
-    },
-    {
-      id: 2,
-      projectName: "project3",
-      managerName: "Manager 3"
+      dispatch(reset());
     }
-  ];
+  }, [dispatch, isSuccess, isError]);
+
+  if (isLoading)
+  {
+    return (
+      <>
+        <div className="m-5" style={{minHeight: "70vh"}}>
+      <div className='gap-5 p-5' style={{ display: "flex", flexWrap: "wrap" }}>
+      <Skeleton variant="rounded" width="45%" height={250} />
+      <Skeleton variant="rectangular" width="45%" height={250} />
+      <Skeleton variant="rectangular" width="45%" height={250} />
+      <Skeleton variant="rectangular" width="45%" height={250} />
+      </div>
+    </div>
+      </>
+    )
+  }
 
   return (
-    <div className="m-5">
+    <div className="m-5" style={{minHeight: "70vh"}}>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {invitesDetails.map((invite, index) => (
+        {invitations.map((invite, index) => (
           <div key={index} className="p-4 " style={{ flex: "0 0 calc(50% - 10px)", marginBottom: "20px" }}>
             <div className="m-2  rounded rounded-3" style={CardStyle}>
-              <div className="m-3 p-2">{invite.managerName}</div>
-              <div className="m-3 p-2">{invite.projectName}</div>
+              <div className="m-3 p-2">{invite.manager_id.firstName + " " + invite.manager_id.lastName}</div>
+              <div className="m-3 p-2">{invite.project_id.name}</div>
               <div
                 className="rounded rounded-3 justify-content-end d-flex flex left"
                 style={ButtonStyle}
@@ -78,6 +65,10 @@ export const InviteCard = (props) => {
                   <button
                     type="button"
                     className="InviteBtn rounded rounded-3 p-2 me-3"
+                    onClick={() => {
+                      console.log(invite._id);
+                    }
+                    }
                   >
                     Join
                   </button>
