@@ -117,7 +117,7 @@ export const MyProfile = () => {
                   Reset Password</p>
                 </span>
               </div>
-              <div className="display-6">
+              {user.role == "employee" && <div className="display-6">
                 <span
                   style={{
                     fontWeight: "bold",
@@ -131,7 +131,7 @@ export const MyProfile = () => {
                   <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
                   Invites</p></Link>
                 </span>
-              </div>
+              </div>}
             </div>
             <div className="row">
               <div className="col-md-4 d-flex flex-column align-items-center justify-content-center">
@@ -239,7 +239,7 @@ export const MyProfile = () => {
                   Reset Password</p>
                 </span>
               </div>
-              <div className="display-6">
+              {user.role == "employee" && <div className="display-6">
                 <span
                   style={{
                     fontWeight: "bold",
@@ -253,7 +253,7 @@ export const MyProfile = () => {
                   <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
                   Invites</p></Link>
                 </span>
-              </div>
+              </div>}
             </div>
             <div className="row">
               <div className="col-md-4 d-flex flex-column align-items-center justify-content-center">

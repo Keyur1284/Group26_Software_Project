@@ -2,11 +2,16 @@ import main_bg from "../assets/project-dashboard/main-bg.jpg";
 import { Hamburger2 } from "../components/Hamburger_2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { faEnvelopeOpenText, faLock,faUser,faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import '../css/Profile.css';
 import {InviteCard} from '../components/InviteCard'
 
 export const Invitations = () => {
+
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.auth);
+
     return (
         <div className="container-fluid px-3 py-3" style={{ backgroundImage: `url(${main_bg})`, backgroundRepeat: "repeat" }}>
           <div className="row">
@@ -76,7 +81,7 @@ export const Invitations = () => {
                   Reset Password</p>
                 </span>
               </div>
-              <div className="display-6">
+              {user.role == "employee" && <div className="display-6">
                 <span
                   style={{
                     fontWeight: "bold",
@@ -90,7 +95,7 @@ export const Invitations = () => {
                   <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
                   Invites</p></Link>
                 </span>
-              </div>
+              </div>}
             </div>
                 </div>
   
