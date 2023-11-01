@@ -54,19 +54,19 @@ export const Project = () => {
           <div style={{ minHeight: "85vh" }}>
             <div className="row">
               <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="70vw" height="15vh" />
+                <Skeleton variant="rounded" width="100%" height="15vh" />
               </Typography>
               <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="70vw" height="15vh" />
+                <Skeleton variant="rounded" width="100%" height="15vh" />
               </Typography>
               <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="70vw" height="15vh" />
+                <Skeleton variant="rounded" width="100%" height="15vh" />
               </Typography>
               <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="70vw" height="15vh" />
+                <Skeleton variant="rounded" width="100%" height="15vh" />
               </Typography>
               <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="70vw" height="15vh" />
+                <Skeleton variant="rounded" width="100%" height="15vh" />
               </Typography>
             </div>
           </div>
