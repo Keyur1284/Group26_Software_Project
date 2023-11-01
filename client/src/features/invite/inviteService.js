@@ -29,4 +29,17 @@ const sendInvite = async (inviteData, token) => {
     return response.data;
 }
 
-export const inviteService = { getEmployees, sendInvite };
+const getInvites = async (token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(`${baseURL}/invites/view-invites`, config);
+    return response.data;
+}
+
+export const inviteService = { getEmployees, sendInvite, getInvites };

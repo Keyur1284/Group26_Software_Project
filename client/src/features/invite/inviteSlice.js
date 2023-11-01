@@ -9,6 +9,7 @@ const initialState = {
     appErr: undefined,
     serverErr: undefined,
     employees: [],
+    invitations: [],
 }
 
 
@@ -39,6 +40,26 @@ export const sendInvite = createAsyncThunk("invite/sendInvite", async (inviteDat
         return response;
     }
 
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+
+export const getInvites = createAsyncThunk("invite/getInvites", async (_, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await inviteService.getInvites(token);
+        return response;
+    }
+    
     catch (error) {
 
         if (!error.response)
@@ -97,6 +118,23 @@ const inviteSlice = createSlice({
         })
 
         .addCase(sendInvite.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.appErr = action.payload?.message;
+            state.serverErr = action.error?.message;
+        })
+
+        .addCase(getInvites.pending, (state) => {
+            state.isLoading = true;
+        })
+
+        .addCase(getInvites.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.invitations = action.payload.invitations;
+        })
+
+        .addCase(getInvites.rejected, (state, action) => {
             state.isLoading = false;
             state.isError = true;
             state.appErr = action.payload?.message;
