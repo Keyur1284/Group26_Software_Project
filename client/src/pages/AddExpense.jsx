@@ -1,8 +1,18 @@
 import { useFormik } from "formik";
+import { useParams, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
+import { message } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { createExpense, reset } from "../features/expense/expenseSlice";
 
 export const AddExpense = () => {
+  
+  const { projectId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const formSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     category: Yup.string().required("Category is required"),
@@ -21,10 +31,30 @@ export const AddExpense = () => {
       driveLink: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      values.projectId = projectId;
+      dispatch(createExpense(values));
     },
     validationSchema: formSchema,
   });
+
+  const {isSuccess, isError, isLoading, appErr, serverErr} = useSelector(state => state.expense);
+
+  useEffect(() => {
+
+    if (isSuccess)
+    {
+      message.success("Expense Created Successfully!");
+      dispatch(reset());
+      navigate(`/projects/${projectId}/expenses`)
+    }
+
+    if (isError)
+    {
+      message.error(appErr||serverErr);
+      dispatch(reset())
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   const categoryOptions = ["Travel", "Food", "Accommodation", "Other"];
 
