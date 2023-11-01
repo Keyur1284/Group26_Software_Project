@@ -1,6 +1,7 @@
 import main_bg from "../assets/project-dashboard/main-bg.jpg";
 import { Hamburger2 } from "../components/Hamburger_2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import { faEnvelopeOpenText, faLock,faUser,faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import '../css/Profile.css';
 import {InviteCard} from '../components/InviteCard'
@@ -27,70 +28,70 @@ export const Invitations = () => {
               >
                 <div style={{height:"20px"}}>
                 <div className="d-flex justify-content-evenly">
-                  <div className="display-6">
-                    <span
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "3vh",
-                        color: "#2D91E6",
-                        cursor: "pointer",
-                        "& :hover": {
-                          backgroundColor: "underline"
-                        }
-                      }}
-                    >
-                      
-                      <p  className="subNav">
-                        <FontAwesomeIcon className="mx-2" icon={faUser} />
-                      Profile</p>
-                    </span>
-                  </div>
-                  <div className="display-6">
-                    <span
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "3vh",
-                        color: "#2D91E6",
-                        cursor: "pointer",
-                      }}
-                    >
-                      
-                      <p className="subNav">
-                        <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
-                        Edit Profile</p>
-                    </span>
-                  </div>
-                  <div className="display-6">
-                    <span
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "3vh",
-                        color: "#2D91E6",
-                        cursor: "pointer",
-                      }}
-                    >
-                      
-                      <p className="subNav">
-                      <FontAwesomeIcon className="mx-2" icon={faLock} />
-                      Reset Password</p>
-                    </span>
-                  </div>
-                  <div className="display-6">
-                    <span
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "3vh",
-                        color: "#2D91E6",
-                        cursor: "pointer",
-                      }}
-                    >
-                      
-                      <p  className="subNav " >
-                      <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
-                      Invites</p>
-                    </span>
-                  </div>
-                  </div>
+              <div className="display-6">
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "3vh",
+                    color: "#2D91E6",
+                    cursor: "pointer",
+                    "& :hover": {
+                      backgroundColor: "underline"
+                    }
+                  }}
+                >
+                  
+                  <Link to = '/profile' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav">
+                    <FontAwesomeIcon className="mx-2" icon={faUser} />
+                  Profile</p></Link>
+                </span>
+              </div>
+              <div className="display-6">
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "3vh",
+                    color: "#2D91E6",
+                    cursor: "pointer",
+                  }}
+                >
+                  
+                  <p className="subNav">
+                    <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
+                    Edit Profile</p>
+                </span>
+              </div>
+              <div className="display-6">
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "3vh",
+                    color: "#2D91E6",
+                    cursor: "pointer",
+                  }}
+                >
+                  
+                  <p className="subNav">
+                  <FontAwesomeIcon className="mx-2" icon={faLock} />
+                  Reset Password</p>
+                </span>
+              </div>
+              <div className="display-6">
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "3vh",
+                    color: "#2D91E6",
+                    cursor: "pointer",
+                  }}
+                >
+                  
+                  <Link to = '/invites' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav " >
+                  <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
+                  Invites</p></Link>
+                </span>
+              </div>
+            </div>
                 </div>
   
                 <div>

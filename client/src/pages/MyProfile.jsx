@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpenText, faLock,faUser,faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import '../css/Profile.css';
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
@@ -20,18 +21,6 @@ const inlineStyles2 = {
   fontSize: "4vh",
   fontWeight: 400
 };
-
-const textStyles = {
-  fontSize: "4vh",
-  fontWeight: 400
-};
-
-const divStyle = {
-  borderRadius: '10px', 
-  padding: '20px',     
-  backgroundColor: 'lightgray',
-};
-
 
 
 export const MyProfile = () => {
@@ -58,7 +47,7 @@ export const MyProfile = () => {
 
   }, [isSuccess, isError, appErr, serverErr]);
 
-  if(isLoading){
+  if(isLoading && !profile){
     return (
       <>
         <div className="container-fluid px-3 py-3" style={{ backgroundImage: `url(${main_bg})`, backgroundRepeat: "repeat" }}>
@@ -93,9 +82,9 @@ export const MyProfile = () => {
                   }}
                 >
                   
-                  <p  className="subNav">
+                  <Link to = '/profile' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav">
                     <FontAwesomeIcon className="mx-2" icon={faUser} />
-                  Profile</p>
+                  Profile</p></Link>
                 </span>
               </div>
               <div className="display-6">
@@ -138,9 +127,9 @@ export const MyProfile = () => {
                   }}
                 >
                   
-                  <p  className="subNav " >
+                  <Link to = '/invites' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav " >
                   <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
-                  Invites</p>
+                  Invites</p></Link>
                 </span>
               </div>
             </div>
@@ -215,9 +204,9 @@ export const MyProfile = () => {
                   }}
                 >
                   
-                  <p  className="subNav">
+                  <Link to = '/profile' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav">
                     <FontAwesomeIcon className="mx-2" icon={faUser} />
-                  Profile</p>
+                  Profile</p></Link>
                 </span>
               </div>
               <div className="display-6">
@@ -260,9 +249,9 @@ export const MyProfile = () => {
                   }}
                 >
                   
-                  <p  className="subNav " >
+                  <Link to = '/invites' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav " >
                   <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
-                  Invites</p>
+                  Invites</p></Link>
                 </span>
               </div>
             </div>
@@ -282,7 +271,7 @@ export const MyProfile = () => {
                     Last Name : {profile?.lastName}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles1}>
-                    Gmail : {profile?.email}
+                    Email : {profile?.email}
                   </h2>
                   <h2 className="p-3 mt-3 rounded-pill" style={inlineStyles2}>
                     Birth Date : {profile?.dob}
