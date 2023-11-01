@@ -69,7 +69,7 @@ const sendInviteController = asyncHandler(async (req, res) => {
 const getInvitesController = asyncHandler(async (req, res) => {
    
     const employee_id = req.employee._id;
-    let invitations = await Invite.find({employee_id});
+    let invitations = await Invite.find({employee_id}).populate('project_id', 'name').populate('manager_id', 'firstName lastName');
     
     const project_ids = [];
     const uniqueInvites = [];
@@ -84,21 +84,10 @@ const getInvitesController = asyncHandler(async (req, res) => {
 
     invitations = uniqueInvites;
 
-    if (invitations.length > 0)
-    {
-        res.status(200).json({
-            success: true,
-            invitations
-        });
-    }
-
-    else
-    {
-        res.status(200).json({
-            success: true,
-            message: "No invitations found"
-        });
-    }
+    res.status(200).json({
+        success: true,
+        invitations
+    });
 });
 
 
