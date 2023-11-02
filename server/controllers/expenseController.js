@@ -184,6 +184,7 @@ const deleteExpenseController = asyncHandler(async (req, res) => {
 
     const expense_id = req.params.expense_id;
     const deletedExpense = await Expense.findByIdAndDelete(expense_id);
+    const notification = await managerNotification.findOneAndDelete({ expense_id });
 
     if (deletedExpense) {
         res.status(200).json({
