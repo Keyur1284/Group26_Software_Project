@@ -57,4 +57,17 @@ const updateExpense = async (expenseData, token) => {
     return response.data;
 }
 
-export const expenseService = { createExpense, getExpenseEmployee, getExpenseManager, updateExpense }
+const deleteExpense = async (expenseId, token) => {
+    
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(`${baseURL}/expenses/delete-expense/${expenseId}`, config);
+    return response.data;
+}
+
+export const expenseService = { createExpense, getExpenseEmployee, getExpenseManager, updateExpense, deleteExpense }

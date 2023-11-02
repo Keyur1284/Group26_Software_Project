@@ -88,7 +88,25 @@ export const updateExpense = createAsyncThunk("expense/updatedExpense", async (e
 });
 
 
-const announcementSlice = createSlice({
+export const deleteExpense = createAsyncThunk("expense/deleteExpense", async (expenseId, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await expenseService.deleteExpense(expenseId, token);
+        return response;
+    }
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
+const expenseSlice = createSlice({
     name: "expense",
     initialState,
     reducers: {
@@ -176,9 +194,27 @@ const announcementSlice = createSlice({
                 state.appErr = action.payload?.message;
                 state.serverErr = action.error?.message;
             })
+
+            .addCase(deleteExpense.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(deleteExpense.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.result = "Expense deleted successfully!"
+                state.expenses = state.expenses.filter((expense) => expense._id !== action.payload.deletedExpense._id);
+            })
+
+            .addCase(deleteExpense.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
     }
 })
 
 
-export const { reset, clearExpenses } = announcementSlice.actions;
-export default announcementSlice.reducer;
+export const { reset, clearExpenses } = expenseSlice.actions;
+export default expenseSlice.reducer;
