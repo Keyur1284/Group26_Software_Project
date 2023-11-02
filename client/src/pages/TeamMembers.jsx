@@ -76,7 +76,7 @@ export const TeamMembers = () => {
                   </div>
                   <div>
                   <Typography component="div" variant="h1" style={{marginTop: "2vh", backgroundColor: "white", opacity: 0.15}}>
-                    <Skeleton variant="rounded" width="100%" height="15vh" />
+                    <Skeleton variant="rounded" animation="wave" width="100%" height="15vh" />
                   </Typography>
                   </div>
                 </div>
@@ -99,13 +99,13 @@ export const TeamMembers = () => {
                   </div>
                   <div className="members">
                   <Typography component="div" variant="h1" style={{marginTop: "2vh", backgroundColor: "white", opacity: 0.15}}>
-                    <Skeleton variant="rounded" width="100%" height="6vh" />
+                    <Skeleton variant="rounded" animation="wave" width="100%" height="6vh" />
                   </Typography>
                   <Typography component="div" variant="h1" style={{marginTop: "2vh", backgroundColor: "white", opacity: 0.15}}>
-                    <Skeleton variant="rounded" width="100%" height="6vh" />
+                    <Skeleton variant="rounded" animation="wave" width="100%" height="6vh" />
                   </Typography>
                   <Typography component="div" variant="h1" style={{marginTop: "2vh", backgroundColor: "white", opacity: 0.15}}>
-                    <Skeleton variant="rounded" width="100%" height="6vh" />
+                    <Skeleton variant="rounded" animation="wave" width="100%" height="6vh" />
                   </Typography>
                   </div>
                 </div>

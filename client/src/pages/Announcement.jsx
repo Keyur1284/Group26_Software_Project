@@ -96,10 +96,10 @@ export const Announcement = () => {
                 >
                   <div className="card-body d-flex justify-content-end flex-column text-white">
                   <Typography component="div" variant="h1" style={{marginTop: "20vh"}}>
-                      <Skeleton variant="rounded" width="35%" height="5vh" />
+                      <Skeleton variant="rounded" animation="wave" width="35%" height="5vh" />
                     </Typography>
                     <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                      <Skeleton variant="rounded" width="35%" height="5vh" />
+                      <Skeleton variant="rounded" animation="wave" width="35%" height="5vh" />
                     </Typography>
                   </div>
                 </div>
@@ -145,13 +145,13 @@ export const Announcement = () => {
                     </h4>
                     
                     <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                      <Skeleton variant="rounded" width="68vw" height="13vh" />
+                      <Skeleton variant="rounded" animation="wave" width="68vw" height="13vh" />
                     </Typography>
                     <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                      <Skeleton variant="rounded" width="68vw" height="13vh" />
+                      <Skeleton variant="rounded" animation="wave" width="68vw" height="13vh" />
                     </Typography>
                     <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                      <Skeleton variant="rounded" width="68vw" height="13vh" />
+                      <Skeleton variant="rounded" animation="wave" width="68vw" height="13vh" />
                     </Typography>
 
                   </div>

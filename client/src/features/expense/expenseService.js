@@ -42,6 +42,18 @@ const getExpenseManager = async (projectId, token) => {
     return response.data;
 }
 
+const getExpenseById = async (expenseId) => {
+    
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    
+    const response = await axios.get(`${baseURL}/expenses/expense/${expenseId}`, config);
+    return response.data;
+} 
+
 const updateExpense = async (expenseData, token) => {
     
     const config = {
@@ -70,4 +82,4 @@ const deleteExpense = async (expenseId, token) => {
     return response.data;
 }
 
-export const expenseService = { createExpense, getExpenseEmployee, getExpenseManager, updateExpense, deleteExpense }
+export const expenseService = { createExpense, getExpenseEmployee, getExpenseManager, updateExpense, deleteExpense, getExpenseById }

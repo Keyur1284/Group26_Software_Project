@@ -47,10 +47,10 @@ export const InviteCard = () => {
       <>
         <div className="m-5" style={{minHeight: "70vh"}}>
       <div className='gap-5 p-5' style={{ display: "flex", flexWrap: "wrap" }}>
-      <Skeleton variant="rounded" width="45%" height={250} />
-      <Skeleton variant="rectangular" width="45%" height={250} />
-      <Skeleton variant="rectangular" width="45%" height={250} />
-      <Skeleton variant="rectangular" width="45%" height={250} />
+      <Skeleton variant="rounded" animation="wave" width="45%" height={250} />
+      <Skeleton variant="rectangular" animation="wave" width="45%" height={250} />
+      <Skeleton variant="rectangular" animation="wave" width="45%" height={250} />
+      <Skeleton variant="rectangular" animation="wave" width="45%" height={250} />
       </div>
     </div>
       </>

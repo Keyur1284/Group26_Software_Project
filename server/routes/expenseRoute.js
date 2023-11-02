@@ -7,7 +7,8 @@ const {
     getExpenseManagerController,
     deleteExpenseController,
     acceptExpenseController,
-    rejectExpenseController
+    rejectExpenseController,
+    getExpenseByIdController
 } = require("../controllers/expenseController");
 
 const { employeeAuthMiddleware, managerAuthMiddleware } = require("../middlewares/authMiddleware");
@@ -19,5 +20,6 @@ router.get("/expenses-manager/:project_id", managerAuthMiddleware, getExpenseMan
 router.delete("/delete-expense/:expense_id", employeeAuthMiddleware, deleteExpenseController);
 router.patch("/accept-expense/:expense_id", managerAuthMiddleware, acceptExpenseController);
 router.patch("/reject-expense/:expense_id", managerAuthMiddleware, rejectExpenseController);
+router.get("/expense/:expense_id", getExpenseByIdController)
 
 module.exports = router;
