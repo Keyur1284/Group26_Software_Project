@@ -10,6 +10,7 @@ import { Expense } from "./pages/Expense";
 import { AddExpense } from "./pages/AddExpense";
 import { Project } from "./pages/Project";
 import { AddProject } from "./pages/AddProject";
+import { EditExpense } from "./pages/EditExpense";
 import { Er401 } from "./pages/Er401";
 import { Er403 } from "./pages/Er403";
 import { Er404 } from "./pages/Er404";
@@ -38,8 +39,9 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
-                <Route path="/projects/:projectId/expenses" element={<Expense />} />
                 <Route path="/projects/:projectId/add-expense" element={<AddExpense />} />
+                <Route path="/projects/:projectId/expenses" element={<Expense />} />
+                <Route path="/projects/:projectId/expenses/:expenseId/edit-expense" element={<EditExpense />} />
                 <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<Er403 />} />
                 <Route path='/employee-search' element={<Er403 />} />
@@ -60,7 +62,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
                 <Route path="/projects/:projectId/expenses" element={<Expense />} />
-                <Route path="/projects/:projectId/add-expense" element={<AddExpense />} />
                 <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />
                 <Route path='/profile' element={<MyProfile />} />
