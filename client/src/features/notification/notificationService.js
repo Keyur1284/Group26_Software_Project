@@ -1,0 +1,32 @@
+import { baseURL } from "../../utils/baseURL";
+import axios from "axios";
+
+
+const getEmployeeNotifications = async (token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(`${baseURL}/notifications/notification-employee`, config);
+    return response.data;
+}
+
+const getManagerNotifications = async (token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(`${baseURL}/notifications/notification-manager`, config);
+    return response.data;
+}
+
+
+export const notificationService = { getEmployeeNotifications, getManagerNotifications }

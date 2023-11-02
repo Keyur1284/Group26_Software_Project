@@ -5,6 +5,7 @@ import announcementReducer from '../features/announcement/announcementSlice';
 import teamReducer from '../features/team/teamSlice';
 import inviteReducer from '../features/invite/inviteSlice';
 import expenseReducer from '../features/expense/expenseSlice';
+import notificationReducer from '../features/notification/notificationSlice';
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         announcement: announcementReducer,
         team: teamReducer,
         invite: inviteReducer,
-        expense: expenseReducer
+        expense: expenseReducer,
+        notification: notificationReducer
     }
 })
