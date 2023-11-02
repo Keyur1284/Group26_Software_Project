@@ -1,18 +1,14 @@
-import React from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import pic_1 from '../assets/AboutUs-images/Vedant.jpg';
 import pic_2 from '../assets/AboutUs-images/Jainil.jpg';
 import pic_3 from '../assets/AboutUs-images/Himanshu_photo.jpg';
 import pic_4 from '../assets/AboutUs-images/Ayush.jpg';
-// import pic_5 from './Nancy.jpeg';
+import pic_5 from '../assets/AboutUs-images/Nancy.jpg';
 import pic_6 from '../assets/AboutUs-images/Keyur.jpeg';
 import pic_7 from '../assets/AboutUs-images/Kashish.jpg';
 import pic_8 from '../assets/AboutUs-images/Akhil.jpg';
 import pic_9 from '../assets/AboutUs-images/Hardik.jpg';
 import pic_10 from '../assets/AboutUs-images/Sahil.jpg';
 import pic_11 from '../assets/AboutUs-images/Ishita.jpg';
-// import FancyText from '@carefully-coded/react-text-gradient';
-
 
 export const AboutUs = () => {
     return (
@@ -20,7 +16,7 @@ export const AboutUs = () => {
         <style>
           {`
             body {
-              background: radial-gradient(50% 50% at 50% 50%, #1CA6FF 0%, #6A8FFF 100%);
+              background: radial-gradient(circle, #16a3f0, #6c27e3);
             }
           `}
           {`
@@ -111,12 +107,12 @@ export const AboutUs = () => {
           <div className="row justify-content-center ps-4 pe-4 mt-5">
               <div className="col-md-3 d-flex">
                 <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
-                  {/* <img
+                  <img
                     className="card-img-top img-fluid rounded-top-5"
-                    src={pic_6}
+                    src={pic_5}
                     alt="Nancy Patel"
                     style={{ height: "50vh", width: "30vw" }}
-                  /> */}
+                  />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Nancy Patel</h5>
                     <span>202101491</span>
