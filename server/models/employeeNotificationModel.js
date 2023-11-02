@@ -12,6 +12,11 @@ const employeeNotificationSchema = new mongoose.Schema({
         required: [true, 'Please enter the expense id'],
         ref: 'Expense'
     },
+    project_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, 'Please enter the project id'],
+        ref: 'Project'
+    },
     message: {
         type: String,
         required: true,
