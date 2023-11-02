@@ -2,32 +2,30 @@ import "bootstrap/dist/css/bootstrap.css";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 
-export const Notifications_employee = () => {
+export const NotificationManager = () => {
   const notification_data = [
     {
-      managerName: "Manager_1",
-      text: " accepted the expense you added to ",
-      projectName: "Project_1",
+      employeeName: "John Doe",
+      text: " has added a new expense in ",
+      projectName: "Project A",
       time:"9:30 am",
       expName: "Expense 1",
     },
     {
-      managerName: "Manager_2",
-      text: " rejected the expense you added to ",
-      projectName: "Project_2",
+      employeeName: "Jane Doe",
+      text: " has added a new expense in ",
+      projectName: "Project B",
       time:"9:30 am",
       expName: "Expense 2",
     },
     {
-      managerName: "Manager_3",
-      text: " accepted the expense you added to ",
-      projectName: "Project_3",
+      employeeName: "Jill Doe",
+      text: " has added a new expense in ",
+      projectName: "Project C",
       time:"9:30 am",
       expName: "Expense 3",
     },
   ];
-
-  const status = "Approved";
 
   return (
     <div
@@ -54,10 +52,10 @@ export const Notifications_employee = () => {
           }}
         >
           <div className="card-body">
-        <h3 className="card-title px-4" style={{ color: `{${status == "Approved" ? "#013E8F" : "#d32f2f"}}` }}>
+            <h3 className="card-title px-4" style={{ color: "#00000066" }}>
               <CircleRoundedIcon sx={{ color: "#013E8F" }} />
               <span style={{ marginLeft: 17 }}>
-                <strong style={{ color: "black" }}>{card.managerName}</strong>
+                <strong style={{ color: "black" }}>{card.employeeName}</strong>
                 {card.text}
                 <strong style={{ color: "black" }}>{card.projectName}</strong>
               </span>

@@ -22,6 +22,8 @@ import { Announcement } from "./pages/Announcement";
 import { TeamMembers } from "./pages/TeamMembers";
 import { Invitations } from "./pages/Invitations";
 import {AboutUs} from "./pages/AboutUs";
+import { NotificationEmployee } from "./pages/NotificationEmployee";
+import { NotificationManager } from "./pages/NotificationManager";
 
 function App() {
   
@@ -51,6 +53,7 @@ function App() {
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
                 <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
+                <Route path='/notifications' element={<NotificationEmployee/>} />
                 <Route path='*' element={<Er404 />} />
               </Routes>
             </>
@@ -71,6 +74,7 @@ function App() {
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
                 <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
+                <Route path='/notifications' element={<NotificationManager/>} />
                 <Route path='*' element={<Er404 />} />
               </Routes>
             </>
