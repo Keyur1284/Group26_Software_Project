@@ -54,6 +54,27 @@ export const getManagerNotifications = createAsyncThunk("notification/getManager
 });
 
 
+export const deleteNotificationManager = createAsyncThunk("notification/deleteNotificationManager", async (notificationId, thunkAPI) => {
+    
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await notificationService.deleteNotificationManager(notificationId, token);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+
+});
+
+
 const notificationSlice = createSlice({
     name: "notification",
     initialState,
@@ -102,6 +123,23 @@ const notificationSlice = createSlice({
             })
 
             .addCase(getManagerNotifications.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(deleteNotificationManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(deleteNotificationManager.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.notifications = state.notifications.filter((notification) => notification._id !== action.payload.deletedNotification._id);
+            })
+
+            .addCase(deleteNotificationManager.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
