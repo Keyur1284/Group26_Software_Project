@@ -228,6 +228,26 @@ const getExpenseManagerController = asyncHandler(async (req, res) => {
 });
 
 
+const getExpenseByIdController = asyncHandler(async (req, res) => {
+
+    const expense_id = req.params.expense_id;
+    const expense = await Expense.findById(expense_id).populate('employee_id', 'firstName lastName');
+
+    if (expense) {
+
+        res.status(200).json({
+            success: true,
+            expense
+        });
+    }
+
+    else {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
+    }
+
+});
 
 const acceptExpenseController = asyncHandler(async (req, res) => {
 
@@ -312,5 +332,6 @@ module.exports = {
     getExpenseManagerController,
     deleteExpenseController,
     acceptExpenseController,
-    rejectExpenseController
+    rejectExpenseController,
+    getExpenseByIdController
 };
