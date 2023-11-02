@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getExpenseEmployee, getExpenseManager, reset } from "../features/expense/expenseSlice";
+import { message } from "antd";
 
 export const DisplayExpense = () => {
 
@@ -10,7 +11,7 @@ export const DisplayExpense = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const role = user.role;
-  const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
+  const { expenses, isSuccess, isLoading, result, isError, appErr, serverErr } = useSelector((state) => state.expense);
 
   useEffect(() => {
 
@@ -27,6 +28,11 @@ export const DisplayExpense = () => {
     if (isSuccess || isError)
     {
       dispatch(reset());
+    }
+
+    if (isSuccess && result)
+    {
+      message.success(result);
     }
 
   }, [isSuccess, isError]);
