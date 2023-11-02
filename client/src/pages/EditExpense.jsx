@@ -5,13 +5,16 @@ import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { message } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createExpense, reset } from "../features/expense/expenseSlice";
+import { updateExpense, reset } from "../features/expense/expenseSlice";
 
-export const AddExpense = () => {
+export const EditExpense = () => {
   
-  const { projectId } = useParams();
+  const { projectId, expenseId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { expenses } = useSelector(state => state.expense);
+
+  const expense = expenses.find((expense) => expense._id === expenseId);
 
   const formSchema = Yup.object({
     name: Yup.string().required("Name is required"),
@@ -23,16 +26,17 @@ export const AddExpense = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      category: "",
-      description: "",
-      amount: "",
-      date: "",
-      driveLink: "",
+      name: expense?.name,
+      category: expense?.category,
+      description: expense?.description,
+      amount: expense?.amount,
+      date: expense?.date?.substring(0, 10),
+      driveLink: expense?.driveLink,
     },
     onSubmit: (values) => {
       values.projectId = projectId;
-      dispatch(createExpense(values));
+      values.expenseId = expense?._id;
+      dispatch(updateExpense(values));
     },
     validationSchema: formSchema,
   });
@@ -43,7 +47,7 @@ export const AddExpense = () => {
 
     if (isSuccess)
     {
-      message.success("Expense Created Successfully!");
+      message.success("Expense Updated Successfully!");
       dispatch(reset());
       navigate(`/projects/${projectId}/expenses`)
     }
@@ -70,7 +74,7 @@ export const AddExpense = () => {
         }}>
           <div className="col-md-10 mt-5 mb-5">
             <p className="text-center text-white display-6" style={{ fontWeight: "400", textShadow: "2px 2px 4px rgba(0,0,0,0.6)"}}>
-              Add your Expense
+              Edit your Expense
             </p>
             <form onSubmit={formik.handleSubmit}>
               <div className="mb-3 mt-4">

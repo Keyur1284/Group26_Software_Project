@@ -1,3 +1,7 @@
+/* eslint-disable react/prop-types */
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteExpense } from "../features/expense/expenseSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlaneDeparture,
@@ -11,6 +15,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export const ExpenseCard = (props) => {
+
+  const { projectId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const categoryIcons = {
     Travel: faPlaneDeparture,
     Car: faCar,
@@ -35,7 +44,7 @@ export const ExpenseCard = (props) => {
             {categoryIcon && <FontAwesomeIcon icon={categoryIcon} size="2xl" />}
           </div>
           <div className="col-md-3 d-flex flex-column align-items-center justify-content-center shadow" style={{ backgroundColor: newColor }}>
-            <div>{props.description}</div>
+            <div>{props.name}</div>
             <div style={{ fontSize: "12px" }}>{props.date}</div>
           </div>
           <div
@@ -56,8 +65,9 @@ export const ExpenseCard = (props) => {
           >
             <button
               type="button"
-              className="btn btn-dark rounded-5"
+              className={`btn btn-dark ${props.status !== "Pending" && "disabled"} rounded-5`}
               style={{ fontSize: "18px" }}
+              onClick={() => navigate(`/projects/${projectId}/expenses/${props.expenseId}/edit-expense`)}
             >
               <FontAwesomeIcon icon={faEdit} />
             </button>
@@ -69,10 +79,11 @@ export const ExpenseCard = (props) => {
               borderRadius: "0px 15px 15px 0px",
             }}
           >
-            <button
+           <button
               type="button"
-              className="btn btn-dark rounded-5"
+              className={`btn btn-dark ${props.status !== "Pending" && "disabled"} rounded-5`}
               style={{ fontSize: "18px" }}
+              onClick={() => dispatch(deleteExpense(props.expenseId))}
             >
               <FontAwesomeIcon icon={faTrashAlt} />
             </button>
@@ -90,7 +101,7 @@ export const ExpenseCard = (props) => {
             {categoryIcon && <FontAwesomeIcon icon={categoryIcon} size="2xl" />}
           </div>
           <div className="col-md-3 d-flex flex-column align-items-center justify-content-center shadow" style={{ backgroundColor: newColor }}>
-            <div>{props.description}</div>
+            <div>{props.name}</div>
             <div style={{ fontSize: "12px" }}>{props.date}</div>
           </div>
           <div

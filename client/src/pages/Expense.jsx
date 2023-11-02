@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faPlus, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { DisplayExpense } from "../components/DisplayExpense";
 import { Hamburger4 } from "../components/Hamburger_4";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Typography from '@mui/material/Typography';
+import Skeleton from '@mui/material/Skeleton';
 
 export const Expense = () => {
+
+  const { projectId } = useParams();
+
   const [selectedDateOption, setSelectedDateOption] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -32,12 +38,15 @@ export const Expense = () => {
     setSelectedCategory(newCategory);
   };
 
-  const user = "employee";
+  const { user } = useSelector((state) => state.auth);
+  const { expenses, isSuccess, isLoading } = useSelector((state) => state.expense);
+  const role = user.role;
 
-  if(user === "employee")
+  if (isLoading && expenses.length == 0)
   {
     return (
-      <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>
+      <>
+        <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight:"92vh" }}>
         <div className="row">
           <div className="col-md-3">
             <Hamburger4 />
@@ -54,14 +63,59 @@ export const Expense = () => {
               </div>
                 <div className="col-md-3 d-flex align-items-center justify-content-end">
                   <div className="mr-3">
-                    <Link to="/add-expense" className="btn btn-dark btn-rounded rounded-pill shadow-lg" style={{ fontSize: "25px" }}>
+                    <Link to={`/projects/${projectId}/add-expense`} className="btn btn-dark btn-rounded rounded-pill shadow-lg" style={{ fontSize: "25px" }}>
+                      <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
+                    </Link>
+                  </div>
+                </div>
+            </div>
+            <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="100%" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="100%" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="100%" height="15vh" />
+              </Typography>
+              <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
+                <Skeleton variant="rounded" width="100%" height="15vh" />
+              </Typography>
+          </div>
+        </div>
+      </div>
+      </>
+    )
+  }
+  
+  if (role == "employee")
+  {
+    return (
+      <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight:"92vh" }}>
+        <div className="row">
+          <div className="col-md-3">
+            <Hamburger4 />
+          </div>
+          <div className="col-md-9">
+            <div className="row d-flex align-items-center mb-3" style={{ marginTop: "-2.5vh" }}>
+              <div className="col-md-9">
+                <div className="d-flex text-start display-6" style={{ fontSize: "80px", fontWeight: "600" }}>
+                  Expense
+                </div>
+                <div style={{ fontSize: "30px" }}>
+                  <FontAwesomeIcon icon={faHistory} style={{ marginRight: "10px" }} /> Expense History
+                </div>
+              </div>
+                <div className="col-md-3 d-flex align-items-center justify-content-end">
+                  <div className="mr-3">
+                    <Link to={`/projects/${projectId}/add-expense`} className="btn btn-dark btn-rounded rounded-pill shadow-lg" style={{ fontSize: "25px" }}>
                       <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
                     </Link>
                   </div>
                 </div>
             </div>
             <div className="row d-flex align-items-center mb-3">
-              <div className="col-md-12 d-flex align-items-center justify-content-end">
+            {expenses.length > 0 && <div className="col-md-12 d-flex align-items-center justify-content-end">
                 <div className="d-flex align-items-center">
                   <FontAwesomeIcon icon={faFilter} size="2xl" style={{ marginRight: "10px" }} />
                   <select
@@ -143,11 +197,11 @@ export const Expense = () => {
                     />
                   </div>
                 )}
-              </div>
+              </div>}
             </div>
-            <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
+            {expenses.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
               <div className="col-md-4 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C", borderRadius: "15px 0px 0px 15px" }}>
-                Description
+                Name
               </div>
               <div className="col-md-3 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
                 Amount
@@ -161,8 +215,12 @@ export const Expense = () => {
               <div className="col-md-1 d-flex align-items-center" style={{ backgroundColor: "#0C438C", borderRadius: "0px 15px 15px 0px" }}>
                 Delete
               </div>
-            </div>
-            <DisplayExpense userType={user} />
+            </div>}
+            
+            {
+                expenses.length == 0 && <div className="display-1">No expenses found!</div>
+            }
+            <DisplayExpense userType={role} />
           </div>
         </div>
       </div>
@@ -171,7 +229,7 @@ export const Expense = () => {
   else
   {
     return (
-      <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>
+      <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight: "92vh" }}>
         <div className="row">
           <div className="col-md-3">
             <Hamburger4 />
@@ -188,7 +246,7 @@ export const Expense = () => {
               </div>
             </div>
             <div className="row d-flex align-items-center mb-3">
-              <div className="col-md-12 d-flex align-items-center justify-content-end">
+            {expenses.length > 0 && <div className="col-md-12 d-flex align-items-center justify-content-end">
                 <div className="d-flex align-items-center">
                   <FontAwesomeIcon icon={faFilter} size="2xl" style={{ marginRight: "10px" }} />
                   <select
@@ -245,8 +303,8 @@ export const Expense = () => {
                       backgroundColor: "white",
                       color: "#000000",
                       cursor: "pointer",
-                    }}
-                  >
+                    }}>
+
                     <option value="">None</option>
                     <option value="travel">Travel</option>
                     <option value="food">Food</option>
@@ -270,29 +328,30 @@ export const Expense = () => {
                     />
                   </div>
                 )}
-              </div>
+              </div>}
             </div>
-            <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
+            {expenses.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
               <div className="col-md-4 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C", borderRadius: "15px 0px 0px 15px" }}>
-                Description
+                Name
               </div>
-              <div className="col-md-2 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
+              <div className="col-md-3 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
                 Amount
               </div>
-              <div className="col-md-2 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
-                  Added By
-              </div>
-              <div className="col-md-2 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
+              <div className="col-md-3 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
                   Status
-              </div>
+                </div>
               <div className="col-md-1 d-flex align-items-center" style={{ backgroundColor: "#0C438C" }}>
                 Edit
               </div>
               <div className="col-md-1 d-flex align-items-center" style={{ backgroundColor: "#0C438C", borderRadius: "0px 15px 15px 0px" }}>
                 Delete
               </div>
-            </div>
-            <DisplayExpense userType={user} />
+            </div>}
+            
+            {
+              expenses.length == 0 && <div className="display-1">No expenses found!</div>
+            }
+            <DisplayExpense />
           </div>
         </div>
       </div>

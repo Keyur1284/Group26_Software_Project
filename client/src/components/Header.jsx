@@ -3,6 +3,11 @@ import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
+import { clearAnnouncements } from "../features/announcement/announcementSlice";
+import { clearEmployeesAndInvitations } from "../features/invite/inviteSlice";
+import { clearProjects } from "../features/project/projectSlice";
+import { clearTeam } from "../features/team/teamSlice";
+import { clearExpenses } from "../features/expense/expenseSlice";
 import { message } from "antd";
 import "../css/Homepage.css";
 
@@ -16,6 +21,11 @@ export const Header = () => {
     
     try {
       await dispatch(logout())
+      dispatch(clearAnnouncements())
+      dispatch(clearEmployeesAndInvitations())
+      dispatch(clearProjects())
+      dispatch(clearTeam())
+      dispatch(clearExpenses())
       message.success("User Logged Out Successfully!")
       navigate('/login')
     }
@@ -109,9 +119,9 @@ export const Header = () => {
           {user ? (
             <div className="d-flex align-items-center">
               <Link to='/notifications'><NotificationsActiveIcon sx={{fontSize: 30}} className="text-light"/></Link>
-              <div className="text-light mx-3" style={{ fontSize: "18px" }}>
+              <Link to='/profile' className="text-decoration-none"> <div className="text-light mx-3" style={{ fontSize: "18px" }}>
                 {user.firstName} {user.lastName}
-              </div>
+              </div> </Link>
               <button
                 className="btn btn-danger"
                 onClick={handleLogout}

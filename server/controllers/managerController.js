@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 
 const registerController = asyncHandler(async (req, res) => {
 
-    const {firstName, lastName, email, dob, contactNo, password} = req.body;
+    let {firstName, lastName, email, dob, contactNo, password} = req.body;
 
     if (!firstName || !lastName || !email || !password || !dob || !contactNo)
     {
@@ -14,6 +14,8 @@ const registerController = asyncHandler(async (req, res) => {
         // res.json({success: false, message: 'Please fill all the fields'});
         throw new Error('Please fill all the fields');
     }
+
+    email = email.toLowerCase();
 
     const managerExists = await Manager.findOne({email});
 
@@ -62,7 +64,7 @@ const registerController = asyncHandler(async (req, res) => {
 
 const loginController = asyncHandler(async (req, res) => {
     
-    const {email, password} = req.body;
+    let {email, password} = req.body;
 
     if (!email || !password)
     {
@@ -70,6 +72,8 @@ const loginController = asyncHandler(async (req, res) => {
         // res.json({success: false, message: 'Please fill all the fields'});
         throw new Error('Please fill all the fields');
     }
+
+    email = email.toLowerCase();
 
     const manager = await Manager.findOne({email});
 

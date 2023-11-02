@@ -70,8 +70,7 @@ const createProjectController = asyncHandler(async (req, res) => {
 
 const findEmployeesController = asyncHandler(async (req, res) => {
 
-    const regex = new RegExp(req.query.email, 'i');
-    const employees = await Employee.find({email: regex});
+    const employees = await Employee.find({}).select('email _id');
 
     if (employees)
     {
@@ -122,6 +121,7 @@ const getProjectsEmployeeController = asyncHandler(async (req, res) => {
     {
         res.status(200).json({
             success: true,
+            projects: [],
             message: "No projects found!"
         });
     }
@@ -160,6 +160,7 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
     {
         res.status(200).json({
             success: true,
+            projects: [],
             message: "No projects found!"
         });
     }
@@ -167,9 +168,51 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
 });
 
 
+const getMembersController = asyncHandler(async (req, res) => {
+    
+    const projectId = req.params.projectId;
+    const project = await Project.findById(projectId).populate('employees');
+    const employees = project.employees;
+    const manager = await Manager.findById(project.manager_id);
+
+    if (employees.length > 0)
+    {
+        const modifiedEmployees = [];
+
+        for (let i = 0; i < employees.length; i++)
+        {
+            const employee = employees[i];
+            const modifiedEmployee = {
+                ...employee._doc,
+                password: undefined,
+                projects: undefined
+            };
+            modifiedEmployees.push(modifiedEmployee);
+        }
+
+        res.status(200).json({
+            success: true,
+            manager,
+            employees: modifiedEmployees
+        });
+    }
+
+    else
+    {
+        res.status(200).json({
+            success: true,
+            employees: [],
+            manager,
+            message: "No employees found!"
+        });
+    }
+});
+
+
 module.exports = {
     findEmployeesController, 
     createProjectController, 
     getProjectsEmployeeController,
-    getProjectsManagerController
+    getProjectsManagerController,
+    getMembersController
 };
