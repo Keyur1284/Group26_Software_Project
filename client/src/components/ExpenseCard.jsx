@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlaneDeparture,
@@ -11,6 +13,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export const ExpenseCard = (props) => {
+
+  const { projectId } = useParams();
+  const navigate = useNavigate();
+
   const categoryIcons = {
     Travel: faPlaneDeparture,
     Car: faCar,
@@ -56,8 +62,9 @@ export const ExpenseCard = (props) => {
           >
             <button
               type="button"
-              className="btn btn-dark rounded-5"
+              className={`btn btn-dark ${props.status !== "Pending" && "disabled"} rounded-5`}
               style={{ fontSize: "18px" }}
+              onClick={() => navigate(`/projects/${projectId}/expenses/${props.expenseId}/edit-expense`)}
             >
               <FontAwesomeIcon icon={faEdit} />
             </button>
@@ -69,9 +76,9 @@ export const ExpenseCard = (props) => {
               borderRadius: "0px 15px 15px 0px",
             }}
           >
-            <button
+           <button
               type="button"
-              className="btn btn-dark rounded-5"
+              className={`btn btn-dark ${props.status !== "Pending" && "disabled"} rounded-5`}
               style={{ fontSize: "18px" }}
             >
               <FontAwesomeIcon icon={faTrashAlt} />
