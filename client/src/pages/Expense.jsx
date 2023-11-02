@@ -340,12 +340,6 @@ export const Expense = () => {
               <div className="col-md-3 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
                 Added by
               </div>
-              {/* <div className="col-md-2 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C" }}>
-                Status
-              </div>
-              <div className="col-md-1 d-flex align-items-center" style={{ backgroundColor: "#0C438C" }}>
-                Edit
-              </div> */}
               <div className="col-md-2 d-flex justify-content-center align-items-center" style={{ backgroundColor: "#0C438C", borderRadius: "0px 15px 15px 0px" }}>
                 Status
               </div>
