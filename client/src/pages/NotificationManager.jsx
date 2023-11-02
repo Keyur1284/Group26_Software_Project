@@ -1,6 +1,9 @@
 import "bootstrap/dist/css/bootstrap.css";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
+import { useDispatch , useSelector} from "react-redux";
+import { useEffect } from "react";
+import { getManagerNotifications, reset } from "../features/notification/notificationSlice";
 
 export const NotificationManager = () => {
   const notification_data = [
@@ -27,6 +30,23 @@ export const NotificationManager = () => {
     },
   ];
 
+  const dispatch = useDispatch();
+  const { notifications, isLoading, isSuccess, isError, appErr, serverErr } = useSelector((state) => state.notification);
+
+  useEffect(() => {
+
+    dispatch(getManagerNotifications());
+    
+  }, [dispatch]);
+
+  useEffect(() => {
+
+    if(isSuccess || isError) {
+      dispatch(reset());
+    }
+
+  }, [dispatch, isSuccess, isError]);
+
   return (
     <div
       className="px-3 py-3"
@@ -39,7 +59,7 @@ export const NotificationManager = () => {
         <h1 className="px-4 py-4" style={{color:"#013E8F"}}>Notifications</h1>
 
     <div className="col-md-12 ">
-      {notification_data.map((card, index) => (
+      {notifications.map((notification, index) => (
         <div
           key={index}
           className="card"
@@ -55,9 +75,9 @@ export const NotificationManager = () => {
             <h3 className="card-title px-4" style={{ color: "#00000066" }}>
               <CircleRoundedIcon sx={{ color: "#013E8F" }} />
               <span style={{ marginLeft: 17 }}>
-                <strong style={{ color: "black" }}>{card.employeeName}</strong>
-                {card.text}
-                <strong style={{ color: "black" }}>{card.projectName}</strong>
+                <strong style={{ color: "black" }}>{notification.employee}</strong>
+                {" "}{notification.message}{" "}
+                <strong style={{ color: "black" }}>{notification.project_id.name}</strong>
               </span>
             </h3>
           </div>
@@ -69,7 +89,7 @@ export const NotificationManager = () => {
               color: "#00000080",
             }}
           >
-    <h5><strong>{card.time}</strong></h5>
+    <h5><strong>{new Date(notification.createdAt).toLocaleString}</strong></h5>
           </div>
       <div className="d-flex justify-content-between">
           <div style={{ position: "relative", bottom: "17px", left: "80px" ,display: 'inline-block'}}>
@@ -81,7 +101,7 @@ export const NotificationManager = () => {
                 borderRadius: "25px",
               }}
             >
-              <h3> {card.expName}</h3>
+              <h3> {notification.expense_id.name}</h3>
             </div>
           </div>
           </div>
