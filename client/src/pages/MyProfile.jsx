@@ -135,30 +135,30 @@ export const MyProfile = () => {
             </div>
             <div className="row">
               <div className="col-md-4 d-flex flex-column align-items-center justify-content-center">
-              <Skeleton variant="circular" width="200px" height="200px" />
+              <Skeleton variant="circular" animation="wave" width="200px" height="200px" />
                 </div>
               <div className="col-md-8">
                 <div className="mt-3 mr-4 ml-3 mb-3 pt-5 p-3">
                 <Typography component="div" variant="h3" style={{marginTop: "2vh", borderadius : "9rem" }}>
-                  <Skeleton variant="rounded" width="33vw" height="9vh"  />
+                  <Skeleton variant="rounded" animation="wave" width="33vw" height="9vh"  />
                 </Typography>
                 <Typography component="div" variant="h3" style={{marginTop: "2vh"}}>
-                  <Skeleton variant="rounded" width="33vw" height="9vh" />
+                  <Skeleton variant="rounded" animation="wave" width="33vw" height="9vh" />
                 </Typography>
                 <Typography component="div" variant="h3" style={{marginTop: "2vh"}}>
-                  <Skeleton variant="rounded" width="33vw" height="9vh" />
+                  <Skeleton variant="rounded" animation="wave" width="33vw" height="9vh" />
                 </Typography>
                 <Typography component="div" variant="h3" style={{marginTop: "2vh"}}>
-                  <Skeleton variant="rounded" width="33vw" height="9vh" />
+                  <Skeleton variant="rounded" animation="wave" width="33vw" height="9vh" />
                 </Typography>
                 <Typography component="div" variant="h3" style={{marginTop: "2vh"}}>
-                  <Skeleton variant="rounded" width="33vw" height="9vh" />
+                  <Skeleton variant="rounded" animation="wave" width="33vw" height="9vh" />
                 </Typography>
                 <Typography component="div" variant="h3" style={{marginTop: "2vh"}}>
-                  <Skeleton variant="rounded" width="33vw" height="9vh" />
+                  <Skeleton variant="rounded" animation="wave" width="33vw" height="9vh" />
                 </Typography>
                 <Typography component="div" variant="h3" style={{marginTop: "2vh"}}>
-                  <Skeleton variant="rounded" width="33vw" height="9vh" />
+                  <Skeleton variant="rounded" animation="wave" width="33vw" height="9vh" />
                 </Typography>
                 </div>
               </div>

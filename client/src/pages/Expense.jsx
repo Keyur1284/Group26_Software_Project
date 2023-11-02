@@ -70,16 +70,16 @@ export const Expense = () => {
                 </div>
             </div>
             <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="100%" height="15vh" />
+                <Skeleton variant="rounded" animation="wave" width="100%" height="15vh" />
               </Typography>
               <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="100%" height="15vh" />
+                <Skeleton variant="rounded" animation="wave" width="100%" height="15vh" />
               </Typography>
               <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="100%" height="15vh" />
+                <Skeleton variant="rounded" animation="wave" width="100%" height="15vh" />
               </Typography>
               <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
-                <Skeleton variant="rounded" width="100%" height="15vh" />
+                <Skeleton variant="rounded" animation="wave" width="100%" height="15vh" />
               </Typography>
           </div>
         </div>
