@@ -20,12 +20,12 @@ export const Header = () => {
   const handleLogout = async () => {
     
     try {
-      await dispatch(logout())
       dispatch(clearAnnouncements())
       dispatch(clearEmployeesAndInvitations())
       dispatch(clearProjects())
       dispatch(clearTeam())
       dispatch(clearExpenses())
+      dispatch(logout())
       message.success("User Logged Out Successfully!")
       navigate('/login')
     }
