@@ -69,7 +69,8 @@ const addExpenseController = asyncHandler(async (req, res) => {
         const notification = await managerNotification.create({
             manager_id: manager_id,
             expense_id: expense._id,
-            message: 'New expense request!'
+            project_id: project_id,
+            message: 'has requested for an expense in'
         });
 
         if (notification) {
@@ -153,7 +154,8 @@ const updateExpenseController = asyncHandler(async (req, res) => {
         const updatedNotification = await managerNotification.create({
             manager_id,
             expense_id: updatedExpense._id,
-            message: 'Expense request updated!'
+            project_id,
+            message: 'has updated request for an expense in'
         });
 
         if (updatedNotification) {
@@ -239,6 +241,7 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
         const notification = await employeeNotification.create({
             employee_id: expense.employee_id,
             expense_id: expense._id,
+            project_id: expense.project_id,
             message: 'Your expense request has been approved!'
         });
 
@@ -277,6 +280,7 @@ const rejectExpenseController = asyncHandler(async (req, res) => {
 
             employee_id: expense.employee_id,
             expense_id: expense._id,
+            project_id: expense.project_id,
             message: 'Your expense request has been rejected!'
         });
 
