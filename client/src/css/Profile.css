@@ -1,12 +1,11 @@
 .subNav {
-    text-decoration: none; /* Remove the default underline from links */
-    font-size: 23px; /* Set the default font size */
-    transition: text-decoration 0.3s, font-size 0.3s; /* Add a smooth transition effect */
+    text-decoration: none; 
+    font-size: 23px; 
+    transition: text-decoration 0.3s, font-size 0.3s; 
   }
 
 .subNav:hover {
-    /* text-decoration: underline; Show underline on hover */
-    font-size: 27px; /* Enlarge font on hover */
+    font-size: 27px; 
   } 
 
 .subNav.active {

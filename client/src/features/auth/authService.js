@@ -64,9 +64,37 @@ const loginManager = async (userData) => {
 }
 
 
+const getManagerProfile = async (token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(`${baseURL}/managers/profile`, config);
+    return response.data;
+
+}
+
+const getEmployeeProfile = async (token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(`${baseURL}/employees/profile`, config);
+    return response.data;
+
+}
+
 
 const logout = async () => {
     localStorage.removeItem("user");
 }
 
-export const authService = {registerEmployee, registerManager, loginEmployee, loginManager, logout}
+export const authService = {registerEmployee, registerManager, loginEmployee, loginManager, getEmployeeProfile, getManagerProfile, logout}

@@ -7,13 +7,13 @@ const asyncHandler = require('express-async-handler');
 
 const addExpenseController = asyncHandler(async (req, res) => {
 
-    const { name, date, category, amount, description, file } = req.body;
+    const { name, date, category, amount, description, driveLink } = req.body;
     const project_id = req.params.project_id;
     const employee_id = req.employee._id;
     const project = await Project.findById(project_id);
     const manager_id = project.manager_id;
 
-    if (!name || !date || !category || !amount || !project_id || !file) {
+    if (!name || !date || !category || !amount || !project_id || !driveLink) {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
         throw new Error('Please fill all the fields');
@@ -60,7 +60,7 @@ const addExpenseController = asyncHandler(async (req, res) => {
         amount,
         project_id,
         employee_id,
-        file,
+        driveLink,
         status: 'Pending'
     });
 
@@ -98,14 +98,14 @@ const addExpenseController = asyncHandler(async (req, res) => {
 
 const updateExpenseController = asyncHandler(async (req, res) => {
 
-    const { name, date, category, amount, file } = req.body;
+    const { name, date, category, amount, driveLink } = req.body;
     const expense_id = req.params.expense_id;
     const expense = await Expense.findById(expense_id);
     const project_id = expense.project_id;
     const project = await Project.findById(project_id);
     const manager_id = project.manager_id;
 
-    if (!name || !date || !category || !amount || !file) {
+    if (!name || !date || !category || !amount || !driveLink) {
         res.status(400)
         // res.json({success: false, message: 'Please fill all the fields'});
         throw new Error('Please fill all the fields');
@@ -184,6 +184,7 @@ const deleteExpenseController = asyncHandler(async (req, res) => {
 
     const expense_id = req.params.expense_id;
     const deletedExpense = await Expense.findByIdAndDelete(expense_id);
+    const notification = await managerNotification.findOneAndDelete({ expense_id });
 
     if (deletedExpense) {
         res.status(200).json({
@@ -205,42 +206,24 @@ const getExpenseEmployeeController = asyncHandler(async (req, res) => {
 
     const employee_id = req.employee._id;
     const project_id = req.params.project_id;
-    const expenses = await Expense.find({ employee_id, project_id });
+    const expenses = await Expense.find({ employee_id, project_id }).populate('employee_id', 'firstName lastName');
 
-    if (expenses.length > 0) {
-        res.status(200).json({
-            success: true,
-            expenses
-        });
-    }
-
-    else {
-        res.status(200).json({
-            success: true,
-            message: "No expenses found!"
-        });
-    }
+    res.status(200).json({
+        success: true,
+        expenses
+    });
 });
 
 
 const getExpenseManagerController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const expenses = await Expense.find({ project_id });
+    const expenses = await Expense.find({ project_id }).populate('employee_id', 'firstName lastName');
 
-    if (expenses.length > 0) {
-        res.status(200).json({
-            success: true,
-            expenses
-        });
-    }
-
-    else {
-        res.status(200).json({
-            success: true,
-            message: "No expenses found!"
-        });
-    }
+    res.status(200).json({
+        success: true,
+        expenses
+    });
 
 });
 

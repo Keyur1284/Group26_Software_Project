@@ -1,0 +1,14 @@
+.InviteBtn {
+    background-color:#295CAA; 
+    color: #fff;
+    transition: background-color 0.3s; 
+    border-width: 0in;
+    width:100%;
+  
+  }
+
+.InviteBtn:hover {
+    
+    background-color: #3f7fe0;
+  } 
+

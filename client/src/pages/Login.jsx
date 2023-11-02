@@ -7,6 +7,7 @@ import {message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { loginEmployee, loginManager, reset } from "../features/auth/authSlice";
+import { Loading } from "./Loading";
 
 export const Login = () => {
 
@@ -69,9 +70,7 @@ export const Login = () => {
 
   if (isLoading)
   {
-    return(<div>
-      <h1>Loading...</h1>
-    </div>)
+    return(<Loading />)
   }
 
   return (
