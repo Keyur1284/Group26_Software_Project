@@ -21,6 +21,7 @@ import { EmployeeSearch } from "./pages/EmployeeSearch";
 import { Announcement } from "./pages/Announcement";
 import { TeamMembers } from "./pages/TeamMembers";
 import { Invitations } from "./pages/Invitations";
+import {AboutUs} from "./pages/AboutUs";
 
 function App() {
   
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
                 <Route path="/projects/:projectId/add-expense" element={<AddExpense />} />
                 <Route path="/projects/:projectId/expenses" element={<Expense />} />
@@ -60,6 +62,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
                 <Route path="/projects/:projectId/expenses" element={<Expense />} />
                 <Route path="/projects" element={<Project />} />
@@ -80,6 +83,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/about-us" element={<AboutUs />} />
               <Route path="*" element={<Er401 />} />
             </Routes>
           </>
