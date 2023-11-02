@@ -35,7 +35,7 @@ export const ExpenseCard = (props) => {
 
   const newColor = cardColors[props.ind % cardColors.length];
   
-  if(props.userType === "employee")
+  if(props.userType == "employee")
   {
     return (
       <div className="container-fluid justify-content-end text-white">
@@ -100,7 +100,7 @@ export const ExpenseCard = (props) => {
           <div className="col-md-1 d-flex align-items-center justify-content-center shadow" style={{ backgroundColor: newColor,borderRadius: "15px 0px 0px 15px"}}>
             {categoryIcon && <FontAwesomeIcon icon={categoryIcon} size="2xl" />}
           </div>
-          <div className="col-md-3 d-flex flex-column align-items-center justify-content-center shadow" style={{ backgroundColor: newColor }}>
+          <div className="col-md-4 d-flex flex-column align-items-center justify-content-center shadow" style={{ backgroundColor: newColor }}>
             <div>{props.name}</div>
             <div style={{ fontSize: "12px" }}>{props.date}</div>
           </div>
@@ -111,43 +111,18 @@ export const ExpenseCard = (props) => {
             Rs. {props.amount}
           </div>
           <div
-            className="col-md-2 d-flex align-items-center justify-content-center shadow"
+            className="col-md-3 d-flex align-items-center justify-content-center shadow"
             style={{ backgroundColor: newColor }}
           >
             {props.addedBy}
           </div>
           <div
             className="col-md-2 d-flex align-items-center justify-content-center shadow"
-            style={{ backgroundColor: newColor }}
-          >
-            {props.status}
-          </div>
-          <div
-            className="col-md-1 d-flex align-items-center justify-content-center shadow"
-            style={{ backgroundColor: newColor }}
-          >
-            <button
-              type="button"
-              className="btn btn-dark rounded-5"
-              style={{ fontSize: "18px" }}
-            >
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-          </div>
-          <div
-            className="col-md-1 d-flex align-items-center justify-content-center shadow"
-            style={{
-              backgroundColor: newColor,
+            style={{ backgroundColor: newColor,
               borderRadius: "0px 15px 15px 0px",
             }}
           >
-            <button
-              type="button"
-              className="btn btn-dark rounded-5"
-              style={{ fontSize: "18px" }}
-            >
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </button>
+            {props.status}
           </div>
         </div>
       </div>
