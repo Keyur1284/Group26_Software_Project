@@ -117,6 +117,7 @@ const expenseSlice = createSlice({
             state.message = "";
             state.appErr = "";
             state.serverErr = "";
+            state.result = "";
         },
         clearExpenses: (state) => {
             state.expenses = [];
