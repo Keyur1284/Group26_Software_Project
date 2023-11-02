@@ -54,7 +54,7 @@ export const Announcement = () => {
     }
   }, [dispatch, isSuccess, isError]);
 
-  if ( isLoading && announcements.length === 0) {
+  if ( isLoading && !managerName) {
     return (
       <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight: "92vh" }}>
       <div className="row">
