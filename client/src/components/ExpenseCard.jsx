@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteExpense } from "../features/expense/expenseSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlaneDeparture,
@@ -15,6 +17,7 @@ import {
 export const ExpenseCard = (props) => {
 
   const { projectId } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const categoryIcons = {
@@ -80,6 +83,7 @@ export const ExpenseCard = (props) => {
               type="button"
               className={`btn btn-dark ${props.status !== "Pending" && "disabled"} rounded-5`}
               style={{ fontSize: "18px" }}
+              onClick={() => dispatch(deleteExpense(props.expenseId))}
             >
               <FontAwesomeIcon icon={faTrashAlt} />
             </button>
