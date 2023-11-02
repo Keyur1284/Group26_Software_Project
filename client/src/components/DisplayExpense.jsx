@@ -35,6 +35,7 @@ export const DisplayExpense = () => {
   {expenses.map((expense, index) => (
     <ExpenseCard
       key={expense._id}
+      expenseId={expense._id}
       ind={index}
       name={expense.name}
       amount={expense.amount}
