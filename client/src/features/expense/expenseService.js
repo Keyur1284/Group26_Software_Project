@@ -42,4 +42,19 @@ const getExpenseManager = async (projectId, token) => {
     return response.data;
 }
 
-export const expenseService = { createExpense, getExpenseEmployee, getExpenseManager }
+const updateExpense = async (expenseData, token) => {
+    
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const { expenseId } = expenseData;
+
+    const response = await axios.patch(`${baseURL}/expenses/update-expense/${expenseId}`, expenseData, config);
+    return response.data;
+}
+
+export const expenseService = { createExpense, getExpenseEmployee, getExpenseManager, updateExpense }

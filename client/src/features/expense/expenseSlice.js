@@ -69,6 +69,25 @@ export const getExpenseManager = createAsyncThunk("expense/getExpenseManager", a
 });
 
 
+export const updateExpense = createAsyncThunk("expense/updatedExpense", async (expenseData, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await expenseService.updateExpense(expenseData, token);
+        return response;
+    }
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
+
 const announcementSlice = createSlice({
     name: "expense",
     initialState,
@@ -135,6 +154,23 @@ const announcementSlice = createSlice({
             })
 
             .addCase(getExpenseManager.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(updateExpense.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(updateExpense.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.expenses = state.expenses.map((expense) => expense._id === action.payload.updatedExpense._id ? action.payload.updatedExpense : expense);
+            })
+
+            .addCase(updateExpense.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
