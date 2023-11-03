@@ -27,4 +27,10 @@ const getEmployeeDashboard = async (projectId, token) => {
     return response.data;
 }
 
-export const statisticService = { getManagerDashboard, getEmployeeDashboard }
+const getExpenseContribution = async (expenseId) => {
+
+    const response = await axios.get(`${baseURL}/statistics/expense-contribution/${expenseId}`);
+    return response.data;
+}
+
+export const statisticService = { getManagerDashboard, getEmployeeDashboard, getExpenseContribution }

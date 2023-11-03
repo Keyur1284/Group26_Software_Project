@@ -13,7 +13,8 @@ const initialState = {
     pendingExpensesCount: 0,
     totalMoneySpent: 0,
     employeeWiseExpenseArray: [],
-    employeeExpenses: 0
+    employeeExpenses: 0,
+    contribution: 0
 }
 
 
@@ -59,6 +60,26 @@ export const getEmployeeDashboard = createAsyncThunk('/statistic/getEmployeeDash
 })
 
 
+export const getExpenseContribution = createAsyncThunk('/statistic/getExpenseContribution', async (expenseId, thunkAPI) => {
+
+    try {
+        const response = await statisticService.getExpenseContribution(expenseId);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+
+})
+
+
 const statisticSlice = createSlice({
     name: "statistic",
     initialState,
@@ -78,6 +99,7 @@ const statisticSlice = createSlice({
             state.totalMoneySpent = 0;
             state.employeeWiseExpenseArray = [];
             state.employeeExpenses = 0;
+            state.contribution = 0;
         }
     },
     extraReducers: (builder) => {
@@ -120,6 +142,24 @@ const statisticSlice = createSlice({
             })
 
             .addCase(getEmployeeDashboard.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(getExpenseContribution.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(getExpenseContribution.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.contribution = action.payload.contribution;
+                state.totalMoneySpent = action.payload.totalMoneySpent;
+            })
+
+            .addCase(getExpenseContribution.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
