@@ -12,6 +12,7 @@ const expenseRoutes = require('./routes/expenseRoute');
 const inviteRoutes = require('./routes/inviteRoute');
 const notificationRoutes = require('./routes/notificationRoute');
 const announcementRoutes = require('./routes/announcementRoute');
+const statisticRoutes = require('./routes/statisticRoute');
 
 dotenv.config({path: 'config.env'});
 const app = express();
@@ -31,6 +32,7 @@ app.use('/api/expenses', expenseRoutes);
 app.use('/api/invites', inviteRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/announcements', announcementRoutes);
+app.use('/api/statistics', statisticRoutes);
 
 app.use(notFound)
 app.use(errorHandler);
