@@ -1,5 +1,6 @@
 const employeeNotification = require('../models/employeeNotificationModel');
 const Employee = require('../models/employeeModel');
+const Manager = require('../models/managerModel');
 const managerNotification = require('../models/managerNotificationModel');
 const asyncHandler = require('express-async-handler');
 
@@ -7,8 +8,21 @@ const asyncHandler = require('express-async-handler');
 const viewNotificationEmployeeController = asyncHandler(async (req, res) => {
 
     const employee_id = req.employee._id;
-    const notifications = await employeeNotification.find({ employee_id }).sort({ createdAt: -1 });
-    res.json({ success: true, notifications });
+    let notifications = await employeeNotification.find({ employee_id }).sort({ createdAt: -1 }).populate('project_id', 'name manager_id').populate('expense_id', 'name status');
+
+    notifications = await Promise.all(notifications.map(async (notification) => {
+
+        const manager_id = notification.project_id.manager_id;
+        const manager = await Manager.findById(manager_id);
+
+        return {
+            ...notification._doc,
+            manager: manager.firstName + " " + manager.lastName
+        }
+    }
+    ));
+
+    res.status(200).json({ success: true, notifications });
 
 });
 
@@ -30,7 +44,7 @@ const viewNotificationManagerController = asyncHandler(async (req, res) => {
     }
     ));
 
-    res.json({ success: true, notifications });
+    res.status(200).json({ success: true, notifications });
 
 });
 

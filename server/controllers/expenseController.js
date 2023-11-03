@@ -208,7 +208,7 @@ const getExpenseEmployeeController = asyncHandler(async (req, res) => {
 
     const employee_id = req.employee._id;
     const project_id = req.params.project_id;
-    const expenses = await Expense.find({ employee_id, project_id }).populate('employee_id', 'firstName lastName');
+    const expenses = await Expense.find({ employee_id, project_id }).populate('employee_id', 'firstName lastName').sort({ createdAt: -1 });
 
     res.status(200).json({
         success: true,
@@ -220,7 +220,7 @@ const getExpenseEmployeeController = asyncHandler(async (req, res) => {
 const getExpenseManagerController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const expenses = await Expense.find({ project_id }).populate('employee_id', 'firstName lastName');
+    const expenses = await Expense.find({ project_id }).populate('employee_id', 'firstName lastName').sort({ createdAt: -1 });
 
     res.status(200).json({
         success: true,
@@ -262,8 +262,10 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
             employee_id: expense.employee_id,
             expense_id: expense._id,
             project_id: expense.project_id,
-            message: 'has approved the expense request'
+            message: 'has approved the expense request in'
         });
+
+        const deletedNotification = await managerNotification.findOneAndDelete({ expense_id });
 
         if (notification) {
             res.status(200).json({
@@ -301,8 +303,10 @@ const rejectExpenseController = asyncHandler(async (req, res) => {
             employee_id: expense.employee_id,
             expense_id: expense._id,
             project_id: expense.project_id,
-            message: 'has rejected the expense request'
+            message: 'has rejected the expense request in'
         });
+
+        const deletedNotification = await managerNotification.findOneAndDelete({ expense_id });
 
         if (notification) {
             res.status(200).json({
