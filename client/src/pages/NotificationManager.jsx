@@ -89,6 +89,9 @@ export const NotificationManager = () => {
             </div>
           </div>
         ))}
+        {notifications.length === 0 && (
+          notifications.length == 0 && <div className="display-1 mx-4">You&apos;ve no new notifications!</div>
+        )}
       </div>
     </div>
   );

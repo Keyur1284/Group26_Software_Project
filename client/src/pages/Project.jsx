@@ -116,7 +116,7 @@ export const Project = () => {
               ))}
 
               {
-                isSuccess && projects.length == 0 && <div className="display-1 mx-5">No projects found!</div>
+                projects.length == 0 && <div className="display-1 mx-5">No projects found!</div>
               }
 
               {user.role == "manager" && <button
