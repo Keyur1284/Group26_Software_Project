@@ -7,6 +7,7 @@ import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createProject, reset } from "../features/project/projectSlice";
+import { Loading } from "../components/Loading";
 
 export const AddProject = () => {
 
@@ -51,6 +52,13 @@ export const AddProject = () => {
     }
 
   }, [dispatch, isSuccess, isError, appErr, serverErr]);
+
+  if (isLoading)
+  {
+    return (
+      <Loading />
+    )
+  }
 
   return (
     <div className="container-fluid">

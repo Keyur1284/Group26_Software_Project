@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { registerEmployee, registerManager, reset } from "../features/auth/authSlice";
-import "bootstrap-icons/font/bootstrap-icons.css";
+import { Loading } from "../components/Loading";
 
 export const Register = () => {
 
@@ -105,9 +105,7 @@ export const Register = () => {
   if (isLoading)
   {
     return (
-      <div>
-        <h1>Loading...</h1>
-      </div>
+      <Loading />
     )
   }
 

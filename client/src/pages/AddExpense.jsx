@@ -6,6 +6,7 @@ import { message } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createExpense, reset } from "../features/expense/expenseSlice";
+import { Loading } from "../components/Loading";
 
 export const AddExpense = () => {
   
@@ -57,6 +58,11 @@ export const AddExpense = () => {
   }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   const categoryOptions = ["Travel", "Food", "Accommodation", "Other"];
+
+  if (isLoading)
+  {
+    return (<Loading />)
+  }
 
   return (
     <div className="container-fluid">

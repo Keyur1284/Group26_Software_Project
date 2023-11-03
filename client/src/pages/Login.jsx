@@ -7,7 +7,7 @@ import {message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { loginEmployee, loginManager, reset } from "../features/auth/authSlice";
-import { Loading } from "./Loading";
+import { Loading } from "../components/Loading";
 
 export const Login = () => {
 
