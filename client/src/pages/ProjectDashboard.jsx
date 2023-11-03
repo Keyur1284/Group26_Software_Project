@@ -10,7 +10,7 @@ import { Hamburger4 } from '../components/Hamburger_4'
 import { EmpDistributionPie } from '../components/EmpDistributionPie'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { getManagerDashboard, reset } from '../features/statistic/statisticSlice'
+import { getManagerDashboard, getEmployeeDashboard, reset } from '../features/statistic/statisticSlice'
 import { useEffect } from 'react'
 
 
@@ -19,13 +19,16 @@ export const ProjectDashboard = () => {
     const { projectId } = useParams();
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
-    const { isSuccess, isError, isLoading, appErr, serverErr, project, approvedExpensesCount, pendingExpensesCount } = useSelector(state => state.statistic);
+    const { isSuccess, isError, isLoading, appErr, serverErr, project, approvedExpensesCount, pendingExpensesCount, employeeExpenses } = useSelector(state => state.statistic);
     const role = user.role;
 
     useEffect(() => {
 
         if (role == 'manager')
             dispatch(getManagerDashboard(projectId));
+
+        else if (role == 'employee')
+            dispatch(getEmployeeDashboard(projectId));
 
     }, [dispatch, projectId, role])
 
@@ -168,7 +171,7 @@ export const ProjectDashboard = () => {
                             { role == 'employee' ?
                                 <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white' >My Expense</h3>
-                                <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; 200</h6>
+                                <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; {employeeExpenses}</h6>
                                 <div className="pie">
                                     <MyExpPie/>
                                 </div>

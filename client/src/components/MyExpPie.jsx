@@ -1,6 +1,10 @@
 import Chart from "react-apexcharts";
+import { useSelector } from "react-redux";
 
 export const MyExpPie = () => {
+
+  const { employeeExpenses, totalMoneySpent } = useSelector(state => state.statistic)
+
   const optionsRadial = {
     plotOptions: {
       radialBar: {
@@ -67,7 +71,7 @@ export const MyExpPie = () => {
     labels: ["Percent"]
   };
 
-  const seriesRadial = [90];
+  const seriesRadial = [Math.round((employeeExpenses / totalMoneySpent) * 100)];
 
   return (
     <div className="d-flex flew-row justify-content-end">
