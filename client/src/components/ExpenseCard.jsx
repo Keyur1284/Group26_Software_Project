@@ -5,9 +5,7 @@ import { deleteExpense } from "../features/expense/expenseSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlaneDeparture,
-  faCar,
   faUtensils,
-  faShoppingCart,
   faEdit,
   faTrashAlt,
   faHotel,
@@ -22,9 +20,7 @@ export const ExpenseCard = (props) => {
 
   const categoryIcons = {
     Travel: faPlaneDeparture,
-    Car: faCar,
     Food: faUtensils,
-    Shopping: faShoppingCart,
     Accommodation: faHotel,
     Other: faWallet
   };
