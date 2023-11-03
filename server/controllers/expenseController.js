@@ -56,7 +56,7 @@ const addExpenseController = asyncHandler(async (req, res) => {
         name,
         date,
         category,
-        description,
+        description: description || "No description provided.",
         amount,
         project_id,
         employee_id,
