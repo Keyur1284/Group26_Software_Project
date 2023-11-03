@@ -262,7 +262,7 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
             employee_id: expense.employee_id,
             expense_id: expense._id,
             project_id: expense.project_id,
-            message: 'Your expense request has been approved!'
+            message: 'has approved the expense request'
         });
 
         if (notification) {
@@ -301,7 +301,7 @@ const rejectExpenseController = asyncHandler(async (req, res) => {
             employee_id: expense.employee_id,
             expense_id: expense._id,
             project_id: expense.project_id,
-            message: 'Your expense request has been rejected!'
+            message: 'has rejected the expense request'
         });
 
         if (notification) {
