@@ -1,6 +1,10 @@
 import Chart from "react-apexcharts";
+import { useSelector } from "react-redux";
 
 export const TotalExpPie = () => {
+
+  const { totalMoneySpent, project } = useSelector(state => state.statistic);
+
   const optionsDoughnut = {
     labels: ["Used", "Unused"],
     responsive: [{
@@ -22,7 +26,7 @@ export const TotalExpPie = () => {
     }
   };
 
-  const seriesDoughnut = [100, 500];
+  const seriesDoughnut = [totalMoneySpent, project.budget - totalMoneySpent];
 
   return (
     <div className="mt-5 d-flex flex-row justify-content-end me-5">

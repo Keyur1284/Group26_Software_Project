@@ -48,8 +48,6 @@ const categoryIcons = {
   Other: <AccountBalanceWalletIcon style={{ color: "#fff", fontSize: 35 }}/>
 };
 
-const category = 'Accommodation';
-
   if (isLoading) {
     return (
       <>
