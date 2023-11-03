@@ -41,6 +41,35 @@ const getManagerDashboardController = asyncHandler(async (req, res) => {
     });
 })  
 
+
+const getEmployeeDashboardController = asyncHandler(async (req, res) => {
+
+    const project_id = req.params.project_id;
+    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email');
+    
+    const employee_id = req.employee._id;
+    const approvedExpensesCount = await Expense.countDocuments({employee_id, project_id, status: 'Approved'});
+    const pendingExpensesCount = await Expense.countDocuments({employee_id, project_id, status: 'Pending'});
+    
+    const expenses = await Expense.find({project_id, status: 'Approved'});
+    let totalMoneySpent = expenses.reduce((total, expense) => total + expense.amount, 0);
+    totalMoneySpent = Math.min(totalMoneySpent, project.budget);
+
+    let employeeExpenses = await Expense.find({project_id, employee_id, status: 'Approved'});
+    employeeExpenses = employeeExpenses.reduce((total, expense) => total + expense.amount, 0);
+
+    res.status(200).json({
+        success: true,
+        project,
+        approvedExpensesCount,
+        pendingExpensesCount,
+        totalMoneySpent,
+        employeeExpenses
+    });
+})
+
+
 module.exports = {
-    getManagerDashboardController
+    getManagerDashboardController,
+    getEmployeeDashboardController
 };
