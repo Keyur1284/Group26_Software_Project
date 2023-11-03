@@ -1,7 +1,9 @@
 import "bootstrap/dist/css/bootstrap.css";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
+import Skeleton from '@mui/material/Skeleton';
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom"
 import { useEffect } from "react";
 import { getManagerNotifications, deleteNotificationManager, reset } from "../features/notification/notificationSlice";
 
@@ -23,6 +25,32 @@ export const NotificationManager = () => {
     }
 
   }, [dispatch, isSuccess, isError]);
+
+  if (isLoading && notifications.length == 0)
+  {
+    return (
+      <>
+        <div
+      className="px-3 py-3"
+      style={{
+        backgroundImage: `url(${mainbg})`,
+        backgroundRepeat: "repeat",
+        minHeight: "92vh",
+      }}
+    >
+      <h1 className="px-4 py-4" style={{ color: "#013E8F" }}>Notifications</h1>
+
+      <div className="col-md-12">
+        <Skeleton sx={{marginLeft: 3}} variant="rounded" animation="wave" width="98%" height="15vh" />
+        <Skeleton sx={{marginLeft: 3, marginTop: 2}} variant="rounded" animation="wave" width="98%" height="15vh" />
+        <Skeleton sx={{marginLeft: 3, marginTop: 2}} variant="rounded" animation="wave" width="98%" height="15vh" />
+        <Skeleton sx={{marginLeft: 3, marginTop: 2}} variant="rounded" animation="wave" width="98%" height="15vh" />
+        <Skeleton sx={{marginLeft: 3, marginTop: 2}} variant="rounded" animation="wave" width="98%" height="15vh" />
+      </div>
+    </div>
+      </>
+    )
+  }
 
   return (
     <div
@@ -70,6 +98,7 @@ export const NotificationManager = () => {
             </div>
             <div className="d-flex justify-content-between">
               <div style={{ position: "relative", bottom: "17px", left: "80px", display: 'inline-block' }}>
+              <Link to={`/projects/${notification.project_id._id}/expenses/${notification.expense_id._id}`} style={{ textDecoration: "none", color: "white" }}>
                 <div
                   className="card px-4"
                   style={{
@@ -80,6 +109,7 @@ export const NotificationManager = () => {
                 >
                   <h3> {notification.expense_id.name}</h3>
                 </div>
+              </Link>
               </div>
             </div>
             <div style={{ position: "absolute", bottom: "17px", right: "20px" }}>
@@ -90,7 +120,7 @@ export const NotificationManager = () => {
           </div>
         ))}
         {notifications.length === 0 && (
-          notifications.length == 0 && <div className="display-1 mx-4">You&apos;ve no new notifications!</div>
+          notifications.length == 0 && <div className="display-5 mx-4">You&apos;ve no new notifications!</div>
         )}
       </div>
     </div>
