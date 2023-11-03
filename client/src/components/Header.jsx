@@ -25,7 +25,7 @@ export const Header = () => {
       dispatch(clearProjects())
       dispatch(clearTeam())
       dispatch(clearExpenses())
-      dispatch(logout())
+      await dispatch(logout())
       message.success("User Logged Out Successfully!")
       navigate('/login')
     }
