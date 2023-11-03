@@ -42,5 +42,17 @@ const deleteNotificationManager = async (notificationId, token) => {
 
 }
 
+const deleteNotificationEmployee = async (notificationId, token) => {
+    
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
 
-export const notificationService = { getEmployeeNotifications, getManagerNotifications, deleteNotificationManager }
+    const response = await axios.delete(`${baseURL}/notifications/delete-notification-employee/${notificationId}`, config);
+    return response.data;
+
+}
+export const notificationService = { getEmployeeNotifications, getManagerNotifications, deleteNotificationManager, deleteNotificationEmployee }
