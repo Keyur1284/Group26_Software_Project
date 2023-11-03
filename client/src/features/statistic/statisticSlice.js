@@ -12,7 +12,8 @@ const initialState = {
     approvedExpensesCount: 0,
     pendingExpensesCount: 0,
     totalMoneySpent: 0,
-    employeeWiseExpenseArray: []
+    employeeWiseExpenseArray: [],
+    employeeExpenses: 0
 }
 
 
@@ -37,6 +38,27 @@ export const getManagerDashboard = createAsyncThunk('/statistic/getManagerDashbo
 })
 
 
+export const getEmployeeDashboard = createAsyncThunk('/statistic/getEmployeeDashboard', async (projectId, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await statisticService.getEmployeeDashboard(projectId, token);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+
+})
+
+
 const statisticSlice = createSlice({
     name: "statistic",
     initialState,
@@ -55,6 +77,7 @@ const statisticSlice = createSlice({
             state.pendingExpensesCount = 0;
             state.totalMoneySpent = 0;
             state.employeeWiseExpenseArray = [];
+            state.employeeExpenses = 0;
         }
     },
     extraReducers: (builder) => {
@@ -76,6 +99,27 @@ const statisticSlice = createSlice({
             })
 
             .addCase(getManagerDashboard.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(getEmployeeDashboard.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(getEmployeeDashboard.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.project = action.payload.project;
+                state.approvedExpensesCount = action.payload.approvedExpensesCount;
+                state.pendingExpensesCount = action.payload.pendingExpensesCount;
+                state.totalMoneySpent = action.payload.totalMoneySpent;
+                state.employeeExpenses = action.payload.employeeExpenses;
+            })
+
+            .addCase(getEmployeeDashboard.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
