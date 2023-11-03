@@ -69,7 +69,29 @@ const getEmployeeDashboardController = asyncHandler(async (req, res) => {
 })
 
 
+const getExpenseContibutionController = asyncHandler(async (req, res) => {
+
+    const expense_id = req.params.expense_id;
+    const expense = await Expense.findById(expense_id);
+
+    const project_id = expense.project_id;
+    const project = await Project.findById(project_id)
+
+    const expenses = await Expense.find({project_id, status: 'Approved'});
+    let totalMoneySpent = expenses.reduce((total, expense) => total + expense.amount, 0);
+    totalMoneySpent = Math.min(totalMoneySpent, project.budget);
+
+    const contribution = (expense.status == 'Approved') ? expense.amount : 0;
+
+    res.status(200).json({
+        success: true,
+        contribution,
+        totalMoneySpent
+    });
+})
+
 module.exports = {
     getManagerDashboardController,
-    getEmployeeDashboardController
+    getEmployeeDashboardController,
+    getExpenseContibutionController
 };
