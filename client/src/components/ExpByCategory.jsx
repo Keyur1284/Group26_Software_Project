@@ -1,17 +1,14 @@
 import Chart from "react-apexcharts";
 
 export const ExpByCategory = () => {
-  const labels = ["Category 1", "Category 2", "Category 3", "Category 4", "Category 5", "Category 6", "Category 7", "Category 8"];
-  
-  const generateRandomColor = () => {
-    const randomRed = Math.floor(Math.random() * 100 + 100); // Generate a random red component (100-200)
-    const randomGreen = Math.floor(Math.random() * 100 + 100); // Generate a random green component (100-200)
-    const randomBlue = Math.floor(Math.random() * 100 + 100); // Generate a random blue component (100-200)
-  
-    const randomColor = `rgb(${randomRed}, ${randomGreen}, ${randomBlue})`;
-    return randomColor;
-  }
-  
+  const labels = ["Category 1", "Category 2", "Category 3", "Category 4",
+    "Category 5", "Category 6", "Category 7", "Category 8"];
+
+  const color_palette = ["#BBDEFB", "#64B5F6", "#2196F3", "#1976D2", "#0D47A1",  //blue
+    "#E0AAFF", "#C77DFF", "#9D4EDD", "#5A189A", "#310055", //purple
+    "#FFE0E9", "#FF9EBB", "#E05780", "#8A2846", "#522E38", //pink
+    "#99E2B4", "#67B99A", "#469D89", "#248277", "#036666" //green
+  ]
 
   const optionsDoughnut = {
     labels: labels,
@@ -22,7 +19,7 @@ export const ExpByCategory = () => {
         }
       }
     }],
-    colors: labels.map(() => generateRandomColor()), // Generate colors dynamically
+    colors: color_palette,
     legend: {
       position: 'left',
       labels: {
