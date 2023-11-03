@@ -284,7 +284,7 @@ const category = 'Accommodation';
               }}
             >
               <div className="d-flex mt-4">
-                {categoryIcons[category]} {" "}
+                {categoryIcons[expenseById?.category]} {" "}
                 <h2
                   className="rounded ms-2 px-2"
                   style={{ backgroundColor: "#fff" }}
