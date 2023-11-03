@@ -1,6 +1,11 @@
 import { Hamburger4 } from "../components/Hamburger_4";
 import { useParams } from "react-router-dom";
-import { getExpenseById, reset } from "../features/expense/expenseSlice";
+import {
+  getExpenseById,
+  acceptExpense,
+  rejectExpense,
+  reset,
+} from "../features/expense/expenseSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
@@ -22,21 +27,6 @@ export const ExpenseDetails = () => {
   const { user } = useSelector((state) => state.auth);
 
   const role = user.role;
-  const status = expenseById?.status;
-
-  let statusClassName;
-  let statusText;
-
-  if (status == "Rejected") {
-    statusClassName = "bg-danger";
-    statusText = "Rejected";
-  } else if (status == "Approved") {
-    statusClassName = "bg-success";
-    statusText = "Approved";
-  } else if (status == "Pending") {
-    statusClassName = "bg-warning";
-    statusText = "Pending";
-  }
 
   useEffect(() => {
     dispatch(getExpenseById(expenseId));
@@ -363,12 +353,18 @@ export const ExpenseDetails = () => {
                       <button
                         className="btn btn-success m-2 mx-1"
                         style={{ width: "48%", fontSize: "3vh" }}
+                        onClick={() =>
+                          dispatch(acceptExpense(expenseById?._id))
+                        }
                       >
                         Approve
                       </button>
                       <button
                         className="btn btn-danger m-2 mx-1"
                         style={{ width: "48%", fontSize: "3vh" }}
+                        onClick={() =>
+                          dispatch(rejectExpense(expenseById?._id))
+                        }
                       >
                         Reject
                       </button>
@@ -377,10 +373,21 @@ export const ExpenseDetails = () => {
                     <div className="d-flex justify-content-center">
                       <div className="status mt-3" style={{ width: "98%" }}>
                         <div
-                          className={`py-2 ${statusClassName} rounded text-light`}
+                          className={`py-2 ${
+                            expenseById?.status == "Rejected"
+                              ? "bg-danger"
+                              : expenseById?.status == "Approved"
+                              ? "bg-success"
+                              : "bg-warning"
+                          } rounded text-light`}
                           style={{ fontSize: "3vh" }}
                         >
-                          {statusText}
+                          {expenseById?.status == "Rejected"
+                            ? "Rejected"
+                            : expenseById?.status === "Approved"
+                            ? "Approved"
+                            : "Pending"
+                          }
                         </div>
                       </div>
                     </div>
@@ -402,12 +409,23 @@ export const ExpenseDetails = () => {
                   </a>
                   <div className="d-flex justify-content-center">
                     <div className="status mt-3" style={{ width: "98%" }}>
-                      <div
-                        className={`py-2 ${statusClassName} rounded text-light`}
-                        style={{ fontSize: "3vh" }}
-                      >
-                        {statusText}
-                      </div>
+                    <div
+                          className={`py-2 ${
+                            expenseById?.status == "Rejected"
+                              ? "bg-danger"
+                              : expenseById?.status == "Approved"
+                              ? "bg-success"
+                              : "bg-warning"
+                          } rounded text-light`}
+                          style={{ fontSize: "3vh" }}
+                        >
+                          {expenseById?.status == "Rejected"
+                            ? "Rejected"
+                            : expenseById?.status == "Approved"
+                            ? "Approved"
+                            : "Pending"
+                            }
+                        </div>
                     </div>
                   </div>
                 </div>
