@@ -13,6 +13,9 @@ import { PortionInTotalPie } from "../components/PortionInTotalPie";
 import bg1 from "../assets/expense-details/bg1.jpg";
 import bg2 from "../assets/project-dashboard/bg-2.jpg";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
+import FastfoodIcon from "@mui/icons-material/Fastfood";
+import HotelIcon from "@mui/icons-material/Hotel";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
@@ -37,6 +40,15 @@ export const ExpenseDetails = () => {
       dispatch(reset());
     }
   }, [isSuccess, isError, dispatch]);
+
+const categoryIcons = {
+  Travel: <FlightTakeoffIcon style={{ color: "#fff", fontSize: 35 }}/>,
+  Food: <FastfoodIcon style={{ color: "#fff", fontSize: 35 }}/>,
+  Accommodation: <HotelIcon style={{ color: "#fff", fontSize: 35 }}/>,
+  Other: <AccountBalanceWalletIcon style={{ color: "#fff", fontSize: 35 }}/>
+};
+
+const category = 'Accommodation';
 
   if (isLoading) {
     return (
@@ -272,7 +284,7 @@ export const ExpenseDetails = () => {
               }}
             >
               <div className="d-flex mt-4">
-                <FlightTakeoffIcon style={{ color: "#fff", fontSize: 35 }} />{" "}
+                {categoryIcons[category]} {" "}
                 <h2
                   className="rounded ms-2 px-2"
                   style={{ backgroundColor: "#fff" }}
