@@ -124,6 +124,44 @@ export const deleteExpense = createAsyncThunk("expense/deleteExpense", async (ex
     }
 });
 
+
+export const acceptExpense = createAsyncThunk("expense/acceptExpense", async (expenseId, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await expenseService.acceptExpense(expenseId, token);
+        return response;
+    }
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
+
+export const rejectExpense = createAsyncThunk("expense/rejectExpense", async (expenseId, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await expenseService.rejectExpense(expenseId, token);
+        return response;
+    }
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
 const expenseSlice = createSlice({
     name: "expense",
     initialState,
@@ -248,6 +286,42 @@ const expenseSlice = createSlice({
                 state.isError = true;
                 state.appErr = action.payload?.message;
                 state.serverErr = action.error?.message;
+            })
+
+            .addCase(acceptExpense.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(acceptExpense.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.expenses = state.expenses.map((expense) => expense._id === action.payload.expense._id ? action.payload.expense : expense);
+                state.expenseById.status = action.payload.expense.status;
+            })
+
+            .addCase(acceptExpense.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message; 
+            })
+
+            .addCase(rejectExpense.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(rejectExpense.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.expenses = state.expenses.map((expense) => expense._id === action.payload.expense._id ? action.payload.expense : expense);
+                state.expenseById.status = action.payload.expense.status;
+            })
+
+            .addCase(rejectExpense.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message; 
             })
     }
 })

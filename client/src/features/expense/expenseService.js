@@ -82,4 +82,30 @@ const deleteExpense = async (expenseId, token) => {
     return response.data;
 }
 
-export const expenseService = { createExpense, getExpenseEmployee, getExpenseManager, updateExpense, deleteExpense, getExpenseById }
+const acceptExpense = async (expenseId, token) => {
+        
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.patch(`${baseURL}/expenses/accept-expense/${expenseId}`, {}, config);
+    return response.data;
+}
+
+const rejectExpense = async (expenseId, token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.patch(`${baseURL}/expenses/reject-expense/${expenseId}`, {}, config);
+    return response.data;
+}
+
+export const expenseService = { createExpense, getExpenseEmployee, getExpenseManager, updateExpense, deleteExpense, getExpenseById, acceptExpense, rejectExpense }
