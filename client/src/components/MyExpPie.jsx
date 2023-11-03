@@ -71,8 +71,13 @@ export const MyExpPie = () => {
     labels: ["Percent"]
   };
 
-  const seriesRadial = [Math.round((employeeExpenses / totalMoneySpent) * 100)];
+  const round = (num) => {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
+  };
 
+  const seriesRadial = [round(employeeExpenses / totalMoneySpent * 100)];
+
+  
   return (
     <div className="d-flex flew-row justify-content-end">
           <Chart
