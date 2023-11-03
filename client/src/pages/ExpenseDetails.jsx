@@ -6,6 +6,7 @@ import {
   rejectExpense,
   reset,
 } from "../features/expense/expenseSlice";
+import { getExpenseContribution } from "../features/statistic/statisticSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
@@ -33,6 +34,7 @@ export const ExpenseDetails = () => {
 
   useEffect(() => {
     dispatch(getExpenseById(expenseId));
+    dispatch(getExpenseContribution(expenseId));
   }, [dispatch, expenseId]);
 
   useEffect(() => {
@@ -249,7 +251,11 @@ const categoryIcons = {
                   }}
                 >
                   <h1 className="text-light">Contribution in Total Budget</h1>
-                  <PortionInTotalPie />
+                  <div className="pie d-flex justify-content-end">
+                    <div className='mt-5 me-5'>
+                        <Skeleton variant="circular" width={200} height={200} />
+                    </div>
+                    </div>
                 </div>
               </div>
             </div>
@@ -451,7 +457,7 @@ const categoryIcons = {
                 minWidth: 530,
               }}
             >
-              <h1 className="text-light">Contribution in Total Budget</h1>
+              <h1 className="text-light p-2">Contribution in Total Spent Budget</h1>
               <PortionInTotalPie />
             </div>
           </div>
