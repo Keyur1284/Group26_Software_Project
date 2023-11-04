@@ -53,12 +53,12 @@ export const Header = () => {
 
   useEffect(() => {
 
-    if (user.role == "manager")
+    if (user?.role == "manager")
       dispatch(getManagerNotifications())
     
-    else
+    else if (user?.role == "employee")
       dispatch(getEmployeeNotifications())
-
+    
   }, [
     user,
     isLoading,
