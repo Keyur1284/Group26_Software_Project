@@ -13,6 +13,8 @@ const initialState = {
     pendingExpensesCount: 0,
     totalMoneySpent: 0,
     employeeWiseExpenseArray: [],
+    categoryWiseExpenseArray: [],
+    expenses: [],
     employeeExpenses: 0,
     contribution: 0
 }
@@ -80,6 +82,27 @@ export const getExpenseContribution = createAsyncThunk('/statistic/getExpenseCon
 })
 
 
+export const getManagerAnalytics = createAsyncThunk('/statistic/getManagerAnalytics', async (projectId, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await statisticService.getManagerAnalytics(projectId, token);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+
+})
+
+
 const statisticSlice = createSlice({
     name: "statistic",
     initialState,
@@ -98,6 +121,8 @@ const statisticSlice = createSlice({
             state.pendingExpensesCount = 0;
             state.totalMoneySpent = 0;
             state.employeeWiseExpenseArray = [];
+            state.categoryWiseExpenseArray = [];
+            state.expenses = [];
             state.employeeExpenses = 0;
             state.contribution = 0;
         }
@@ -166,6 +191,25 @@ const statisticSlice = createSlice({
                 state.serverErr = action.error?.message;
             })
 
+            .addCase(getManagerAnalytics.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(getManagerAnalytics.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.project = action.payload.project;
+                state.employeeWiseExpenseArray = action.payload.employeeWiseExpenseArray;
+                state.categoryWiseExpenseArray = action.payload.categoryWiseExpenseArray;
+                state.expenses = action.payload.expenses;
+            })
+            
+            .addCase(getManagerAnalytics.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
     }
 })
 

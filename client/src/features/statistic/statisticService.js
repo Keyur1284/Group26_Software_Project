@@ -33,4 +33,17 @@ const getExpenseContribution = async (expenseId) => {
     return response.data;
 }
 
-export const statisticService = { getManagerDashboard, getEmployeeDashboard, getExpenseContribution }
+const getManagerAnalytics = async (projectId, token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.get(`${baseURL}/statistics/manager-analytics/${projectId}`, config);
+    return response.data;
+}
+
+export const statisticService = { getManagerDashboard, getEmployeeDashboard, getExpenseContribution, getManagerAnalytics }
