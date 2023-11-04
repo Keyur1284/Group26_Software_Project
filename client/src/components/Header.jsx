@@ -1,14 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { logout } from "../features/auth/authSlice";
 import { clearAnnouncements } from "../features/announcement/announcementSlice";
 import { clearEmployeesAndInvitations } from "../features/invite/inviteSlice";
 import { clearProjects } from "../features/project/projectSlice";
 import { clearTeam } from "../features/team/teamSlice";
 import { clearExpenses } from "../features/expense/expenseSlice";
-import { clearNotification } from "../features/notification/notificationSlice";
+import { clearNotification, getEmployeeNotifications, getManagerNotifications } from "../features/notification/notificationSlice";
+import { clearStatistics } from "../features/statistic/statisticSlice";
 import { message } from "antd";
 import "../css/Homepage.css";
 
@@ -17,6 +20,7 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector((state) => state.auth);
+  const { notifications } = useSelector((state) => state.notification)
 
   const handleLogout = async () => {
     
@@ -27,6 +31,7 @@ export const Header = () => {
       dispatch(clearTeam())
       dispatch(clearExpenses())
       dispatch(clearNotification())
+      dispatch(clearStatistics())
       await dispatch(logout())
       message.success("User Logged Out Successfully!")
       navigate('/login')
@@ -39,6 +44,16 @@ export const Header = () => {
     }
 
   }
+
+  useEffect(() => {
+
+    if (user.role == "manager")
+      dispatch(getManagerNotifications())
+    
+    else
+      dispatch(getEmployeeNotifications())
+
+  }, [])
 
   return (
     <nav
@@ -70,7 +85,7 @@ export const Header = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link" aria-current="page" to="/projects">
-                Menu
+                Track Expenses
               </Link>
             </li>
             <li className="nav-item">
@@ -82,7 +97,15 @@ export const Header = () => {
 
           {user ? (
             <div className="d-flex align-items-center">
-              <Link to='/notifications'><NotificationsActiveIcon sx={{fontSize: 30}} className="text-light"/></Link>
+              {notifications.length > 0 ? (
+                <Link to='/notifications' className="text-decoration-none">
+                  <NotificationsActiveIcon className="text-light mx-2" style={{ fontSize: "30px" }} />
+                </Link>
+              ) : (
+                <Link to='/notifications' className="text-decoration-none">
+                  <NotificationsIcon className="text-light mx-2" style={{ fontSize: "30px" }} />
+                </Link>
+              )}
               <Link to='/profile' className="text-decoration-none"> <div className="text-light mx-3" style={{ fontSize: "18px" }}>
                 {user.firstName} {user.lastName}
               </div> </Link>
