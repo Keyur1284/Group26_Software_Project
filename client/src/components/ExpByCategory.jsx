@@ -1,8 +1,11 @@
 import Chart from "react-apexcharts";
+import { useSelector } from "react-redux";
 
 export const ExpByCategory = () => {
-  const labels = ["Category 1", "Category 2", "Category 3", "Category 4",
-    "Category 5", "Category 6", "Category 7", "Category 8"];
+
+  const { categoryWiseExpenseArray } = useSelector(state => state.statistic)
+
+  const labels = categoryWiseExpenseArray.map((category) => category.category)
 
   const color_palette = ["#BBDEFB", "#64B5F6", "#2196F3", "#1976D2", "#0D47A1",  //blue
     "#E0AAFF", "#C77DFF", "#9D4EDD", "#5A189A", "#310055", //purple
@@ -31,7 +34,7 @@ export const ExpByCategory = () => {
     }
   };
 
-  const seriesDoughnut = [1200, 400, 1505, 700, 900, 1000, 250, 500];
+  const seriesDoughnut = categoryWiseExpenseArray.map((category) => category.categoryTotalMoneySpent)
 
   return (
     <div className="mt-5 d-flex flex-row justify-content-center me-5">
