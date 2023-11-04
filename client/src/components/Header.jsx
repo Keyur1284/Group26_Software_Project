@@ -73,44 +73,6 @@ export const Header = () => {
                 Menu
               </Link>
             </li>
-            {/* <li className="nav-item">
-              <Link className="nav-link" aria-current="page" to="/">
-                Notifications
-              </Link>
-            </li> */}
-            {/* <li className="nav-item dropdown">
-              <a
-                className="nav-link text-secondary link-light dropdown-toggle"
-                href="#"
-                id="navbarDarkDropdownMenuLink"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Resources
-              </a>
-              <ul
-                className="dropdown-menu dropdown-menu-dark"
-                aria-labelledby="navbarDarkDropdownMenuLink"
-              >
-                <li>
-                  <Link className="dropdown-item" to="/">
-                    User Guide
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/">
-                    FAQs
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/">
-                    Articles
-                  </Link>
-                </li>
-              </ul>
-            </li> */}
-
             <li className="nav-item">
               <Link className="nav-link" aria-current="page" to="/about-us">
                 About Us
