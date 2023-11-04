@@ -4,7 +4,8 @@ const {
     getManagerDashboardController,
     getEmployeeDashboardController,
     getExpenseContibutionController,
-    getManagerAnalyticsController
+    getManagerAnalyticsController,
+    getEmployeeAnalyticsController
 } = require("../controllers/statisticController");
 
 const {
@@ -16,5 +17,7 @@ router.get("/manager-dashboard/:project_id", managerAuthMiddleware, getManagerDa
 router.get("/employee-dashboard/:project_id", employeeAuthMiddleware, getEmployeeDashboardController);
 router.get("/expense-contribution/:expense_id", getExpenseContibutionController);
 router.get("/manager-analytics/:project_id", managerAuthMiddleware, getManagerAnalyticsController);
+router.get("/employee-analytics/:project_id", employeeAuthMiddleware, getEmployeeAnalyticsController);
+
 
 module.exports = router;
