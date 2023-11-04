@@ -35,7 +35,7 @@ export const ExpenseDetails = () => {
   useEffect(() => {
     dispatch(getExpenseById(expenseId));
     dispatch(getExpenseContribution(expenseId));
-  }, [dispatch, expenseId]);
+  }, [dispatch, expenseId, expenseById?.status]);
 
   useEffect(() => {
     if (isSuccess || isError) {
