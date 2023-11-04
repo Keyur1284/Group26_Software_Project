@@ -20,7 +20,13 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector((state) => state.auth);
+  const { isLoading: isLoadingAnnouncement} = useSelector((state) => state.announcement)
+  const { isLoading: isLoadingExpense} = useSelector((state) => state.expense)
+  const { isLoading: isLoadingInvite} = useSelector((state) => state.invite)
   const { notifications } = useSelector((state) => state.notification)
+  const { isLoading: isLoadingProject} = useSelector((state) => state.project)
+  const { isLoading: isLoadingStatistic} = useSelector((state) => state.statistic)
+  const { isLoading: isLoadingTeam} = useSelector((state) => state.team)
 
   const handleLogout = async () => {
     
@@ -53,7 +59,16 @@ export const Header = () => {
     else
       dispatch(getEmployeeNotifications())
 
-  }, [])
+  }, [
+    user,
+    isLoading,
+    isLoadingAnnouncement,
+    isLoadingExpense,
+    isLoadingInvite,
+    isLoadingProject,
+    isLoadingStatistic,
+    isLoadingTeam
+  ])
 
   return (
     <nav
