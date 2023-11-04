@@ -103,6 +103,27 @@ export const getManagerAnalytics = createAsyncThunk('/statistic/getManagerAnalyt
 })
 
 
+export const getEmployeeAnalytics = createAsyncThunk('/statistic/getEmployeeAnalytics', async (projectId, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await statisticService.getEmployeeAnalytics(projectId, token);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+
+    }
+
+})
+
 const statisticSlice = createSlice({
     name: "statistic",
     initialState,
@@ -205,6 +226,25 @@ const statisticSlice = createSlice({
             })
             
             .addCase(getManagerAnalytics.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(getEmployeeAnalytics.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(getEmployeeAnalytics.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.project = action.payload.project;
+                state.expenses = action.payload.expenses;
+                state.categoryWiseExpenseArray = action.payload.categoryWiseExpenseArray;
+            })
+
+            .addCase(getEmployeeAnalytics.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
