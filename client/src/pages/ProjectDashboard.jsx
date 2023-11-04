@@ -20,17 +20,16 @@ export const ProjectDashboard = () => {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.auth);
     const { isSuccess, isError, isLoading, appErr, serverErr, project, approvedExpensesCount, pendingExpensesCount, employeeExpenses } = useSelector(state => state.statistic);
-    const role = user.role;
 
     useEffect(() => {
 
-        if (role == 'manager')
+        if (user.role == 'manager')
             dispatch(getManagerDashboard(projectId));
 
-        else if (role == 'employee')
+        else if (user.role == 'employee')
             dispatch(getEmployeeDashboard(projectId));
 
-    }, [dispatch, projectId, role])
+    }, [dispatch, projectId, user.role])
 
     useEffect(() => {
 
@@ -62,7 +61,7 @@ export const ProjectDashboard = () => {
                         <div className="row gap-4">
                             <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg1})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white'>Total Budget</h3>
-                                <Skeleton sx={{marginLeft: 2.5}} variant="rounded" animation="wave" width="50%" height="8vh" />
+                                <Skeleton sx={{marginLeft: 2.5}} variant="rounded" animation="wave" width="50%" height="6vh" />
                                 <div className="pie d-flex justify-content-end">
                                 <div className='mt-5 me-5'>
                                     <Skeleton variant="circular" width={200} height={200} />
@@ -84,12 +83,14 @@ export const ProjectDashboard = () => {
                         </div>
 
                         <div className="row my-4 gap-4">
-                            { role == 'employee' ?
+                            { user.role == 'employee' ?
                                 <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white' >My Expense</h3>
-                                <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; 200</h6>
-                                <div className="pie">
-                                    <MyExpPie/>
+                                <Skeleton sx={{marginLeft: 2}} variant="rounded" animation="wave" width="45%" height="6vh" />
+                                <div className="pie d-flex justify-content-end">
+                                <div className='mt-5 me-5'>
+                                    <Skeleton variant="circular" width={200} height={200} />
+                                </div>
                                 </div>
                             </div>
                             :
@@ -168,7 +169,7 @@ export const ProjectDashboard = () => {
                         </div>
 
                         <div className="row my-4 gap-4">
-                            { role == 'employee' ?
+                            { user.role == 'employee' ?
                                 <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white' >My Expense</h3>
                                 <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; {employeeExpenses}</h6>

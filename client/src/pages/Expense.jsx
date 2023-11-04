@@ -40,7 +40,6 @@ export const Expense = () => {
 
   const { user } = useSelector((state) => state.auth);
   const { expenses, isSuccess, isLoading } = useSelector((state) => state.expense);
-  const role = user.role;
 
   if (isLoading && expenses.length == 0)
   {
@@ -88,7 +87,7 @@ export const Expense = () => {
     )
   }
   
-  if (role == "employee")
+  if (user.role == "employee")
   {
     return (
       <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight:"92vh" }}>

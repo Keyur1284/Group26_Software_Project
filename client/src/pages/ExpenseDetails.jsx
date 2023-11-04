@@ -30,8 +30,6 @@ export const ExpenseDetails = () => {
   );
   const { user } = useSelector((state) => state.auth);
 
-  const role = user.role;
-
   useEffect(() => {
     dispatch(getExpenseById(expenseId));
     dispatch(getExpenseContribution(expenseId));
@@ -173,7 +171,7 @@ const categoryIcons = {
                       />
                     </div>
                   </div>
-                  {role == "manager" ? (
+                  {user.role == "manager" ? (
                     <div className="text-center">
                       <Skeleton
                         sx={{ marginTop: "2vh" }}
@@ -350,7 +348,7 @@ const categoryIcons = {
                   <p>{expenseById?.description}</p>
                 </div>
               </div>
-              {role == "manager" ? (
+              {user.role == "manager" ? (
                 <div className="text-center">
                   <a
                     href={expenseById?.driveLink}

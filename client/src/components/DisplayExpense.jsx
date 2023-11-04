@@ -10,18 +10,18 @@ export const DisplayExpense = () => {
   const { projectId } = useParams();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const role = user.role;
+
   const { expenses, isSuccess, isLoading, result, isError, appErr, serverErr } = useSelector((state) => state.expense);
 
   useEffect(() => {
 
-    if (role == "employee")
+    if (user.role == "employee")
       dispatch(getExpenseEmployee(projectId));
 
-    else if (role == "manager")
+    else if (user.role == "manager")
       dispatch(getExpenseManager(projectId));
     
-  }, [dispatch, projectId]);
+  }, [dispatch, projectId, user.role]);
 
   useEffect(() => {
     

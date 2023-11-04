@@ -36,7 +36,7 @@ export const MyProfile = () => {
     else 
       dispatch(getEmployeeProfile());
 
-  }, [dispatch]);
+  }, [dispatch, user.role]);
 
   useEffect(() => {
     

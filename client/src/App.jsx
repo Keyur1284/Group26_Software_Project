@@ -34,7 +34,7 @@ function App() {
     <>
       <Router>
         {user ? (
-          user.role === "employee" ? (
+          user.role == "employee" ? (
             <>
               <Header />
               <Routes>

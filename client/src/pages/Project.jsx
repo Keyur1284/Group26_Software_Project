@@ -24,7 +24,7 @@ export const Project = () => {
     else
       dispatch(getProjectsEmployee());
 
-  }, [dispatch]);
+  }, [dispatch, user.role]);
 
   useEffect(() => {
     
