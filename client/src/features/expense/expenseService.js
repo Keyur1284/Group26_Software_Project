@@ -69,6 +69,21 @@ const getExpenseManagerByFilter = async (filterData, token) => {
     return response.data;
 }
 
+const getExpenseEmployeeByFilter = async (filterData, token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const { projectId } = filterData;
+
+    const response = await axios.post(`${baseURL}/expenses/expenses-employee-filter/${projectId}`, filterData, config);
+    return response.data;
+}
+
 const updateExpense = async (expenseData, token) => {
     
     const config = {
@@ -133,4 +148,5 @@ export const expenseService = {
     acceptExpense,
     rejectExpense,
     getExpenseManagerByFilter,
+    getExpenseEmployeeByFilter
 };

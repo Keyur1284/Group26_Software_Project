@@ -108,6 +108,28 @@ export const getExpenseManagerByFilter = createAsyncThunk("expense/getExpenseMan
 });
 
 
+export const getExpenseEmployeeByFilter = createAsyncThunk("expense/getExpenseEmployeeByFilter", async (filterData, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await expenseService.getExpenseEmployeeByFilter(filterData, token);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+
+    }
+
+});
+
+
 export const updateExpense = createAsyncThunk("expense/updatedExpense", async (expenseData, thunkAPI) => {
 
     try {
@@ -268,6 +290,23 @@ const expenseSlice = createSlice({
             })
 
             .addCase(getExpenseManagerByFilter.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(getExpenseEmployeeByFilter.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(getExpenseEmployeeByFilter.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.expenses = action.payload.expenses;
+            })
+
+            .addCase(getExpenseEmployeeByFilter.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
