@@ -2,7 +2,7 @@ import mainbg from '../assets/project-dashboard/main-bg.jpg'
 import { Hamburger4 } from '../components/Hamburger_4'
 import { ExpByCategory } from '../components/ExpByCategory'
 import { EmpDistributionPie } from '../components/EmpDistributionPie'
-import { ExpenseTable } from './ExpenseTable'
+import { ExpenseTable } from '../components/ExpenseTable'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
