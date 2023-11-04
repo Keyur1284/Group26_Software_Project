@@ -251,6 +251,54 @@ const getExpenseByIdController = asyncHandler(async (req, res) => {
 
 });
 
+const getExpenseManagerByFilterController = asyncHandler(async (req, res) => {
+
+    const project_id = req.params.project_id;
+    let { startDate, endDate, filter, category } = req.body;
+    
+    startDate = new Date(startDate);
+    tempEndDate = new Date(endDate);
+    endDate = new Date(endDate);
+    endDate.setDate(endDate.getDate() + 1);
+
+    const currentDate = new Date();
+    const istDate = new Date(currentDate.getTime() + 330 * 60000);
+
+    if (filter == "custom" && startDate > tempEndDate) {
+        
+        res.status(400)
+        // res.json({success: false, message: 'Start date must be less than or equal to end date'});
+        throw new Error('Start date must be less than or equal to end date');
+    }
+
+    if (filter == "custom" && startDate > istDate) {
+
+        res.status(400)
+        // res.json({success: false, message: 'Start date must be less than or equal to current date'});
+        throw new Error('Start date must be less than or equal to current date');
+    }
+
+    if (filter == "custom" && tempEndDate > istDate) {
+
+        res.status(400)
+        // res.json({success: false, message: 'End date must be less than or equal to current date'});
+        throw new Error('End date must be less than or equal to current date');
+    }
+
+    const expenses = await Expense.find({
+        
+        project_id,
+        category: category == "all" ? { $ne: null } : category,
+        date: filter == "all" ? { $ne: null } : filter == "custom" ? { $gte: startDate, $lt: endDate } : { $gte: istDate.setDate(istDate.getDate() - Number(filter)) }
+
+    }).populate('employee_id', 'firstName lastName').sort({ createdAt: -1});
+
+    res.status(200).json({
+        success: true,
+        expenses
+    });
+});
+
 const acceptExpenseController = asyncHandler(async (req, res) => {
 
     const expense_id = req.params.expense_id;
@@ -341,5 +389,6 @@ module.exports = {
     deleteExpenseController,
     acceptExpenseController,
     rejectExpenseController,
-    getExpenseByIdController
+    getExpenseByIdController,
+    getExpenseManagerByFilterController
 };
