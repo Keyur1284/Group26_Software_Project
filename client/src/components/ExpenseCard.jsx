@@ -48,7 +48,7 @@ export const ExpenseCard = (props) => {
             <div className="d-flex col-md-3 align-items-center justify-content-center shadow"
               style={{ backgroundColor: newColor }}
             >
-              Rs. {props.amount}
+              &#8377; {props.amount}
             </div>
             <div className="d-flex col-md-4 align-items-center justify-content-center shadow"
               style={{ backgroundColor: newColor }}
@@ -107,7 +107,7 @@ export const ExpenseCard = (props) => {
             className="col-md-2 d-flex align-items-center justify-content-center shadow"
             style={{ backgroundColor: newColor }}
           >
-            Rs. {props.amount}
+            &#8377; {props.amount}
           </div>
           <div
             className="col-md-3 d-flex align-items-center justify-content-center shadow"
