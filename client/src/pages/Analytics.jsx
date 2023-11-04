@@ -8,7 +8,7 @@ import { useParams, Link } from 'react-router-dom'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect } from 'react'
-import { getManagerAnalytics, reset } from '../features/statistic/statisticSlice'
+import { getManagerAnalytics, getEmployeeAnalytics, reset } from '../features/statistic/statisticSlice'
 import '../css/Analytics.css'
 
 export const Analytics = () => {
@@ -22,6 +22,11 @@ export const Analytics = () => {
         if (user.role == 'manager') {
             dispatch(getManagerAnalytics(projectId))
         }
+
+        else {
+            dispatch(getEmployeeAnalytics(projectId))
+        }
+
     }, [dispatch, projectId, user.role])
 
     useEffect(() => {
@@ -68,11 +73,12 @@ export const Analytics = () => {
                         <Skeleton variant="circular" animation="wave" width={600} height={600} />   
                         </div>   
                     </div>
-                    <div className='mt-4 shadow-lg rounded p-2' style={{backgroundColor: "rgba(255, 255, 255, 0.7)"}}>
+                    {user.role == "manager" && <div className='mt-4 shadow-lg rounded p-2' style={{backgroundColor: "rgba(255, 255, 255, 0.7)"}}>
                         <h3 className='p-2 display-6 fw-normal'>Expense Based on Employee Use</h3>
                         <div className='d-flex justify-content-center mt-5 mb-5'>
                         <Skeleton variant="circular" animation="wave" width={600} height={600} />   
-                        </div>                     </div>
+                        </div>
+                        </div>}
                     <div className='mt-4 shadow-lg rounded p-2 mb-4' style={{backgroundColor: "rgba(255, 255, 255, 0.7)"}}>
                         <h3 className='mb-3 p-2 display-6 fw-normal'>Expenses </h3>
                         <div className="expense-table ms-5 mb-4">
