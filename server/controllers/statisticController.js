@@ -90,8 +90,62 @@ const getExpenseContibutionController = asyncHandler(async (req, res) => {
     });
 })
 
+const getManagerAnalyticsController = asyncHandler(async (req, res) => {
+
+    const project_id = req.params.project_id;
+    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+    const expenses = await Expense.find({project_id}).populate('employee_id', 'firstName lastName').sort({date: 1});
+
+    const employeeWiseExpenseArray = [];
+
+    for (let i = 0; i < project.employees.length; i++)
+    {
+        const employee = project.employees[i];
+        const employeeExpenses = await Expense.find({project_id, employee_id: employee._id, status: 'Approved'});
+        const employeeTotalMoneySpent = employeeExpenses.reduce((total, expense) => total + expense.amount, 0);
+        employeeWiseExpenseArray.push({
+            employee_id: employee._id,
+            employeeName: employee.firstName + ' ' + employee.lastName,
+            employeeEmail: employee.email,
+            employeeTotalMoneySpent
+        });
+    }
+
+    const categoryWiseExpenseArray = [];
+
+    for (let i = 0; i < expenses.length; i++)
+    {
+        const expense = expenses[i];
+        const category = expense.category;
+
+        if (categoryWiseExpenseArray.find((categoryWiseExpense) => categoryWiseExpense.category == category))
+            continue;
+
+        const categoryExpenses = await Expense.find({project_id, category, status: 'Approved'});
+        const categoryTotalMoneySpent = categoryExpenses.reduce((total, expense) => total + expense.amount, 0);
+
+        if (categoryTotalMoneySpent == 0)
+            continue;
+
+        categoryWiseExpenseArray.push({
+            category,
+            categoryTotalMoneySpent
+        });
+    }
+
+    res.status(200).json({
+        success: true,
+        project,
+        employeeWiseExpenseArray,
+        categoryWiseExpenseArray,
+        expenses
+    });
+})
+    
+
 module.exports = {
     getManagerDashboardController,
     getEmployeeDashboardController,
-    getExpenseContibutionController
+    getExpenseContibutionController,
+    getManagerAnalyticsController
 };
