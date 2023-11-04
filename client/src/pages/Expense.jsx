@@ -6,7 +6,7 @@ import { Hamburger4 } from "../components/Hamburger_4";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getExpenseEmployee, getExpenseManager, getExpenseManagerByFilter, reset } from "../features/expense/expenseSlice";
+import { getExpenseEmployee, getExpenseManager, getExpenseManagerByFilter, getExpenseEmployeeByFilter, reset } from "../features/expense/expenseSlice";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import { message } from "antd";
@@ -63,11 +63,18 @@ export const Expense = () => {
 
     if (user.role == "manager")
     {
-
       if (selectedDateOption == "custom" && (startDate == "" || endDate == "")) 
         return;
 
       dispatch(getExpenseManagerByFilter(filterData));
+    }
+
+    else if (user.role == "employee")
+    {
+      if (selectedDateOption == "custom" && (startDate == "" || endDate == "")) 
+        return;
+
+      dispatch(getExpenseEmployeeByFilter(filterData));
     }
 
   }, [selectedDateOption, startDate, endDate, selectedCategory]);
@@ -169,7 +176,7 @@ export const Expense = () => {
                 </div>
             </div>
             <div className="row d-flex align-items-center mb-3">
-            {expenses.length > 0 && <div className="col-md-12 d-flex align-items-center justify-content-end">
+            <div className="col-md-12 d-flex align-items-center justify-content-end">
                 <div className="d-flex align-items-center">
                   <FontAwesomeIcon icon={faFilter} size="2xl" style={{ marginRight: "10px" }} />
                   <select
@@ -251,7 +258,7 @@ export const Expense = () => {
                     />
                   </div>
                 )}
-              </div>}
+              </div>
             </div>
             {expenses.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
               <div className="col-md-4 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C", borderRadius: "15px 0px 0px 15px" }}>
