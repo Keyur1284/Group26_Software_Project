@@ -1,25 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faPlus, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { DisplayExpense } from "../components/DisplayExpense";
 import { Hamburger4 } from "../components/Hamburger_4";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getExpenseEmployee, getExpenseManager, getExpenseManagerByFilter, reset } from "../features/expense/expenseSlice";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
+import { message } from "antd";
 
 export const Expense = () => {
 
   const { projectId } = useParams();
+  const dispatch = useDispatch();
 
-  const [selectedDateOption, setSelectedDateOption] = useState("");
+  const [selectedDateOption, setSelectedDateOption] = useState("all");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const handleDateOptionChange = (event) => {
     const newDateOption = event.target.value;
+
+    if (newDateOption != "custom")
+    {
+      setStartDate("");
+      setEndDate("");
+    }
+
     setSelectedDateOption(newDateOption);
   };
 
@@ -39,9 +49,54 @@ export const Expense = () => {
   };
 
   const { user } = useSelector((state) => state.auth);
-  const { expenses, isSuccess, isLoading } = useSelector((state) => state.expense);
+  const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
 
-  if (isLoading && expenses.length == 0)
+  useEffect(() => {
+
+    const filterData = {
+      filter: selectedDateOption,
+      startDate: startDate,
+      endDate: endDate,
+      category: selectedCategory,
+      projectId: projectId
+    }
+
+    if (user.role == "manager")
+    {
+
+      if (selectedDateOption == "custom" && (startDate == "" || endDate == "")) 
+        return;
+
+      dispatch(getExpenseManagerByFilter(filterData));
+    }
+
+  }, [selectedDateOption, startDate, endDate, selectedCategory]);
+
+  // useEffect(() => {
+
+  //   if (user.role == "employee")
+  //     dispatch(getExpenseEmployee(projectId));
+
+  //   else if (user.role == "manager")
+  //     dispatch(getExpenseManager(projectId));
+    
+  // }, [dispatch, projectId, user.role]);
+
+  useEffect(() => {
+
+    if (isSuccess || isError)
+    {
+      dispatch(reset());
+    }
+
+    if (isError)
+    {
+      message.error(appErr || serverErr);
+    }
+
+  }, [isSuccess, isError]);
+
+  if (isLoading)
   {
     return (
       <>
@@ -128,13 +183,13 @@ export const Expense = () => {
                       marginRight: "10px"
                     }}
                   >
-                    <option value="">None</option>
-                    <option value="days">Last 7 days</option>
-                    <option value="month">Last 1 month</option>
-                    <option value="custom_date">Custom Date</option>
+                    <option value="all">None</option>
+                    <option value="7">Last 7 days</option>
+                    <option value="30">Last 30 days</option>
+                    <option value="custom">Custom Date</option>
                   </select>
                 </div>
-                {selectedDateOption === "custom_date" && (
+                {selectedDateOption === "custom" && (
                   <div className="d-flex align-items-center" style={{ marginRight: "10px" }}>
                     <label style={{ marginRight: "5px" }}>From</label>
                     <input
@@ -173,11 +228,11 @@ export const Expense = () => {
                       cursor: "pointer",
                     }}>
 
-                    <option value="">None</option>
-                    <option value="travel">Travel</option>
-                    <option value="food">Food</option>
-                    <option value="accommodation">Accommodation</option>
-                    <option value="other">Other</option>
+                    <option value="all">None</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Food">Food</option>
+                    <option value="Accommodation">Accommodation</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
                 {selectedCategory === "category" && (
@@ -245,7 +300,7 @@ export const Expense = () => {
               </div>
             </div>
             <div className="row d-flex align-items-center mb-3">
-            {expenses.length > 0 && <div className="col-md-12 d-flex align-items-center justify-content-end">
+            <div className="col-md-12 d-flex align-items-center justify-content-end">
                 <div className="d-flex align-items-center">
                   <FontAwesomeIcon icon={faFilter} size="2xl" style={{ marginRight: "10px" }} />
                   <select
@@ -259,13 +314,13 @@ export const Expense = () => {
                       marginRight: "10px"
                     }}
                   >
-                    <option value="">None</option>
-                    <option value="days">Last 7 days</option>
-                    <option value="month">Last 1 month</option>
-                    <option value="custom_date">Custom Date</option>
+                    <option value="all">None</option>
+                    <option value="7">Last 7 days</option>
+                    <option value="30">Last 30 days</option>
+                    <option value="custom">Custom Date</option>
                   </select>
                 </div>
-                {selectedDateOption === "custom_date" && (
+                {selectedDateOption === "custom" && (
                   <div className="d-flex align-items-center" style={{ marginRight: "10px" }}>
                     <label style={{ marginRight: "5px" }}>From</label>
                     <input
@@ -304,11 +359,11 @@ export const Expense = () => {
                       cursor: "pointer",
                     }}>
 
-                    <option value="">None</option>
-                    <option value="travel">Travel</option>
-                    <option value="food">Food</option>
-                    <option value="accommodation">Accommodation</option>
-                    <option value="other">Other</option>
+                    <option value="all">None</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Food">Food</option>
+                    <option value="Accommodation">Accommodation</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
                 {selectedCategory === "category" && (
@@ -327,7 +382,7 @@ export const Expense = () => {
                     />
                   </div>
                 )}
-              </div>}
+              </div>
             </div>
             {expenses.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
               <div className="col-md-5 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C", borderRadius: "15px 0px 0px 15px" }}>
