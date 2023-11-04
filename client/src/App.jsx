@@ -17,11 +17,12 @@ import { Er404 } from "./pages/Er404";
 import { useSelector } from "react-redux";
 import { MyProfile} from './pages/MyProfile'
 import { ExpenseDetails } from "./pages/ExpenseDetails";
+import { Analytics } from "./pages/Analytics";
 import { EmployeeSearch } from "./pages/EmployeeSearch";
 import { Announcement } from "./pages/Announcement";
 import { TeamMembers } from "./pages/TeamMembers";
 import { Invitations } from "./pages/Invitations";
-import {AboutUs} from "./pages/AboutUs";
+import { AboutUs } from "./pages/AboutUs";
 import { NotificationEmployee } from "./pages/NotificationEmployee";
 import { NotificationManager } from "./pages/NotificationManager";
 
@@ -51,6 +52,7 @@ function App() {
                 <Route path='/profile' element={<MyProfile />} />
                 <Route path='/invites' element={<Invitations />} />
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
+                <Route path='/projects/:projectId/analytics' element={<Analytics />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
                 <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
                 <Route path='/notifications' element={<NotificationEmployee/>} />
@@ -72,6 +74,7 @@ function App() {
                 <Route path='/profile' element={<MyProfile />} />
                 <Route path='/projects/:projectId/invite-employee' element={<EmployeeSearch />} />
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
+                <Route path='/projects/:projectId/analytics' element={<Analytics />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
                 <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
                 <Route path='/notifications' element={<NotificationManager/>} />
