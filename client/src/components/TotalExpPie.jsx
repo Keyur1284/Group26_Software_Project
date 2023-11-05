@@ -26,7 +26,7 @@ export const TotalExpPie = () => {
     }
   };
 
-  const seriesDoughnut = [totalMoneySpent, project.budget - totalMoneySpent];
+  const seriesDoughnut = [totalMoneySpent, project?.budget - totalMoneySpent];
 
   return (
     <div className="mt-5 d-flex flex-row justify-content-end me-5">

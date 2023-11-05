@@ -7,7 +7,7 @@ export const DisplayExpense = () => {
   const { expenses } = useSelector((state) => state.expense);
 
   return( <>
-  {expenses.map((expense, index) => (
+  {expenses?.map((expense, index) => (
     <ExpenseCard
       key={expense._id}
       expenseId={expense._id}
@@ -17,8 +17,8 @@ export const DisplayExpense = () => {
       status={expense.status}
       category={expense.category}
       date={new Date(expense.date).toLocaleDateString()}
-      userType={user.role}
-      addedBy={expense.employee_id.firstName + " " + expense.employee_id.lastName}
+      userType={user?.role}
+      addedBy={expense.employee_id?.firstName + " " + expense.employee_id?.lastName}
     />
   ))}
   </>
