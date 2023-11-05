@@ -94,7 +94,7 @@ export const NotificationManager = () => {
                 color: "#00000080",
               }}
             >
-              <h5><strong>{new Date(notification.createdAt).toLocaleString}</strong></h5>
+              <h5><strong>{new Date(notification.createdAt).toLocaleString()}</strong></h5>
             </div>
             <div className="d-flex justify-content-between">
               <div style={{ position: "relative", bottom: "17px", left: "80px", display: 'inline-block' }}>
