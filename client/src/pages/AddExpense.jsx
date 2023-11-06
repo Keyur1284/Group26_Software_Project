@@ -15,7 +15,7 @@ export const AddExpense = () => {
   const navigate = useNavigate();
 
   const formSchema = Yup.object({
-    name: Yup.string().required("Name is required").max(24, "Expense name must not exceed 30 characters"),
+    name: Yup.string().required("Name is required").max(30, "Expense name must not exceed 30 characters"),
     category: Yup.string().required("Category is required"),
     amount: Yup.number().required("Amount is required"),
     date: Yup.date().required("Date is required"),
