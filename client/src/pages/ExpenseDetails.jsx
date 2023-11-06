@@ -16,7 +16,6 @@ import bg2 from "../assets/project-dashboard/bg-2.jpg";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import HotelIcon from "@mui/icons-material/Hotel";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import CampaignIcon from '@mui/icons-material/Campaign';
 import LaptopIcon from '@mui/icons-material/Laptop';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
@@ -25,10 +24,10 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import WineBarIcon from '@mui/icons-material/WineBar';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CategoryIcon from '@mui/icons-material/Category';
+import PersonIcon from '@mui/icons-material/Person';
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import Skeleton from "@mui/material/Skeleton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 export const ExpenseDetails = () => {
@@ -319,7 +318,7 @@ const categoryIcons = {
                 </h2>
               </div>
               <div className="d-flex">
-                <LocationOnIcon style={{ color: "#fff", fontSize: 35 }} />{" "}
+                <CategoryIcon style={{ color: "#fff", fontSize: 35 }} />{" "}
                 <h2
                   className="rounded ms-2 px-2"
                   style={{ backgroundColor: "#fff" }}
@@ -337,13 +336,14 @@ const categoryIcons = {
                 </h2>
               </div>
               <div className="d-flex">
-                <h4
+              <PersonIcon style={{ color: "#fff", fontSize: 40 }} /> 
+                <h2
                   className="rounded ms-2 px-2"
                   style={{ backgroundColor: "#fff" }}
                 >
-                  Added By :- {expenseById?.employee_id?.firstName}{" "}
+                  {expenseById?.employee_id?.firstName}{" "}
                   {expenseById?.employee_id?.lastName}
-                </h4>
+                </h2>
               </div>
             </div>
           </div>
