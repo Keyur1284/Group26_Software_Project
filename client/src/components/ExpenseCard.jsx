@@ -9,7 +9,14 @@ import {
   faEdit,
   faTrashAlt,
   faHotel,
-  faWallet
+  faWrench,
+  faArchive,
+  faGift,
+  faBullhorn,
+  faLaptop,
+  faGlassMartini,
+  faEllipsisH
+
 } from "@fortawesome/free-solid-svg-icons";
 
 export const ExpenseCard = (props) => {
@@ -22,7 +29,14 @@ export const ExpenseCard = (props) => {
     Travel: faPlaneDeparture,
     Food: faUtensils,
     Accommodation: faHotel,
-    Other: faWallet
+    Utilities: faWrench,
+    OfficeSupplies: faArchive,
+    Gifts: faGift,
+    Advertising: faBullhorn,
+    Technology: faLaptop,
+    Entertainment: faGlassMartini,
+    Miscellaneous: faEllipsisH
+
   };
 
   const categoryIcon = categoryIcons[props.category] || null;
