@@ -68,7 +68,7 @@ export const EditExpense = () => {
     )
   }
 
-  const categoryOptions = ["Travel", "Food", "Accommodation", "Other"];
+  const categoryOptions = ["Accommodation", "Advertising", "Entertainment", "Food", "Gifts", "Miscellaneous", "OfficeSupplies", "Technology", "Travel", "Utilities"]
 
   return (
     <div className="container-fluid">
