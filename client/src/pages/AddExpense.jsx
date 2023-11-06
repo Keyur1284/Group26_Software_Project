@@ -58,8 +58,8 @@ export const AddExpense = () => {
 
   }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
-  const categoryOptions = ["Travel", "Food", "Accommodation", "Utilities", "OfficeSupplies", "Gifts", "Advertising", "Technology", "Entertainment", "Miscellaneous"];
-
+  const categoryOptions = ["Accommodation", "Advertising", "Entertainment", "Food", "Gifts", "Miscellaneous", "OfficeSupplies", "Technology", "Travel", "Utilities"]
+  
   if (isLoading)
   {
     return (<Loading />)

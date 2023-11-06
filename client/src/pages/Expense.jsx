@@ -144,6 +144,8 @@ export const Expense = () => {
       </>
     )
   }
+
+  const categoryOptions = ["Accommodation", "Advertising", "Entertainment", "Food", "Gifts", "Miscellaneous", "OfficeSupplies", "Technology", "Travel", "Utilities"]
   
   if (user?.role == "employee")
   {
@@ -232,10 +234,11 @@ export const Expense = () => {
                     }}>
 
                     <option value="all">None</option>
-                    <option value="Travel">Travel</option>
-                    <option value="Food">Food</option>
-                    <option value="Accommodation">Accommodation</option>
-                    <option value="Other">Other</option>
+                    {categoryOptions.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 {selectedCategory === "category" && (
@@ -363,10 +366,11 @@ export const Expense = () => {
                     }}>
 
                     <option value="all">None</option>
-                    <option value="Travel">Travel</option>
-                    <option value="Food">Food</option>
-                    <option value="Accommodation">Accommodation</option>
-                    <option value="Other">Other</option>
+                    {categoryOptions.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 {selectedCategory === "category" && (
