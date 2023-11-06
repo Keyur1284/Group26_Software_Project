@@ -15,11 +15,12 @@ export const AddExpense = () => {
   const navigate = useNavigate();
 
   const formSchema = Yup.object({
-    name: Yup.string().required("Name is required"),
+    name: Yup.string().required("Name is required").max(24, "Expense name must not exceed 30 characters"),
     category: Yup.string().required("Category is required"),
     amount: Yup.number().required("Amount is required"),
     date: Yup.date().required("Date is required"),
     driveLink: Yup.string().required("Link of uploaded bill is required"),
+    description: Yup.string().max(400, "Expense Description must not exceed 400 characters")
   });
 
   const formik = useFormik({
@@ -57,7 +58,7 @@ export const AddExpense = () => {
 
   }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
-  const categoryOptions = ["Travel", "Food", "Accommodation", "Other"];
+  const categoryOptions = ["Travel", "Food", "Accommodation", "Utilities", "OfficeSupplies", "Gifts", "Advertising", "Technology", "Entertainment", "Miscellaneous"];
 
   if (isLoading)
   {
@@ -210,6 +211,13 @@ export const AddExpense = () => {
                     onBlur={formik.handleBlur}
                   />
                 </div>
+
+                {formik.touched.description && formik.errors.description && (
+                  <div className="alert alert-danger text-center mt-2">
+                    {formik.touched.description && formik.errors.description}
+                  </div>
+                )}
+
               </div>
 
               <div className="d-flex gap-5 mt-4">
