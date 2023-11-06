@@ -6,7 +6,7 @@ export const EmpDistributionPie = ({ size, labelcolor, justifycontent }) => {
 
   const { employeeWiseExpenseArray } = useSelector(state => state.statistic);
 
-  const labels = employeeWiseExpenseArray.map((employee) => employee.employeeName);
+  const labels = employeeWiseExpenseArray?.map((employee) => employee.employeeName);
 
 
   const color_palette = ["#64B5F6", "#2196F3", "#1976D2", "#0D47A1",  //blue
@@ -36,7 +36,7 @@ export const EmpDistributionPie = ({ size, labelcolor, justifycontent }) => {
     }
   };
 
-  const seriesDoughnut = employeeWiseExpenseArray.map((employee) => employee.employeeTotalMoneySpent);
+  const seriesDoughnut = employeeWiseExpenseArray?.map((employee) => employee.employeeTotalMoneySpent);
 
   return (
     <div className={`mt-5 d-flex flex-row ${justifycontent || 'justify-content-end'} me-5`}>

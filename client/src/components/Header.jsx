@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import { Link, useNavigate } from "react-router-dom";
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
@@ -20,7 +21,13 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector((state) => state.auth);
+  const { isLoading: isLoadingAnnouncement} = useSelector((state) => state.announcement)
+  const { isLoading: isLoadingExpense} = useSelector((state) => state.expense)
+  const { isLoading: isLoadingInvite} = useSelector((state) => state.invite)
   const { notifications } = useSelector((state) => state.notification)
+  const { isLoading: isLoadingProject} = useSelector((state) => state.project)
+  const { isLoading: isLoadingStatistic} = useSelector((state) => state.statistic)
+  const { isLoading: isLoadingTeam} = useSelector((state) => state.team)
 
   const handleLogout = async () => {
     
@@ -47,13 +54,22 @@ export const Header = () => {
 
   useEffect(() => {
 
-    if (user.role == "manager")
+    if (user?.role == "manager")
       dispatch(getManagerNotifications())
     
-    else
+    else if (user?.role == "employee")
       dispatch(getEmployeeNotifications())
-
-  }, [])
+    
+  }, [
+    user,
+    isLoading,
+    isLoadingAnnouncement,
+    isLoadingExpense,
+    isLoadingInvite,
+    isLoadingProject,
+    isLoadingStatistic,
+    isLoadingTeam
+  ])
 
   return (
     <nav
@@ -61,6 +77,18 @@ export const Header = () => {
       style={{ fontSize: "18px" }}
     >
       <div className="container-fluid">
+        <a
+            href="https://github.com/Keyur1284/Group26_Software_Project"
+            target="_blank"
+            className="navbar-brand"
+        >        
+              <img
+                src="https://static.dezeen.com/uploads/2023/07/x-logo-twitter-elon-musk_dezeen_2364_col_0-1-600x600.jpg"
+                alt="logo"
+                className="rounded-circle"
+                style={{ height: "35px", width: "35px" }}
+              />
+        </a>
         <Link className="navbar-brand" to="/">
           Xpense Tracker
         </Link>
@@ -97,7 +125,7 @@ export const Header = () => {
 
           {user ? (
             <div className="d-flex align-items-center">
-              {notifications.length > 0 ? (
+              {notifications?.length > 0 ? (
                 <Link to='/notifications' className="text-decoration-none">
                   <NotificationsActiveIcon className="text-light mx-2" style={{ fontSize: "30px" }} />
                 </Link>
@@ -107,7 +135,7 @@ export const Header = () => {
                 </Link>
               )}
               <Link to='/profile' className="text-decoration-none"> <div className="text-light mx-3" style={{ fontSize: "18px" }}>
-                {user.firstName} {user.lastName}
+                {user?.firstName} {user?.lastName}
               </div> </Link>
               <button
                 className="btn btn-danger"

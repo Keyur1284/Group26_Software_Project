@@ -2,14 +2,13 @@ import main_bg from "../assets/project-dashboard/main-bg.jpg";
 import { Hamburger2 } from "../components/Hamburger_2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { faEnvelopeOpenText, faLock,faUser,faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { faEnvelopeOpenText , faUser, faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import '../css/Profile.css';
 import {InviteCard} from '../components/InviteCard'
 
 export const Invitations = () => {
 
-    const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
 
     return (
@@ -31,73 +30,45 @@ export const Invitations = () => {
                   marginBottom: "20px",
                 }}
               >
-                <div style={{height:"20px"}}>
-                <div className="d-flex justify-content-evenly">
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                    "& :hover": {
-                      backgroundColor: "underline"
-                    }
-                  }}
+
+            <ul className="nav nav-underline rounded">
+              <li className="nav-item mx-4">
+                <Link
+                  className="nav-link"
+                  style={{ color: "black", fontSize: "20px" }}
+                  to="/profile"
                 >
-                  
-                  <Link to = '/profile' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav">
-                    <FontAwesomeIcon className="mx-2" icon={faUser} />
-                  Profile</p></Link>
-                </span>
-              </div>
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
+                  <FontAwesomeIcon className="mx-2" icon={faUser} />
+                  Profile
+                </Link>
+              </li>
+              <li className="nav-item mx-3">
+                <Link
+                  className="nav-link"
+                  style={{ color: "black", fontSize: "20px" }}
+                  to="/profile"
                 >
-                  
-                  <p className="subNav">
-                    <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
-                    Edit Profile</p>
-                </span>
-              </div>
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
-                >
-                  
-                  <p className="subNav">
-                  <FontAwesomeIcon className="mx-2" icon={faLock} />
-                  Reset Password</p>
-                </span>
-              </div>
-              {user.role == "employee" && <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
-                >
-                  
-                  <Link to = '/invites' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav " >
-                  <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
-                  Invites</p></Link>
-                </span>
-              </div>}
-            </div>
-                </div>
+                  <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
+                  Edit Profile
+                </Link>
+              </li>
+              {user?.role == "employee" && (
+                <li className="nav-item mx-3">
+                  <Link
+                    className="nav-link active"
+                    aria-current="page"
+                    style={{ color: "blue", fontSize: "20px" }}
+                    to="/invites"
+                  >
+                    <FontAwesomeIcon
+                      className="mx-2"
+                      icon={faEnvelopeOpenText}
+                    />
+                    Invites
+                  </Link>
+                </li>
+              )}
+            </ul>
   
                 <div>
               

@@ -26,7 +26,7 @@ export const NotificationEmployee = () => {
     }
   }, [dispatch, isSuccess, isError]);
 
-  if (isLoading && notifications.length == 0)
+  if (isLoading && notifications?.length == 0)
   {
     return (
       <>
@@ -66,7 +66,7 @@ export const NotificationEmployee = () => {
       </h1>
 
       <div className="col-md-12 ">
-        {notifications.map((notification, index) => (
+        {notifications?.map((notification, index) => (
           <div
             key={index}
             className="card"
@@ -84,7 +84,7 @@ export const NotificationEmployee = () => {
                 className="card-title px-4"
                 style={{
                   color: `{${
-                    notification.expense_id.status == "Approved"
+                    notification?.expense_id?.status == "Approved"
                       ? "#013E8F"
                       : "#d32f2f"
                   }}`,
@@ -93,11 +93,11 @@ export const NotificationEmployee = () => {
                 <CircleRoundedIcon sx={{ color: "#013E8F" }} />
                 <span style={{ marginLeft: 17 }}>
                   <strong style={{ color: "black" }}>
-                    {notification.manager}
+                    {notification?.manager}
                   </strong>{" "}
-                  {notification.message}{" "}
+                  {notification?.message}{" "}
                   <strong style={{ color: "black" }}>
-                    {notification.project_id.name}
+                    {notification?.project_id?.name}
                   </strong>
                 </span>
               </h3>
@@ -112,7 +112,7 @@ export const NotificationEmployee = () => {
             >
               <h5>
                 <strong>
-                  {new Date(notification.createdAt).toLocaleString}
+                  {new Date(notification?.createdAt).toLocaleString()}
                 </strong>
               </h5>
             </div>
@@ -126,7 +126,7 @@ export const NotificationEmployee = () => {
                 }}
               >
                 <Link
-                  to={`/projects/${notification.project_id._id}/expenses/${notification.expense_id._id}`}
+                  to={`/projects/${notification?.project_id?._id}/expenses/${notification?.expense_id?._id}`}
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   <div
@@ -137,7 +137,7 @@ export const NotificationEmployee = () => {
                       borderRadius: "25px",
                     }}
                   >
-                    <h3> {notification.expense_id.name}</h3>
+                    <h3> {notification?.expense_id?.name}</h3>
                   </div>
                 </Link>
               </div>
@@ -148,15 +148,14 @@ export const NotificationEmployee = () => {
               <button
                 className="btn text-white"
                 style={{ borderRadius: "25px", backgroundColor: "#013E8F" }}
-                onClick={() => dispatch(deleteNotificationEmployee(notification._id))}
+                onClick={() => dispatch(deleteNotificationEmployee(notification?._id))}
               >
                 <h5>Mark as read</h5>
               </button>
             </div>
           </div>
         ))}
-        {notifications.length === 0 && (
-          notifications.length == 0 && <div className="display-5 mx-4">You&apos;ve no new notifications!</div>
+        {notifications?.length == 0 && (<div className="display-5 mx-4">You&apos;ve no new notifications!</div>
         )}
       </div>
     </div>

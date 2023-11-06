@@ -18,13 +18,13 @@ export const Project = () => {
 
   useEffect(() => {
   
-    if (user.role == "manager")
+    if (user?.role == "manager")
       dispatch(getProjectsManager());
 
-    else
+    else if (user?.role == "employee")
       dispatch(getProjectsEmployee());
 
-  }, [dispatch, user.role]);
+  }, [dispatch, user?.role]);
 
   useEffect(() => {
     
@@ -35,7 +35,7 @@ export const Project = () => {
 
   }, [isSuccess, isError, appErr, serverErr]);
 
-  if (isLoading && projects.length == 0)
+  if (isLoading && projects?.length == 0)
   {
     return (
       <div
@@ -92,7 +92,7 @@ export const Project = () => {
         <div className="col-9 px-4" style={{marginTop: "-1vh"}}>
           <div>
             <div className="row">
-              {projects.map((project, index) => (
+              {projects?.map((project, index) => (
                 <button
                   key={index}
                   style={{
@@ -108,18 +108,18 @@ export const Project = () => {
                     boxShadow: "0px 4px 8px rgba(5, 5, 5, 5)",
                   }}
 
-                  onClick={() => navigate(`/projects/${project._id}/announcements`)}
+                  onClick={() => navigate(`/projects/${project?._id}/announcements`)}
                 >
-                  <div style={{ fontSize: "32px" }}>{project.name}</div>
-                  <div style={{ fontSize: "20px" }}>{project.managerName}</div>
+                  <div style={{ fontSize: "32px" }}>{project?.name}</div>
+                  <div style={{ fontSize: "20px" }}>{project?.managerName}</div>
                 </button>
               ))}
 
               {
-                projects.length == 0 && <div className="display-1 mx-5">No projects found!</div>
+                projects?.length == 0 && <div className="display-1 mx-5">No projects found!</div>
               }
 
-              {user.role == "manager" && <button
+              {user?.role == "manager" && <button
                 style={{
                   position: "absolute",
                   bottom: "25px",

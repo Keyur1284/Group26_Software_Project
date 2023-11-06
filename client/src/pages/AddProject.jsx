@@ -15,10 +15,10 @@ export const AddProject = () => {
   const navigate = useNavigate();
 
   const formSchema = Yup.object({
-    name: Yup.string().required("Project Name is required"),
+    name: Yup.string().required("Project Name is required").max(30, "Project Name must not exceed 30 characters"),
     budget: Yup.number().required("Project Amount is required"),
     alertLimit: Yup.number().required("Alert Limit is required"),
-    description: Yup.string()
+    description: Yup.string().max(400, "Project Description must not exceed 400 characters")
   });
 
   const formik = useFormik({
@@ -131,7 +131,7 @@ export const AddProject = () => {
                     <input
                       type="number"
                       name="alertLimit"
-                      placeholder="Alert Limit"
+                      placeholder="Alert Limit in %"
                       className="form-control"
                       value={formik.values.alertLimit}
                       onChange={formik.handleChange}
@@ -157,6 +157,13 @@ export const AddProject = () => {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     />
+                    
+                    {formik.touched.description && formik.errors.description && (
+                      <div className="alert alert-danger text-center mt-2">
+                        {formik.touched.description && formik.errors.description}
+                      </div>
+                    )}
+
                   </div>
 
                   <div className="d-flex gap-5 mt-4">

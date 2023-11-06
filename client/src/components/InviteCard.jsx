@@ -41,7 +41,7 @@ export const InviteCard = () => {
     }
   }, [dispatch, isSuccess, isError]);
 
-  if (isLoading && invitations.length == 0)
+  if (isLoading && invitations?.length == 0)
   {
     return (
       <>
@@ -60,11 +60,11 @@ export const InviteCard = () => {
   return (
     <div className="m-5" style={{minHeight: "70vh"}}>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {invitations.map((invite, index) => (
+        {invitations?.map((invite, index) => (
           <div key={index} className="p-4 " style={{ flex: "0 0 calc(50% - 10px)", marginBottom: "20px" }}>
             <div className="m-2  rounded rounded-3" style={CardStyle}>
-              <div className="m-3 p-2">{invite.manager_id.firstName + " " + invite.manager_id.lastName}</div>
-              <div className="m-3 p-2">{invite.project_id.name}</div>
+              <div className="m-3 p-2">{invite.manager_id?.firstName + " " + invite.manager_id?.lastName}</div>
+              <div className="m-3 p-2">{invite.project_id?.name}</div>
               <div
                 className="rounded rounded-3 justify-content-end d-flex flex left"
                 style={ButtonStyle}
