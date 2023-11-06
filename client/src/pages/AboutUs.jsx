@@ -16,7 +16,7 @@ export const AboutUs = () => {
         <style>
           {`
             body {
-              background: radial-gradient(circle, #16a3f0, #6c27e3);
+              background: radial-gradient(circle, #00b3b3, #0066cc);
             }
           `}
           {`
@@ -42,12 +42,12 @@ export const AboutUs = () => {
           <div className="col-md-12">
             <div className="row justify-content-center ps-4 pe-4 mt-5">
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F" }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F" }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_1}
                     alt="Vedant Pandya"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white", fontWeight: 400}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Vedant Pandya</h5>
@@ -57,12 +57,12 @@ export const AboutUs = () => {
               </div>
   
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_2}
                     alt="Jainil Patel"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Jainil Patel</h5>
@@ -72,12 +72,12 @@ export const AboutUs = () => {
               </div>
   
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_3}
                     alt="Himanshu Vachhani"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Himanshu Vachhani</h5>
@@ -87,12 +87,12 @@ export const AboutUs = () => {
               </div>
   
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_4}
                     alt="Aush Patel" 
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Ayush Patel</h5>
@@ -106,12 +106,12 @@ export const AboutUs = () => {
   
           <div className="row justify-content-center ps-4 pe-4 mt-5">
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_5}
                     alt="Nancy Patel"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Nancy Patel</h5>
@@ -121,12 +121,12 @@ export const AboutUs = () => {
               </div>
   
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_6}
                     alt="Keyur Govrani"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Keyur Govrani</h5>
@@ -136,12 +136,12 @@ export const AboutUs = () => {
               </div>
   
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_7}
                     alt="Kashish"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Kashish Patel</h5>
@@ -156,12 +156,12 @@ export const AboutUs = () => {
   
           <div className="row justify-content-center ps-4 pe-4 mt-5 mb-5">
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F" }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F" }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_8}
                     alt="Akhil Patoliya"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white", fontWeight: 400}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Akhil Patoliya</h5>
@@ -171,12 +171,12 @@ export const AboutUs = () => {
               </div>
   
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_9}
                     alt="Hardik Mehta"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Hardik Mehta</h5>
@@ -186,12 +186,12 @@ export const AboutUs = () => {
               </div>
   
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_10}
                     alt="Sahil Bhadesiya"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Sahil Bhadesiya</h5>
@@ -201,12 +201,12 @@ export const AboutUs = () => {
               </div>
   
               <div className="col-md-3 d-flex">
-                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "62vh", width: "30vw", backgroundColor:"#013E8F"  }}>
+                <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor:"#013E8F"  }}>
                   <img
                     className="card-img-top img-fluid rounded-top-5"
                     src={pic_11}
                     alt="Ishita Rathod"
-                    style={{ height: "50vh", width: "30vw" }}
+                    style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
                     <h5 className="mb-0" style={{fontSize:25}}>Ishita Rathod</h5>
