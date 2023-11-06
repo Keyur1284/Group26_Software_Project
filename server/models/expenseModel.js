@@ -15,7 +15,7 @@ const expenseSchema = new mongoose.Schema({
     category: {
         type: String,
         enum: {
-            values: ['Accommodation', 'Fuel', 'Equipment', 'Food', 'Office', 'Maintenance', 'Rent', 'Taxes', 'Travel', 'Internet', 'Other'],
+            values: ['Accommodation', 'Fuel', 'Equipment', 'Food', 'Office', 'Maintenance', 'Rent', 'Taxes', 'Travel', 'Internet', 'Utilities', 'OfficeSupplies', 'Gifts', 'Advertising', 'Technology', 'Entertainment', 'Miscellaneous'],
             message: 'Category is invalid!'
         },
         required: [true, 'Please enter the category']
