@@ -231,7 +231,7 @@ const resetPasswordController = asyncHandler( async (req, res) => {
       const verify = jwt.verify(token, secret);
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      await Employee.updateOne(
+      await Manager.updateOne(
         {
           _id: id,
         },
