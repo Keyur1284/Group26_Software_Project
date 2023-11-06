@@ -15,14 +15,14 @@ export const EditExpense = () => {
   const navigate = useNavigate();
   const { expenses } = useSelector(state => state.expense);
 
-  const expense = expenses.find((expense) => expense._id === expenseId);
+  const expense = expenses?.find((expense) => expense._id === expenseId);
 
   const formSchema = Yup.object({
     name: Yup.string().required("Name is required"),
     category: Yup.string().required("Category is required"),
     amount: Yup.number().required("Amount is required"),
     date: Yup.date().required("Date is required"),
-    driveLink: Yup.string().required("Drive-Link is required"),
+    driveLink: Yup.string().required("Link of uploaded bill is required"),
   });
 
   const formik = useFormik({
@@ -181,13 +181,13 @@ export const EditExpense = () => {
 
               <div className="mb-3 mt-4">
                 <label className="form-label text-dark" style={{ fontSize: "22px" }}>
-                  Drive-Link
+                Link of uploaded bill
                 </label>
                 <div className="input-group">
                   <input
                     type="text"
                     name="driveLink"
-                    placeholder="Drive Link"
+                    placeholder="Link of uploaded bill"
                     className="form-control"
                     value={formik.values.driveLink}
                     onChange={formik.handleChange}

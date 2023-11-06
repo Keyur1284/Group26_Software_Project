@@ -83,7 +83,7 @@ export const ProjectDashboard = () => {
                         </div>
 
                         <div className="row my-4 gap-4">
-                            { user.role == 'employee' ?
+                            { user?.role == 'employee' ?
                                 <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white' >My Expense</h3>
                                 <Skeleton sx={{marginLeft: 2}} variant="rounded" animation="wave" width="45%" height="6vh" />
@@ -137,15 +137,15 @@ export const ProjectDashboard = () => {
                     <div className="container"></div>
                     <div className="row me-3">
                         <div className="col-12 mb-3 py-3 text-white rounded-4" style={{ backgroundColor: "#304D6D" }}>
-                            <h2 className='display-4 fw-normal'>{project.name}</h2>
-                            <p className='mx-1'>{project.description}</p>
+                            <h2 className='display-4 fw-normal'>{project?.name}</h2>
+                            <p className='mx-1'>{project?.description}</p>
                         </div>
                     </div>
                     <div className="row">
                         <div className="row gap-4">
                             <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg1})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white'>Total Budget</h3>
-                                <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; {project.budget}</h6>
+                                <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; {project?.budget}</h6>
                                 <div className="pie">
                                     <TotalExpPie />
                                 </div>
@@ -154,11 +154,11 @@ export const ProjectDashboard = () => {
                                 <h3 className="text-center py-2 rounded-3 text-white" style={{ backgroundColor: "#295CAA" }}>Employees</h3>
                                 <div className="overflow-auto scroll custom-scroll-container" style={{ maxHeight: "350px", minHeight: "350px" }}>
                                     <ol className="list-group list-group-numbered">
-                                        {project.employees?.map((employee, index) => (
+                                        {project?.employees?.map((employee, index) => (
                                             <li key={index} className="list-group-item d-flex justify-content-between align-items-start">
                                                 <div className="ms-2 me-auto">
-                                                    <div className="fw-bold">{employee.firstName + " " + employee.lastName}</div>
-                                                    {employee.email}
+                                                    <div className="fw-bold">{employee?.firstName + " " + employee?.lastName}</div>
+                                                    {employee?.email}
                                                 </div>
                                                 <span className="badge bg-primary rounded-pill">Employee</span>
                                             </li>
@@ -169,7 +169,7 @@ export const ProjectDashboard = () => {
                         </div>
 
                         <div className="row my-4 gap-4">
-                            { user.role == 'employee' ?
+                            { user?.role == 'employee' ?
                                 <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
                                 <h3 className='mx-3 my-3 fw-bold display-6 text-white' >My Expense</h3>
                                 <h6 className='mx-3 fw-semibold h2 text-light'>&#8377; {employeeExpenses}</h6>

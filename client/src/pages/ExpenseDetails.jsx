@@ -171,7 +171,7 @@ const categoryIcons = {
                       />
                     </div>
                   </div>
-                  {user.role == "manager" ? (
+                  {user?.role == "manager" ? (
                     <div className="text-center">
                       <Skeleton
                         sx={{ marginTop: "2vh" }}
@@ -348,7 +348,7 @@ const categoryIcons = {
                   <p>{expenseById?.description}</p>
                 </div>
               </div>
-              {user.role == "manager" ? (
+              {user?.role == "manager" ? (
                 <div className="text-center">
                   <a
                     href={expenseById?.driveLink}

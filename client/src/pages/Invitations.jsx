@@ -81,7 +81,7 @@ export const Invitations = () => {
                   Reset Password</p>
                 </span>
               </div>
-              {user.role == "employee" && <div className="display-6">
+              {user?.role == "employee" && <div className="display-6">
                 <span
                   style={{
                     fontWeight: "bold",

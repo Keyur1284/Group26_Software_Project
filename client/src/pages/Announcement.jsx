@@ -248,13 +248,13 @@ export const Announcement = () => {
                   <h4 className="card-title mb-4" style={{ color: "blue" }}>
                     Announcements
                   </h4>
-                  {announcements.map((announcement, index) => (
+                  {announcements?.map((announcement, index) => (
                     <div key={index} className="card mb-3">
                       <div className="card-body">
-                        <h5 className="card-title">{announcement.message}</h5>
+                        <h5 className="card-title">{announcement?.message}</h5>
                         <p className="card-text">
                           <small className="text-muted">
-                            {announcement.name} | {new Date(announcement.createdAt).toLocaleString()}
+                            {announcement?.name} | {new Date(announcement?.createdAt).toLocaleString()}
                           </small>
                         </p>
                       </div>

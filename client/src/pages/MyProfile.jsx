@@ -30,13 +30,13 @@ export const MyProfile = () => {
 
   useEffect(() => {
     
-    if(user.role == "manager")
+    if(user?.role == "manager")
       dispatch(getManagerProfile());
 
-    else 
+    else if(user?.role == "employee")
       dispatch(getEmployeeProfile());
 
-  }, [dispatch, user.role]);
+  }, [dispatch, user?.role]);
 
   useEffect(() => {
     
@@ -117,7 +117,7 @@ export const MyProfile = () => {
                   Reset Password</p>
                 </span>
               </div>
-              {user.role == "employee" && <div className="display-6">
+              {user?.role == "employee" && <div className="display-6">
                 <span
                   style={{
                     fontWeight: "bold",
@@ -239,7 +239,7 @@ export const MyProfile = () => {
                   Reset Password</p>
                 </span>
               </div>
-              {user.role == "employee" && <div className="display-6">
+              {user?.role == "employee" && <div className="display-6">
                 <span
                   style={{
                     fontWeight: "bold",

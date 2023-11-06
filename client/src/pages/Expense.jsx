@@ -61,7 +61,7 @@ export const Expense = () => {
       projectId: projectId
     }
 
-    if (user.role == "manager")
+    if (user?.role == "manager")
     {
       if (selectedDateOption == "custom" && (startDate == "" || endDate == "")) 
         return;
@@ -69,7 +69,7 @@ export const Expense = () => {
       dispatch(getExpenseManagerByFilter(filterData));
     }
 
-    else if (user.role == "employee")
+    else if (user?.role == "employee")
     {
       if (selectedDateOption == "custom" && (startDate == "" || endDate == "")) 
         return;
@@ -123,11 +123,7 @@ export const Expense = () => {
                 </div>
               </div>
                 <div className="col-md-3 d-flex align-items-center justify-content-end">
-                  <div className="mr-3">
-                    <Link to={`/projects/${projectId}/add-expense`} className="btn btn-dark btn-rounded rounded-pill shadow-lg" style={{ fontSize: "25px" }}>
-                      <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} /> Add Expense
-                    </Link>
-                  </div>
+
                 </div>
             </div>
             <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
@@ -149,7 +145,7 @@ export const Expense = () => {
     )
   }
   
-  if (user.role == "employee")
+  if (user?.role == "employee")
   {
     return (
       <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight:"92vh" }}>
@@ -260,7 +256,7 @@ export const Expense = () => {
                 )}
               </div>
             </div>
-            {expenses.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
+            {expenses?.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
               <div className="col-md-4 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C", borderRadius: "15px 0px 0px 15px" }}>
                 Name
               </div>
@@ -279,7 +275,7 @@ export const Expense = () => {
             </div>}
             
             {
-                expenses.length == 0 && <div className="display-1">No expenses found!</div>
+                expenses?.length == 0 && <div className="display-1">No expenses found!</div>
             }
             <DisplayExpense />
           </div>
@@ -391,7 +387,7 @@ export const Expense = () => {
                 )}
               </div>
             </div>
-            {expenses.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
+            {expenses?.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
               <div className="col-md-5 d-flex align-items-center justify-content-center" style={{ backgroundColor: "#0C438C", borderRadius: "15px 0px 0px 15px" }}>
                 Name
               </div>
@@ -407,7 +403,7 @@ export const Expense = () => {
             </div>}
             
             {
-              expenses.length == 0 && <div className="display-1">No expenses found!</div>
+              expenses?.length == 0 && <div className="display-1">No expenses found!</div>
             }
             <DisplayExpense />
           </div>

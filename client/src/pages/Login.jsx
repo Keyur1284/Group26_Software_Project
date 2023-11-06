@@ -28,9 +28,9 @@ export const Login = () => {
       userType: "employee",
     },
     onSubmit: (values) => {
-      if(values.userType === "employee")
+      if(values.userType == "employee")
         dispatch(loginEmployee(values));
-      else if(values.userType === "manager")
+      else if(values.userType == "manager")
         dispatch(loginManager(values));
     },
     validationSchema: formSchema,

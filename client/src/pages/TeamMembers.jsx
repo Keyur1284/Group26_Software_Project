@@ -171,7 +171,7 @@ export const TeamMembers = () => {
                   </div>
                   <div>
                     <h4 className="card-title px-1 py-3 align-items-center d-flex text-white font-weight-bold">
-                      <ManageAccountsIcon sx={{fontSize: 40, marginRight: "1vh"}} /> {manager.firstName} {manager.lastName}
+                      <ManageAccountsIcon sx={{fontSize: 40, marginRight: "1vh"}} /> {manager?.firstName} {manager?.lastName}
                     </h4>
                   </div>
                 </div>
@@ -192,22 +192,22 @@ export const TeamMembers = () => {
                     <h3 className="card-title px-3 text-white font-weight-bold">
                       Team Members
                     </h3>
-                    {user.role == "manager" && <Link to={ `/projects/${projectId}/invite-employee`} className="text-decoration-none"><h3 className="card-title px-3 mt-2 text-white font-weight-bold">
+                    {user?.role == "manager" && <Link to={ `/projects/${projectId}/invite-employee`} className="text-decoration-none"><h3 className="card-title px-3 mt-2 text-white font-weight-bold">
                       <PersonAddIcon sx={{fontSize: 40}}/> Invite Members
                     </h3></Link>}
                     </div>
                   </div>
                   <div className="members">
-                    {employees.map((employee, index) => (
+                    {employees?.map((employee, index) => (
                       <h4
                         className="card-title px-1 py-3 text-white font-weight-bold"
                         key={index}
                       >
-                        <FaUser /> {" "} {employee.firstName || employee.name} {employee.lastName}
+                        <FaUser /> {" "} {employee?.firstName || employee?.name} {employee?.lastName}
                       </h4>
                     ))}
 
-                    {isSuccess && employees.length === 0 && (
+                    {isSuccess && employees?.length === 0 && (
                       <h4
                         className="card-title px-1 py-3 text-white font-weight-bold"
                       >

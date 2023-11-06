@@ -19,7 +19,7 @@ export const AddExpense = () => {
     category: Yup.string().required("Category is required"),
     amount: Yup.number().required("Amount is required"),
     date: Yup.date().required("Date is required"),
-    driveLink: Yup.string().required("Drive-Link is required"),
+    driveLink: Yup.string().required("Link of uploaded bill is required"),
   });
 
   const formik = useFormik({
@@ -175,13 +175,13 @@ export const AddExpense = () => {
 
               <div className="mb-3 mt-4">
                 <label className="form-label text-dark" style={{ fontSize: "22px" }}>
-                  Drive-Link
+                  Link of uploaded bill
                 </label>
                 <div className="input-group">
                   <input
                     type="text"
                     name="driveLink"
-                    placeholder="Drive Link"
+                    placeholder="Link of uploaded bill"
                     className="form-control"
                     value={formik.values.driveLink}
                     onChange={formik.handleChange}

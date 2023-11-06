@@ -131,7 +131,7 @@ export const AddProject = () => {
                     <input
                       type="number"
                       name="alertLimit"
-                      placeholder="Alert Limit"
+                      placeholder="Alert Limit in %"
                       className="form-control"
                       value={formik.values.alertLimit}
                       onChange={formik.handleChange}
