@@ -16,11 +16,19 @@ import bg2 from "../assets/project-dashboard/bg-2.jpg";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import HotelIcon from "@mui/icons-material/Hotel";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import CampaignIcon from '@mui/icons-material/Campaign';
+import LaptopIcon from '@mui/icons-material/Laptop';
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import WineBarIcon from '@mui/icons-material/WineBar';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CategoryIcon from '@mui/icons-material/Category';
+import PersonIcon from '@mui/icons-material/Person';
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import Skeleton from "@mui/material/Skeleton";
+
 
 export const ExpenseDetails = () => {
   const { expenseId } = useParams();
@@ -45,7 +53,13 @@ const categoryIcons = {
   Travel: <FlightTakeoffIcon style={{ color: "#fff", fontSize: 35 }}/>,
   Food: <FastfoodIcon style={{ color: "#fff", fontSize: 35 }}/>,
   Accommodation: <HotelIcon style={{ color: "#fff", fontSize: 35 }}/>,
-  Other: <AccountBalanceWalletIcon style={{ color: "#fff", fontSize: 35 }}/>
+  OfficeSupplies: <LocalPrintshopIcon style={{ color: "#fff", fontSize: 35 }} />,
+  Utilities: <ReceiptLongIcon style={{ color: "#fff", fontSize: 35 }} />,
+  Gifts: <CardGiftcardIcon style={{ color: "#fff", fontSize: 35 }} />,
+  Advertising: <CampaignIcon style={{ color: "#fff", fontSize: 35 }} />,
+  Technology: <LaptopIcon style={{ color: "#fff", fontSize: 35 }} />,
+  Entertainment: <WineBarIcon style={{ color: "#fff", fontSize: 35 }} />,
+  Miscellaneous: <MoreVertIcon style={{ color: "#fff", fontSize: 35 }} />
 };
 
   if (isLoading) {
@@ -171,7 +185,7 @@ const categoryIcons = {
                       />
                     </div>
                   </div>
-                  {user.role == "manager" ? (
+                  {user?.role == "manager" ? (
                     <div className="text-center">
                       <Skeleton
                         sx={{ marginTop: "2vh" }}
@@ -286,7 +300,7 @@ const categoryIcons = {
               }}
             >
               <div className="d-flex mt-4">
-                {categoryIcons[expenseById?.category]} {" "}
+              {categoryIcons[expenseById?.category]} {" "}
                 <h2
                   className="rounded ms-2 px-2"
                   style={{ backgroundColor: "#fff" }}
@@ -304,7 +318,7 @@ const categoryIcons = {
                 </h2>
               </div>
               <div className="d-flex">
-                <LocationOnIcon style={{ color: "#fff", fontSize: 35 }} />{" "}
+                <CategoryIcon style={{ color: "#fff", fontSize: 35 }} />{" "}
                 <h2
                   className="rounded ms-2 px-2"
                   style={{ backgroundColor: "#fff" }}
@@ -322,13 +336,14 @@ const categoryIcons = {
                 </h2>
               </div>
               <div className="d-flex">
-                <h4
+              <PersonIcon style={{ color: "#fff", fontSize: 40 }} /> 
+                <h2
                   className="rounded ms-2 px-2"
                   style={{ backgroundColor: "#fff" }}
                 >
-                  Added By :- {expenseById?.employee_id?.firstName}{" "}
+                  {expenseById?.employee_id?.firstName}{" "}
                   {expenseById?.employee_id?.lastName}
-                </h4>
+                </h2>
               </div>
             </div>
           </div>
@@ -348,7 +363,7 @@ const categoryIcons = {
                   <p>{expenseById?.description}</p>
                 </div>
               </div>
-              {user.role == "manager" ? (
+              {user?.role == "manager" ? (
                 <div className="text-center">
                   <a
                     href={expenseById?.driveLink}

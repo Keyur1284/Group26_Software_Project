@@ -7,11 +7,11 @@ export const ExpenseTable = () => {
   const { projectId } = useParams();
   const { expenses } = useSelector(state => state.statistic)
 
-    const expenseData = expenses.map((expense, index) => {
+    const expenseData = expenses?.map((expense, index) => {
         return {
             _id: expense._id,
             serialNumber: index + 1,
-            employeeName: expense.employee_id.firstName + " " + expense.employee_id.lastName,
+            employeeName: expense.employee_id?.firstName + " " + expense.employee_id?.lastName,
             expenseName: expense.name,
             amount: expense.amount,
             status: expense.status,
@@ -33,7 +33,7 @@ export const ExpenseTable = () => {
       </tr>
     </thead>
     <tbody>
-      {expenseData.map((expense, index) => (
+      {expenseData?.map((expense, index) => (
         <tr key={index} onClick={() => navigate(`/projects/${projectId}/expenses/${expense._id}`)} className={getBackgroundColorClass(expense.status)} style={{cursor: "pointer"}}>
           <td>{expense.serialNumber}</td>
           <td>{expense.employeeName}</td>

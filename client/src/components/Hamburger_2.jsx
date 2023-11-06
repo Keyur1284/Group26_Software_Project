@@ -26,7 +26,7 @@ export const Hamburger2 = () => {
   };
 
   const buttons = [
-    { icon: faListCheck, text: 'My Project', link : `/projects` },
+    { icon: faListCheck, text: 'My Projects', link : `/projects` },
     { icon: faUser, text: 'Profile' , link : `/profile`},
   ];
 

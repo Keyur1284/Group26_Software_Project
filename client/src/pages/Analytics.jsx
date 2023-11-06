@@ -19,11 +19,12 @@ export const Analytics = () => {
     const { project, isLoading, isSuccess, isError, appErr, serverErr } = useSelector(state => state.statistic)
 
     useEffect(() => {
-        if (user.role == 'manager') {
+        if (user?.role == 'manager') {
             dispatch(getManagerAnalytics(projectId))
         }
 
-        else {
+        else if (user?.role == 'employee') 
+        {
             dispatch(getEmployeeAnalytics(projectId))
         }
 
@@ -98,19 +99,19 @@ export const Analytics = () => {
                     <Hamburger4 />
                 </div>
                 <div className="col-9">
-                    <div className="display-5 shadow-lg rounded p-3 fw-semibold text-light" style={{ backgroundColor: "#304D6D" }}>{project.name}</div>
-                    <div className=' mt-3 display-6 p-2' style={{fontSize: "3vh", fontWeight: 450}}>Description : {project.description}</div>
+                    <div className="display-5 shadow-lg rounded p-3 fw-semibold text-light" style={{ backgroundColor: "#304D6D" }}>{project?.name}</div>
+                    <div className=' mt-3 display-6 p-2' style={{fontSize: "3vh", fontWeight: 450}}>Description : {project?.description}</div>
                     <div className="team p-2">
                         <div className=''>
                             <div className='display-6 fw-normal'>Manager</div>
                             <ol className="list-group mt-3 list-group-numbered">
-                                {project.manager_id && (
+                                {project?.manager_id && (
                                 <li className="list-group-item d-flex justify-content-between align-items-start striped-hover-item">
                                     <div className="ms-2 me-auto">
                                     <div className="fw-bold">
-                                        {project.manager_id.firstName + " " + project.manager_id.lastName}
+                                        {project?.manager_id?.firstName + " " + project?.manager_id?.lastName}
                                     </div>
-                                    {project.manager_id.email}
+                                    {project?.manager_id?.email}
                                     </div>
                                     <span className="badge mt-3 bg-success rounded-pill">Manager</span>
                                 </li>
@@ -120,12 +121,12 @@ export const Analytics = () => {
                         <div className='mt-3 display-6 fw-normal'>Employees</div>
                         <div className="overflow-auto scroll" style={{ maxHeight: "350px" }}>
                         <ol className="list-group mt-3 list-group-numbered">
-                        {project.employees?.map((employee, index) => {
+                        {project?.employees?.map((employee, index) => {
                             return (
                                 <li key={index} className={`list-group-item d-flex justify-content-between align-items-start striped-hover-item`}>
                                     <div className="ms-2 me-auto">
-                                        <div className="fw-bold">{employee.firstName + " " + employee.lastName}</div>
-                                        {employee.email}
+                                        <div className="fw-bold">{employee?.firstName + " " + employee?.lastName}</div>
+                                        {employee?.email}
                                     </div>
                                     <span className="badge mt-3 bg-primary rounded-pill">Employee</span>
                                 </li>
@@ -133,7 +134,7 @@ export const Analytics = () => {
                         })}
                         </ol>
 
-                        {project.employees?.length == 0  && 
+                        {project?.employees?.length == 0  && 
                         (
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="display-6 mt-3" style={{fontSize: "4vh", fontWeight: 400}}>No employees have been added to the project.</div>
@@ -149,7 +150,7 @@ export const Analytics = () => {
                         <h3 className='display-6 fw-normal p-2'>Expense Based on Category</h3>
                         <ExpByCategory />
                     </div>
-                    {user.role == "manager" && <div className='mt-4 shadow-lg rounded p-2' style={{backgroundColor: "rgba(255, 255, 255, 0.7)"}}>
+                    {user?.role == "manager" && <div className='mt-4 shadow-lg rounded p-2' style={{backgroundColor: "rgba(255, 255, 255, 0.7)"}}>
                         <h3 className='p-2 display-6 fw-normal'>Expense Based on Employee Use</h3>
                         <EmpDistributionPie size={800} labelcolor={"#000"}  justifycontent="justify-content-center"/>
                     </div>}

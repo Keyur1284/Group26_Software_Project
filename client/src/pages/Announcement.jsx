@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Typography from '@mui/material/Typography';
+import EditIcon from '@mui/icons-material/Edit';
 import Skeleton from '@mui/material/Skeleton';
 import { createAnnouncement, getAnnouncements, reset } from "../features/announcement/announcementSlice"; 
 
@@ -193,22 +194,38 @@ export const Announcement = () => {
           </li>
         </ul>
         <div className="row mt-4">
-            <div className="col-md-12">
-              <div
-                className="card bg-primary"
-                style={{
-                  height: "35vh",
-                  backgroundImage: `url(${ig})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              >
-                <div className="card-body d-flex flex-column text-white">
-                  <h3 className="card-title mt-auto mb-2">{projectName}</h3>
-                  <h5>{managerName}</h5>
-                </div>
-              </div>
-            </div>
+        <div className="col-md-12">
+    <div
+      className="card bg-primary"
+      style={{
+        height: "35vh",
+        backgroundImage: `url(${ig})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="card-body d-flex flex-column text-white">
+        <h3 className="card-title mt-auto mb-2">{projectName}</h3>
+        <h5>{managerName}</h5>
+        <button 
+          className="edit-button m-2 btn d-flex rounded"
+          style={{
+            position: "absolute",
+            bottom: "10px",
+            right: "10px",
+            backgroundColor: "white",
+            fontWeight: "bold",
+            color: "blue",
+            border: "none",
+          }}
+          onClick={() => console.log(projectId)}
+        >
+          <EditIcon sx={{marginRight: 1}} />  
+        Edit Project
+        </button>
+      </div>
+    </div>
+  </div>
           </div>
           <div className="row mt-4">
             <div className="col-md-12">
@@ -248,13 +265,13 @@ export const Announcement = () => {
                   <h4 className="card-title mb-4" style={{ color: "blue" }}>
                     Announcements
                   </h4>
-                  {announcements.map((announcement, index) => (
+                  {announcements?.map((announcement, index) => (
                     <div key={index} className="card mb-3">
                       <div className="card-body">
-                        <h5 className="card-title">{announcement.message}</h5>
+                        <h5 className="card-title">{announcement?.message}</h5>
                         <p className="card-text">
                           <small className="text-muted">
-                            {announcement.name} | {new Date(announcement.createdAt).toLocaleString()}
+                            {announcement?.name} | {new Date(announcement?.createdAt).toLocaleString()}
                           </small>
                         </p>
                       </div>

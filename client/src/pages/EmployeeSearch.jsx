@@ -34,12 +34,12 @@ export const EmployeeSearch = () => {
     setSearchTerm(term);
 
     if (term.trim() !== "") {
-      const filteredEmployees = employees.filter((employee) =>
+      const filteredEmployees = employees?.filter((employee) =>
         employee.email.toLowerCase().includes(term.toLowerCase())
       );
       
       const filteredEmployees2 = filteredEmployees.filter((employee) => {
-        return !employees2.some(
+        return !employees2?.some(
           (employee2) => employee2.email === employee.email
         );
       });
@@ -87,7 +87,7 @@ export const EmployeeSearch = () => {
   }, [isSuccess, isError]);
 
 
-  if (isLoading && employees.length > 0) {
+  if (isLoading && employees?.length > 0) {
     return (
       <>
         <div
@@ -152,32 +152,32 @@ export const EmployeeSearch = () => {
             className="rounded border-1 my-2 p-2"
             style={{ width: "90%" }}
           />
-          {matchingEmployees.length > 0 &&
-            matchingEmployees.map((employee) => (
+          {matchingEmployees?.length > 0 &&
+            matchingEmployees?.map((employee) => (
               <p
-                key={employee.email}
+                key={employee?.email}
                 onClick={() => handleEmployeeClick(employee)}
                 style={{ cursor: "pointer", width: "90%" }}
                 className="rounded my-1 p-2 bg-light"
               >
-                {employee.email}
+                {employee?.email}
               </p>
             ))}
-          {matchingEmployees.length === 0 && searchTerm.trim() !== "" && (
+          {matchingEmployees?.length === 0 && searchTerm.trim() !== "" && (
             <p className="rounded my-1 p-2 bg-light" style={{ width: "90%" }}>
               No matching employees found
             </p>
           )}
-          {selectedEmployees.length > 0 && (
+          {selectedEmployees?.length > 0 && (
             <div>
               <h1 className="display-6 mt-4 fw-medium">Selected Employees:</h1>
-              {selectedEmployees.map((employee) => (
+              {selectedEmployees?.map((employee) => (
                 <p
-                  key={employee.email}
+                  key={employee?.email}
                   className="rounded bg-light my-1 p-2"
                   style={{ width: "90%" }}
                 >
-                  {employee.email}
+                  {employee?.email}
                 </p>
               ))}
               <button className="btn btn-primary my-4" onClick={handleInvite}>
