@@ -2,7 +2,7 @@ import main_bg from "../assets/project-dashboard/main-bg.jpg";
 import Profile_pic from "../assets/MyProfile-img/Profile.png";
 import { Hamburger2 } from "../components/Hamburger_2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelopeOpenText, faLock,faUser,faUserEdit} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelopeOpenText, faUser, faUserEdit} from "@fortawesome/free-solid-svg-icons";
 import '../css/Profile.css';
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -68,71 +68,45 @@ export const MyProfile = () => {
               marginBottom: "20px",
             }}
           >
-            <div className="d-flex justify-content-evenly">
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                    "& :hover": {
-                      backgroundColor: "underline"
-                    }
-                  }}
+
+            <ul className="nav nav-underline rounded">
+              <li className="nav-item mx-4">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  style={{ color: "blue", fontSize: "20px" }}
+                  to="/profile"
                 >
-                  
-                  <Link to = '/profile' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav">
-                    <FontAwesomeIcon className="mx-2" icon={faUser} />
-                  Profile</p></Link>
-                </span>
-              </div>
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
+                  <FontAwesomeIcon className="mx-2" icon={faUser} />
+                  Profile
+                </Link>
+              </li>
+              <li className="nav-item mx-3">
+                <Link
+                  className="nav-link"
+                  style={{ color: "black", fontSize: "20px" }}
+                  to="/profile"
                 >
-                  
-                  <p className="subNav">
-                    <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
-                    Edit Profile</p>
-                </span>
-              </div>
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
-                >
-                  
-                  <p className="subNav">
-                  <FontAwesomeIcon className="mx-2" icon={faLock} />
-                  Reset Password</p>
-                </span>
-              </div>
-              {user?.role == "employee" && <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
-                >
-                  
-                  <Link to = '/invites' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav " >
-                  <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
-                  Invites</p></Link>
-                </span>
-              </div>}
-            </div>
+                  <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
+                  Edit Profile
+                </Link>
+              </li>
+              {user?.role == "employee" && (
+                <li className="nav-item mx-3">
+                  <Link
+                    className="nav-link"
+                    style={{ color: "black", fontSize: "20px" }}
+                    to="/invites"
+                  >
+                    <FontAwesomeIcon
+                      className="mx-2"
+                      icon={faEnvelopeOpenText}
+                    />
+                    Invites
+                  </Link>
+                </li>
+              )}
+            </ul>
             <div className="row">
               <div className="col-md-4 d-flex flex-column align-items-center justify-content-center">
               <Skeleton variant="circular" animation="wave" width="200px" height="200px" />
@@ -172,16 +146,16 @@ export const MyProfile = () => {
   }
 
   return (
-    <div className="container-fluid px-3 py-3" style={{ backgroundImage: `url(${main_bg})`, backgroundRepeat: "repeat" }}>
+    <div
+      className="container-fluid px-3 py-3"
+      style={{ backgroundImage: `url(${main_bg})`, backgroundRepeat: "repeat" }}
+    >
       <div className="row">
-        <div
-          className="col-md-3"
-        >
+        <div className="col-md-3">
           <Hamburger2 />
         </div>
         <div className="col-md-8 mx-5 rounded rounded-3 bg-light">
           <div
-            
             className="me-5"
             style={{
               marginTop: "20px",
@@ -190,78 +164,52 @@ export const MyProfile = () => {
               marginBottom: "20px",
             }}
           >
-            <div className="d-flex justify-content-evenly">
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                    "& :hover": {
-                      backgroundColor: "underline"
-                    }
-                  }}
+            <ul className="nav nav-underline rounded">
+              <li className="nav-item mx-4">
+                <Link
+                  className="nav-link active"
+                  aria-current="page"
+                  style={{ color: "blue", fontSize: "20px" }}
+                  to="/profile"
                 >
-                  
-                  <Link to = '/profile' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav">
-                    <FontAwesomeIcon className="mx-2" icon={faUser} />
-                  Profile</p></Link>
-                </span>
-              </div>
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
+                  <FontAwesomeIcon className="mx-2" icon={faUser} />
+                  Profile
+                </Link>
+              </li>
+              <li className="nav-item mx-3">
+                <Link
+                  className="nav-link"
+                  style={{ color: "black", fontSize: "20px" }}
+                  to="/profile"
                 >
-                  
-                  <p className="subNav">
-                    <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
-                    Edit Profile</p>
-                </span>
-              </div>
-              <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
-                >
-                  
-                  <p className="subNav">
-                  <FontAwesomeIcon className="mx-2" icon={faLock} />
-                  Reset Password</p>
-                </span>
-              </div>
-              {user?.role == "employee" && <div className="display-6">
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "3vh",
-                    color: "#2D91E6",
-                    cursor: "pointer",
-                  }}
-                >
-                  
-                  <Link to = '/invites' className="text-decoration-none" style={{color: "#2D91E6"}}><p  className="subNav " >
-                  <FontAwesomeIcon className="mx-2" icon={faEnvelopeOpenText} />
-                  Invites</p></Link>
-                </span>
-              </div>}
-            </div>
+                  <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
+                  Edit Profile
+                </Link>
+              </li>
+              {user?.role == "employee" && (
+                <li className="nav-item mx-3">
+                  <Link
+                    className="nav-link"
+                    style={{ color: "black", fontSize: "20px" }}
+                    to="/invites"
+                  >
+                    <FontAwesomeIcon
+                      className="mx-2"
+                      icon={faEnvelopeOpenText}
+                    />
+                    Invites
+                  </Link>
+                </li>
+              )}
+            </ul>
+
             <div className="row">
               <div className="col-md-4 d-flex flex-column align-items-center justify-content-center">
                 <img
                   style={{ width: "200px", height: "200px" }}
                   src={Profile_pic}
                 />
-                </div>
+              </div>
               <div className="col-md-8">
                 <div className="mt-3 mr-4 ml-3 mb-3 pt-5 p-3">
                   <h2 className="p-3 rounded-pill" style={inlineStyles1}>
