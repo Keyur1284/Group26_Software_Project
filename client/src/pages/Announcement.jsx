@@ -207,7 +207,7 @@ export const Announcement = () => {
       <div className="card-body d-flex flex-column text-white">
         <h3 className="card-title mt-auto mb-2">{projectName}</h3>
         <h5>{managerName}</h5>
-        <button 
+        {user?.role == "manager" && <button 
           className="edit-button m-2 btn d-flex rounded"
           style={{
             position: "absolute",
@@ -222,7 +222,7 @@ export const Announcement = () => {
         >
           <EditIcon sx={{marginRight: 1}} />  
         Edit Project
-        </button>
+        </button>}
       </div>
     </div>
   </div>
