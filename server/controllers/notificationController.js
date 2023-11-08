@@ -34,6 +34,13 @@ const viewNotificationManagerController = asyncHandler(async (req, res) => {
 
     notifications = await Promise.all(notifications.map(async (notification) => {
 
+        if (!notification.expense_id)
+        {
+            return {
+                ...notification._doc
+            }
+        }
+
         const employee_id = notification.expense_id.employee_id;
         const employee = await Employee.findById(employee_id);
 
