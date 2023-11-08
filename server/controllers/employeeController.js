@@ -19,6 +19,39 @@ const registerController = asyncHandler(async (req, res) => {
         throw new Error('Please fill all the fields');
     }
 
+    let currentDate = new Date();
+    const istOffset = 330 * 60000;
+    currentDate = new Date(currentDate.getTime() + istOffset);
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+
+    const dateArray = dob.split('-');
+    const year = parseInt(dateArray[0]);
+    const month = parseInt(dateArray[1]);
+    const day = parseInt(dateArray[2]);
+
+    if (year > currentYear - 18) {
+        res.status(400)
+        throw new Error('Employee must be atleast 18 years old');
+    }
+
+    else if (year === currentYear - 18) {
+
+        if (month > currentMonth) {
+            res.status(400)
+            throw new Error('Employee must be atleast 18 years old');
+        }
+
+        else if (month === currentMonth) {
+
+            if (day > currentDay) {
+                res.status(400)
+                throw new Error('Employee must be atleast 18 years old');
+            }
+        }
+    }
+
     email = email.toLowerCase();
 
     const employeeExists = await Employee.findOne({email});
