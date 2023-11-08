@@ -65,6 +65,25 @@ export const editEmployeeProfile = createAsyncThunk('/auth/editEmployeeProfile',
     }
 })
 
+export const editManagerProfile = createAsyncThunk('/auth/editManagerProfile', async (userData, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await authService.editManagerProfile(userData, token);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
 export const loginEmployee = createAsyncThunk('/auth/loginEmployee', async (userData, thunkAPI) => {
 
     try {
@@ -186,6 +205,24 @@ const authSlice = createSlice({
             })
 
             .addCase(editEmployeeProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(editManagerProfile.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(editManagerProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user = action.payload;
+                state.message = action.payload?.message;
+            })
+
+            .addCase(editManagerProfile.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
