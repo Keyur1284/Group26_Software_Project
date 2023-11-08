@@ -131,6 +131,8 @@ const loginController = asyncHandler(async (req, res) => {
             firstName: employee.firstName,
             lastName: employee.lastName,
             email: employee.email,
+            dob: employee.dob,
+            contactNo: employee.contactNo,
             message: "Login Successful",
             role: "employee",
             token: generateToken(employee._id)
@@ -146,7 +148,79 @@ const loginController = asyncHandler(async (req, res) => {
 });
 
 
-const getEmployeeProfileController = asyncHandler(async (req, res) => {
+const editProfileController = asyncHandler(async (req, res) => {
+
+    const { firstName, lastName, dob, contactNo } = req.body;
+
+    if (!firstName || !lastName || !dob || !contactNo)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Please fill all the fields'});
+        throw new Error('Please fill all the fields');
+    }
+
+    let currentDate = new Date();
+    const istOffset = 330 * 60000;
+    currentDate = new Date(currentDate.getTime() + istOffset);
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+
+    const dateArray = dob.split('-');
+    const year = parseInt(dateArray[0]);
+    const month = parseInt(dateArray[1]);
+    const day = parseInt(dateArray[2]);
+
+    if (year > currentYear - 18) {
+        res.status(400)
+        throw new Error('Employee must be atleast 18 years old');
+    }
+
+    else if (year === currentYear - 18) {
+
+        if (month > currentMonth) {
+            res.status(400)
+            throw new Error('Employee must be atleast 18 years old');
+        }
+
+        else if (month === currentMonth) {
+
+            if (day > currentDay) {
+                res.status(400)
+                throw new Error('Employee must be atleast 18 years old');
+            }
+        }
+    }
+
+    const employee_id = req.employee._id;
+    const updatedEmployee = await Employee.findByIdAndUpdate(employee_id, req.body, {new: true});
+
+    if (updatedEmployee)
+    {
+        res.status(200).json({
+            success: true,
+              _id: updatedEmployee._id,
+              firstName: updatedEmployee.firstName,
+              lastName: updatedEmployee.lastName,
+              dob: updatedEmployee.dob,
+              contactNo: updatedEmployee.contactNo,
+              email: updatedEmployee.email,
+              role: "employee",
+              token: generateToken(updatedEmployee._id),
+              message: "Profile Updated Successfully!"
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid user data'});
+        throw new Error('Invalid user data');
+    }
+});
+
+
+const getProfileController = asyncHandler(async (req, res) => {
 
     const employee = await Employee.findById(req.employee._id);
 
@@ -157,10 +231,10 @@ const getEmployeeProfileController = asyncHandler(async (req, res) => {
             employee: {
                 firstName: employee.firstName,
                 lastName: employee.lastName,
-                dob: employee.dob,
+                dob: employee.dob.getDate() + "-" + (employee.dob.getMonth() + 1) + "-" + employee.dob.getFullYear(),
                 contactNo: employee.contactNo,
                 email: employee.email,
-                joiningDate: employee.createdAt.toISOString().split('T')[0],
+                joiningDate: employee.createdAt.getDate() + "-" + (employee.createdAt.getMonth() + 1) + "-" + employee.createdAt.getFullYear(),
                 role: "Employee"
             }
         });
@@ -295,7 +369,8 @@ const generateToken = (_id) => {
 module.exports = {
     loginController, 
     registerController,
-    getEmployeeProfileController,
+    getProfileController,
+    editProfileController,
     forgotPasswordController,
     verifyIdAndTokenController,
     resetPasswordController
