@@ -9,8 +9,13 @@ const employeeNotificationSchema = new mongoose.Schema({
     },
     expense_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: [true, 'Please enter the expense id'],
+        required: false,
         ref: 'Expense'
+    },
+    invite_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'Invite'
     },
     project_id: {
         type: mongoose.Schema.Types.ObjectId,
