@@ -128,6 +128,8 @@ const loginController = asyncHandler(async (req, res) => {
             firstName: manager.firstName,
             lastName: manager.lastName,
             email: manager.email,
+            dob: manager.dob,
+            contactNo: manager.contactNo,
             message: "Login Successful",
             role: "manager",
             token: generateToken(manager._id)
@@ -143,7 +145,79 @@ const loginController = asyncHandler(async (req, res) => {
 });
 
 
-const getManagerProfileController = asyncHandler(async (req, res) => {
+const editProfileController = asyncHandler(async (req, res) => {
+
+    let {firstName, lastName, email, dob, contactNo} = req.body;
+
+    if (!firstName || !lastName || !email || !dob || !contactNo)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Please fill all the fields'});
+        throw new Error('Please fill all the fields');
+    }
+
+    let currentDate = new Date();
+    const istOffset = 330 * 60000;
+    currentDate = new Date(currentDate.getTime() + istOffset);
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+
+    const dateArray = dob.split('-');
+    const year = parseInt(dateArray[0]);
+    const month = parseInt(dateArray[1]);
+    const day = parseInt(dateArray[2]);
+
+    if (year > currentYear - 18) {
+        res.status(400)
+        throw new Error('Manager must be atleast 18 years old');
+    }
+
+    else if (year === currentYear - 18) {
+
+        if (month > currentMonth) {
+            res.status(400)
+            throw new Error('Manager must be atleast 18 years old');
+        }
+
+        else if (month === currentMonth) {
+
+            if (day > currentDay) {
+                res.status(400)
+                throw new Error('Manager must be atleast 18 years old');
+            }
+        }
+    }
+
+    const manager_id = req.manager._id;
+    const updatedManager = await Manager.findByIdAndUpdate(manager_id, req.body, {new: true});
+
+    if (updatedManager)
+    {
+        res.status(200).json({
+            success: true,
+            _id: updatedManager._id,
+            firstName: updatedManager.firstName,
+            lastName: updatedManager.lastName,
+            dob: updatedManager.dob,
+            contactNo: updatedManager.contactNo,
+            email: updatedManager.email,
+            role: "manager",
+            message: "Profile Updated Successfully",  
+            token: generateToken(updatedManager._id)
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid user data'});
+        throw new Error('Invalid user data');
+    }
+});
+
+
+const getProfileController = asyncHandler(async (req, res) => {
 
     const manager = await Manager.findById(req.manager._id);
 
@@ -154,10 +228,10 @@ const getManagerProfileController = asyncHandler(async (req, res) => {
             manager: {
                 firstName: manager.firstName,
                 lastName: manager.lastName,
-                dob: manager.dob,
+                dob: manager.dob.getDate() + "-" + (manager.dob.getMonth() + 1) + "-" + manager.dob.getFullYear(),
                 contactNo: manager.contactNo,
                 email: manager.email,
-                joiningDate: manager.createdAt.toISOString().split('T')[0],
+                joiningDate: manager.createdAt.getDate() + "-" + (manager.createdAt.getMonth() + 1) + "-" + manager.createdAt.getFullYear(),
                 role: "Manager"
             }
         });
@@ -289,7 +363,8 @@ const generateToken = (_id) => {
 module.exports = {
     loginController, 
     registerController,
-    getManagerProfileController,
+    getProfileController,
+    editProfileController,
     forgotPasswordController,
     verifyIdAndTokenController,
     resetPasswordController
