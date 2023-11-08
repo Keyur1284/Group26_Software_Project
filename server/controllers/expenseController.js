@@ -1,5 +1,7 @@
 const Expense = require('../models/expenseModel');
 const Project = require('../models/projectModel');
+const Employee = require('../models/employeeModel');
+const Manager = require('../models/managerModel');
 const employeeNotification = require('../models/employeeNotificationModel');
 const managerNotification = require('../models/managerNotificationModel');
 const asyncHandler = require('express-async-handler');
@@ -10,6 +12,7 @@ const addExpenseController = asyncHandler(async (req, res) => {
     const { name, date, category, amount, description, driveLink } = req.body;
     const project_id = req.params.project_id;
     const employee_id = req.employee._id;
+    const employee = await Employee.findById(employee_id);
     const project = await Project.findById(project_id);
     const manager_id = project.manager_id;
 
@@ -70,7 +73,7 @@ const addExpenseController = asyncHandler(async (req, res) => {
             manager_id: manager_id,
             expense_id: expense._id,
             project_id: project_id,
-            message: 'has requested for an expense in'
+            message: `${employee.firstName + " " + employee.lastName} has requested for an expense in ${project.name}`
         });
 
         if (notification) {
@@ -100,6 +103,8 @@ const addExpenseController = asyncHandler(async (req, res) => {
 const updateExpenseController = asyncHandler(async (req, res) => {
 
     const { name, date, category, amount, driveLink } = req.body;
+    const employee_id = req.employee._id;
+    const employee = await Employee.findById(employee_id);
     const expense_id = req.params.expense_id;
     const expense = await Expense.findById(expense_id);
     const project_id = expense.project_id;
@@ -155,7 +160,7 @@ const updateExpenseController = asyncHandler(async (req, res) => {
             manager_id,
             expense_id: updatedExpense._id,
             project_id,
-            message: 'has updated request for an expense in'
+            message: `${employee.firstName + " " + employee.lastName} has updated the expense request in ${project.name}`
         });
 
         if (updatedNotification) {
@@ -354,8 +359,12 @@ const getExpenseEmployeeByFilterController = asyncHandler(async (req, res) => {
 
 const acceptExpenseController = asyncHandler(async (req, res) => {
 
+    const manager_id = req.manager._id;
+    const manager = await Manager.findById(manager_id);
     const expense_id = req.params.expense_id;
     const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Approved' }, { new: true });
+    const project_id = expense.project_id;
+    const project = await Project.findById(project_id);
 
     if (expense) {
 
@@ -363,7 +372,7 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
             employee_id: expense.employee_id,
             expense_id: expense._id,
             project_id: expense.project_id,
-            message: 'has approved the expense request in'
+            message: `${manager.firstName + " " + manager.lastName} has accepted the expense request in ${project.name}`
         });
 
         const deletedNotification = await managerNotification.findOneAndDelete({ expense_id });
@@ -394,8 +403,12 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
 
 const rejectExpenseController = asyncHandler(async (req, res) => {
 
+    const manager_id = req.manager._id;
+    const manager = await Manager.findById(manager_id);
     const expense_id = req.params.expense_id;
     const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Rejected' }, { new: true });
+    const project_id = expense.project_id;
+    const project = await Project.findById(project_id);
 
     if (expense) {
 
@@ -404,7 +417,7 @@ const rejectExpenseController = asyncHandler(async (req, res) => {
             employee_id: expense.employee_id,
             expense_id: expense._id,
             project_id: expense.project_id,
-            message: 'has rejected the expense request in'
+            message: `${manager.firstName + " " + manager.lastName} has rejected the expense request in ${project.name}`
         });
 
         const deletedNotification = await managerNotification.findOneAndDelete({ expense_id });
