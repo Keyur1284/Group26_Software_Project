@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
 import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -26,30 +26,61 @@ export const NotificationEmployee = () => {
     }
   }, [dispatch, isSuccess, isError]);
 
-  if (isLoading && notifications?.length == 0)
-  {
+  if (isLoading && notifications?.length == 0) {
     return (
       <>
         <div
-      className="px-3 py-3"
-      style={{
-        backgroundImage: `url(${mainbg})`,
-        backgroundRepeat: "repeat",
-        minHeight: "92vh",
-      }}
-    >
-      <h1 className="px-4 py-4" style={{ color: "#013E8F" }}>Notifications</h1>
+          className="px-3 py-3"
+          style={{
+            backgroundImage: `url(${mainbg})`,
+            backgroundRepeat: "repeat",
+            minHeight: "92vh",
+          }}
+        >
+          <h1 className="px-4 py-4" style={{ color: "#013E8F" }}>
+            Notifications
+          </h1>
 
-      <div className="col-md-12">
-        <Skeleton sx={{marginLeft: 3}} variant="rounded" animation="wave" width="98%" height="15vh" />
-        <Skeleton sx={{marginLeft: 3, marginTop: 2}} variant="rounded" animation="wave" width="98%" height="15vh" />
-        <Skeleton sx={{marginLeft: 3, marginTop: 2}} variant="rounded" animation="wave" width="98%" height="15vh" />
-        <Skeleton sx={{marginLeft: 3, marginTop: 2}} variant="rounded" animation="wave" width="98%" height="15vh" />
-        <Skeleton sx={{marginLeft: 3, marginTop: 2}} variant="rounded" animation="wave" width="98%" height="15vh" />
-      </div>
-    </div>
+          <div className="col-md-12">
+            <Skeleton
+              sx={{ marginLeft: 3 }}
+              variant="rounded"
+              animation="wave"
+              width="98%"
+              height="15vh"
+            />
+            <Skeleton
+              sx={{ marginLeft: 3, marginTop: 2 }}
+              variant="rounded"
+              animation="wave"
+              width="98%"
+              height="15vh"
+            />
+            <Skeleton
+              sx={{ marginLeft: 3, marginTop: 2 }}
+              variant="rounded"
+              animation="wave"
+              width="98%"
+              height="15vh"
+            />
+            <Skeleton
+              sx={{ marginLeft: 3, marginTop: 2 }}
+              variant="rounded"
+              animation="wave"
+              width="98%"
+              height="15vh"
+            />
+            <Skeleton
+              sx={{ marginLeft: 3, marginTop: 2 }}
+              variant="rounded"
+              animation="wave"
+              width="98%"
+              height="15vh"
+            />
+          </div>
+        </div>
       </>
-    )
+    );
   }
 
   return (
@@ -82,24 +113,9 @@ export const NotificationEmployee = () => {
             <div className="card-body">
               <h3
                 className="card-title px-4"
-                style={{
-                  color: `{${
-                    notification?.expense_id?.status == "Approved"
-                      ? "#013E8F"
-                      : "#d32f2f"
-                  }}`,
-                }}
               >
                 <CircleRoundedIcon sx={{ color: "#013E8F" }} />
-                <span style={{ marginLeft: 17 }}>
-                  <strong style={{ color: "black" }}>
-                    {notification?.manager}
-                  </strong>{" "}
-                  {notification?.message}{" "}
-                  <strong style={{ color: "black" }}>
-                    {notification?.project_id?.name}
-                  </strong>
-                </span>
+                <span style={{ marginLeft: 17 }}>{notification?.message}</span>
               </h3>
             </div>
             <div
@@ -125,21 +141,38 @@ export const NotificationEmployee = () => {
                   display: "inline-block",
                 }}
               >
-                <Link
-                  to={`/projects/${notification?.project_id?._id}/expenses/${notification?.expense_id?._id}`}
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  <div
-                    className="card px-4"
-                    style={{
-                      backgroundColor: "#4E79B2",
-                      color: "#fff",
-                      borderRadius: "25px",
-                    }}
+                {notification?.expense_id?.name && (
+                  <Link
+                    to={`/projects/${notification?.project_id?._id}/expenses/${notification?.expense_id?._id}`}
+                    style={{ textDecoration: "none", color: "white" }}
                   >
-                    <h3> {notification?.expense_id?.name}</h3>
-                  </div>
-                </Link>
+                    <button
+                      className="btn text-white"
+                      style={{
+                        borderRadius: "25px",
+                        backgroundColor: "#013E8F",
+                      }}
+                    >
+                      <h5>{notification?.expense_id?.name}</h5>
+                    </button>
+                  </Link>
+                )}
+                {notification?.invite_id && (
+                  <Link
+                    to="/invites"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    <button
+                      className="btn text-white"
+                      style={{
+                        borderRadius: "25px",
+                        backgroundColor: "#013E8F",
+                      }}
+                    >
+                      <h5>View Invitation</h5>
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
             <div
@@ -148,14 +181,19 @@ export const NotificationEmployee = () => {
               <button
                 className="btn text-white"
                 style={{ borderRadius: "25px", backgroundColor: "#013E8F" }}
-                onClick={() => dispatch(deleteNotificationEmployee(notification?._id))}
+                onClick={() =>
+                  dispatch(deleteNotificationEmployee(notification?._id))
+                }
               >
                 <h5>Mark as read</h5>
               </button>
             </div>
           </div>
         ))}
-        {notifications?.length == 0 && (<div className="display-5 mx-4">You&apos;ve no new notifications!</div>
+        {notifications?.length == 0 && (
+          <div className="display-5 mx-4">
+            You&apos;ve no new notifications!
+          </div>
         )}
       </div>
     </div>
