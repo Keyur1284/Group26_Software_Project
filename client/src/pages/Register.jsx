@@ -34,7 +34,9 @@ export const Register = () => {
       .email("Invalid email format")
       .required("Email is required"),
     dob:Yup.date().required("Birth Date is required"),
-    contactNo:Yup.string().required("Contact Number is required"),
+    contactNo: Yup.string()
+      .matches(/^[6-9]\d{9}$/, "Contact Number must be 10 digits long and start with 9,8,7,6 only")
+      .required("Contact Number is required"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .max(24, "Password must not exceed 24 characters")
