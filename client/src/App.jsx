@@ -16,6 +16,7 @@ import { Er403 } from "./pages/Er403";
 import { Er404 } from "./pages/Er404";
 import { useSelector } from "react-redux";
 import { MyProfile} from './pages/MyProfile'
+import { EditProfile } from "./pages/EditProfile";
 import { ExpenseDetails } from "./pages/ExpenseDetails";
 import { Analytics } from "./pages/Analytics";
 import { EmployeeSearch } from "./pages/EmployeeSearch";
@@ -50,6 +51,7 @@ function App() {
                 <Route path="/add-project" element={<Er403 />} />
                 <Route path='/employee-search' element={<Er403 />} />
                 <Route path='/profile' element={<MyProfile />} />
+                <Route path='/edit-profile' element={<EditProfile />} />
                 <Route path='/invites' element={<Invitations />} />
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/analytics' element={<Analytics />} />
@@ -73,6 +75,7 @@ function App() {
                 <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />
                 <Route path='/profile' element={<MyProfile />} />
+                <Route path='/edit-profile' element={<EditProfile />} />
                 <Route path='/projects/:projectId/invite-employee' element={<EmployeeSearch />} />
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/analytics' element={<Analytics />} />
