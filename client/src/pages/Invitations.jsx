@@ -46,7 +46,7 @@ export const Invitations = () => {
                 <Link
                   className="nav-link"
                   style={{ color: "black", fontSize: "20px" }}
-                  to="/profile"
+                  to="/edit-profile"
                 >
                   <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
                   Edit Profile
