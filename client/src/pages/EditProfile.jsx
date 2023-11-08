@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { message } from "antd";
 import { Loading } from "../components/Loading";
 import { useEffect } from "react";
-import { editEmployeeProfile, reset } from "../features/auth/authSlice";
+import { editEmployeeProfile, editManagerProfile, reset } from "../features/auth/authSlice";
 
 export const EditProfile = () => {
 
@@ -54,9 +54,11 @@ export const EditProfile = () => {
     },
     onSubmit: (values) => {
       
-      if (user?.role == "employee") {
+      if (user?.role == "employee")
         dispatch(editEmployeeProfile(values));
-      }
+      
+      else if (user?.role == "manager")
+        dispatch(editManagerProfile(values));
     },
     validationSchema: formSchema,
   });
