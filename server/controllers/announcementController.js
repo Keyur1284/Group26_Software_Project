@@ -58,6 +58,7 @@ const getAnnouncementsController = asyncHandler(async (req, res) => {
         res.status(200).json({
             success: true,
             announcements,
+            project,
             projectName: project.name,
             managerName: manager.firstName + ' ' + manager.lastName
         });
