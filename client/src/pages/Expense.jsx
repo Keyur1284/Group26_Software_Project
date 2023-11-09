@@ -7,6 +7,7 @@ import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getExpenseEmployee, getExpenseManager, getExpenseManagerByFilter, getExpenseEmployeeByFilter, reset } from "../features/expense/expenseSlice";
+import { getMembers, reset as teamReset } from "../features/team/teamSlice";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import { message } from "antd";
@@ -56,6 +57,14 @@ export const Expense = () => {
 
   const { user } = useSelector((state) => state.auth);
   const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
+  const { employees, isLoading: teamLoading, isSuccess: teamSuccess, isError: teamError, appErr: teamAppErr, serverErr: teamServerErr } = useSelector((state) => state.team);
+
+  useEffect(() => {
+
+    if (user?.role == "manager")
+      dispatch(getMembers(projectId));
+
+  }, [dispatch, projectId, user?.role]);
 
   useEffect(() => {
 
@@ -64,7 +73,8 @@ export const Expense = () => {
       startDate: startDate,
       endDate: endDate,
       category: selectedCategory,
-      projectId: projectId
+      projectId: projectId,
+      employeeId: user?.role == "manager" ? selectedEmployee : null
     }
 
     if (user?.role == "manager")
@@ -83,7 +93,7 @@ export const Expense = () => {
       dispatch(getExpenseEmployeeByFilter(filterData));
     }
 
-  }, [selectedDateOption, startDate, endDate, selectedCategory]);
+  }, [selectedDateOption, startDate, endDate, selectedCategory, selectedEmployee]);
 
   // useEffect(() => {
 
@@ -109,7 +119,21 @@ export const Expense = () => {
 
   }, [isSuccess, isError]);
 
-  if (isLoading)
+  useEffect(() => {
+
+    if (teamSuccess || teamError)
+    {
+      dispatch(teamReset());
+    }
+
+    if (teamError)
+    {
+      message.error(teamAppErr || teamServerErr);
+    }
+
+  }, [teamSuccess, teamError]);
+
+  if (isLoading || teamLoading)
   {
     return (
       <>
@@ -151,12 +175,7 @@ export const Expense = () => {
     )
   }
 
-  const categoryOptions = ["Accommodation", "Advertising", "Entertainment", "Food", "Gifts", "Miscellaneous", "OfficeSupplies", "Technology", "Travel", "Utilities"]
-  
-  const empName = [
-    "Employee 1",
-    "Employee 2",
-  ];
+  const categoryOptions = ["Accommodation", "Advertising", "Entertainment", "Food", "Gifts", "Miscellaneous", "OfficeSupplies", "Technology", "Travel", "Utilities"];
 
   if (user?.role == "employee")
   {
@@ -415,9 +434,9 @@ export const Expense = () => {
                       }}
                     >
                       <option value="all">All Employees</option>
-                        {empName.map((employee) => (
-                          <option key={employee} value={employee}>
-                            {employee}
+                        {employees?.map((employee) => (
+                          <option key={employee._id} value={employee._id}>
+                            {employee.firstName} {employee.lastName}
                       </option>
                       ))}
                     </select>
