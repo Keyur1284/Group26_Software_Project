@@ -14,6 +14,21 @@ const createProject = async (projectData, token) => {
     return response.data;
 }
 
+const editProject = async (projectData, token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const { projectId } = projectData;
+
+    const response = await axios.patch(`${baseURL}/projects/edit-project/${projectId}`, projectData, config);
+    return response.data;
+}
+
 
 const getProjectsManager = async (token) => {
     
@@ -42,4 +57,4 @@ const getProjectsEmployee = async (token) => {
     return response.data;
 } 
 
-export const projectService = { createProject, getProjectsManager, getProjectsEmployee }
+export const projectService = { createProject, editProject, getProjectsManager, getProjectsEmployee }
