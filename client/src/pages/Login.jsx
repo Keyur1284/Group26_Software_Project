@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import {message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import { loginEmployee, loginManager, reset } from "../features/auth/authSlice";
 import { Loading } from "../components/Loading";
 
@@ -228,15 +227,20 @@ export const Login = () => {
                     </button>
                   </div>
                   <div
-                    className="create-account text-center mt-3"
+                    className="create-account d-flex justify-content-evenly text-center mt-3"
                     style={{ fontSize: "18px" }}
                   >
-                    <p>
-                      Not a user? {"   "}
-                      <Link to="/register" className="text-white">
-                        Create Account
-                      </Link>{" "}
-                    </p>
+                  <div>
+                    <Link to="/forgot-password" className="text-white text-decoration-none">
+                      Forgot Password?
+                    </Link>
+                  </div>
+                  <div>
+                    <Link to="/register" className="text-white text-decoration-none">
+                    Not a user? {"   "}
+                      Create Account
+                    </Link>{" "}
+                  </div>
                   </div>
                 </form>
               </div>
