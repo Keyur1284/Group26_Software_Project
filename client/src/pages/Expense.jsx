@@ -22,6 +22,7 @@ export const Expense = () => {
   const [endDate, setEndDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedEmployee, setSelectedEmployee] = useState("all");
+  const [selectedStatus, setSelectedStatus] = useState("all");
 
   const handleDateOptionChange = (event) => {
     const newDateOption = event.target.value;
@@ -55,6 +56,11 @@ export const Expense = () => {
     setSelectedEmployee(newEmployee);
   };
 
+  const handleStatusChange = (event) => {
+    const newStatus = event.target.value;
+    setSelectedStatus(newStatus);
+  };
+
   const { user } = useSelector((state) => state.auth);
   const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
   const { employees, isLoading: teamLoading, isSuccess: teamSuccess, isError: teamError, appErr: teamAppErr, serverErr: teamServerErr } = useSelector((state) => state.team);
@@ -74,7 +80,8 @@ export const Expense = () => {
       endDate: endDate,
       category: selectedCategory,
       projectId: projectId,
-      employeeId: user?.role == "manager" ? selectedEmployee : null
+      employeeId: user?.role == "manager" ? selectedEmployee : null,
+      status: selectedStatus
     }
 
     if (user?.role == "manager")
@@ -93,7 +100,7 @@ export const Expense = () => {
       dispatch(getExpenseEmployeeByFilter(filterData));
     }
 
-  }, [selectedDateOption, startDate, endDate, selectedCategory, selectedEmployee]);
+  }, [selectedDateOption, startDate, endDate, selectedCategory, selectedEmployee, selectedStatus, dispatch, projectId, user?.role]);
 
   // useEffect(() => {
 
@@ -271,22 +278,23 @@ export const Expense = () => {
                     ))}
                   </select>
                 </div>
-                {selectedCategory === "category" && (
-                  <div className="d-flex align-items-center">
-                    <input
-                      type="text"
-                      value={selectedCategory}
-                      onChange={handleCategoryChange}
-                      className="form-control rounded-pill"
-                      placeholder="Category"
-                      style={{
-                        backgroundColor: "white",
-                        color: "#000000",
-                        cursor: "pointer",
+                <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
+                  <select
+                    value={selectedStatus}
+                    onChange={handleStatusChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#000000",
+                      cursor: "pointer",
                       }}
-                    />
+                    >
+                      <option value="all">Any Status</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
                   </div>
-                )}
               </div>
             </div>
             {expenses?.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
@@ -404,22 +412,24 @@ export const Expense = () => {
                     ))}
                   </select>
                 </div>
-                {selectedCategory === "category" && (
-                  <div className="d-flex align-items-center">
-                    <input
-                      type="text"
-                      value={selectedCategory}
-                      onChange={handleCategoryChange}
-                      className="form-control rounded-pill"
-                      placeholder="Category"
-                      style={{
-                        backgroundColor: "white",
-                        color: "#000000",
-                        cursor: "pointer",
+
+                  <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
+                  <select
+                    value={selectedStatus}
+                    onChange={handleStatusChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#000000",
+                      cursor: "pointer",
                       }}
-                    />
+                    >
+                      <option value="all">Any Status</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
                   </div>
-                )}
 
 
                 <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
