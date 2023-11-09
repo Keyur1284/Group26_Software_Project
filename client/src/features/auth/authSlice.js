@@ -118,6 +118,40 @@ export const loginManager = createAsyncThunk('/auth/loginManager', async (userDa
     }
 })
 
+export const forgotPasswordEmployee = createAsyncThunk('/auth/forgotPasswordEmployee', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.forgotPasswordEmployee(userData);
+        return response;
+    }
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+export const resetPasswordEmployee = createAsyncThunk('/auth/resetPasswordEmployee', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.resetPasswordEmployee(userData);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
 
 export const getManagerProfile = createAsyncThunk('/auth/getManagerProfile', async (_, thunkAPI) => {
 
@@ -262,6 +296,38 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(forgotPasswordEmployee.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(forgotPasswordEmployee.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+
+            .addCase(forgotPasswordEmployee.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(resetPasswordEmployee.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(resetPasswordEmployee.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+
+            .addCase(resetPasswordEmployee.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message
                 state.serverErr = action.error?.message;
             })
 

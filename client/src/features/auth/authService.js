@@ -75,6 +75,34 @@ const loginManager = async (userData) => {
 }
 
 
+const forgotPasswordEmployee = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const response = await axios.post(`${baseURL}/employees/forgot-password`, userData, config);
+    return response.data;
+}
+
+
+const resetPasswordEmployee = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const { resetId } = userData;
+
+    const response = await axios.post(`${baseURL}/employees/reset-password/${resetId}`, userData, config);
+    return response.data;
+}
+
+
 const getManagerProfile = async (token) => {
 
     const config = {
@@ -133,6 +161,8 @@ export const authService = {
   registerManager,
   loginEmployee,
   loginManager,
+  forgotPasswordEmployee,
+  resetPasswordEmployee,
   getEmployeeProfile,
   editEmployeeProfile,
   getManagerProfile,
