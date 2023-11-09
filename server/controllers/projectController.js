@@ -154,6 +154,10 @@ const getProjectsEmployeeController = asyncHandler(async (req, res) => {
             modifiedProjects.push(modifiedProject);
         }
 
+        modifiedProjects.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+        });
+
         res.status(200).json({
             success: true,
             projects: modifiedProjects
@@ -192,6 +196,10 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
             };
             modifiedProjects.push(modifiedProject);
         }
+
+        modifiedProjects.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+        });
 
         res.status(200).json({
             success: true,
@@ -232,6 +240,33 @@ const getMembersController = asyncHandler(async (req, res) => {
             };
             modifiedEmployees.push(modifiedEmployee);
         }
+        
+        modifiedEmployees.sort((a, b) => {
+            if (a.firstName < b.firstName)
+            {
+                return -1;
+            }
+            else if (a.firstName > b.firstName)
+            {
+                return 1;
+            }
+            else
+            {
+                if (a.lastName < b.lastName)
+                {
+                    return -1;
+                }
+                else if (a.lastName > b.lastName)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        });
+
 
         res.status(200).json({
             success: true,

@@ -35,6 +35,8 @@ const getManagerDashboardController = asyncHandler(async (req, res) => {
         });
     }
 
+    employeeWiseExpenseArray.sort((a, b) => b.employeeTotalMoneySpent - a.employeeTotalMoneySpent);
+
     res.status(200).json({
         success: true,
         project,
@@ -120,6 +122,8 @@ const getManagerAnalyticsController = asyncHandler(async (req, res) => {
         });
     }
 
+    employeeWiseExpenseArray.sort((a, b) => b.employeeTotalMoneySpent - a.employeeTotalMoneySpent);
+
     const categoryWiseExpenseArray = [];
 
     for (let i = 0; i < expenses.length; i++)
@@ -141,6 +145,8 @@ const getManagerAnalyticsController = asyncHandler(async (req, res) => {
             categoryTotalMoneySpent
         });
     }
+
+    categoryWiseExpenseArray.sort((a, b) => b.categoryTotalMoneySpent - a.categoryTotalMoneySpent);
 
     res.status(200).json({
         success: true,
@@ -180,6 +186,8 @@ const getEmployeeAnalyticsController = asyncHandler(async (req, res) => {
             categoryTotalMoneySpent
         });
     }
+
+    categoryWiseExpenseArray.sort((a, b) => b.categoryTotalMoneySpent - a.categoryTotalMoneySpent);
 
     res.status(200).json({
         success: true,
