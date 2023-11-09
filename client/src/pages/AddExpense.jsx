@@ -15,12 +15,12 @@ export const AddExpense = () => {
   const navigate = useNavigate();
 
   const formSchema = Yup.object({
-    name: Yup.string().required("Name is required").max(30, "Expense name must not exceed 30 characters"),
+    name: Yup.string().required("Name is required").max(30, "Expense name must not exceed 30 characters").min(1).trim(),
     category: Yup.string().required("Category is required"),
     amount: Yup.number().required("Amount is required"),
     date: Yup.date().required("Date is required"),
-    driveLink: Yup.string().required("Link of uploaded bill is required"),
-    description: Yup.string().max(400, "Expense Description must not exceed 400 characters")
+    driveLink: Yup.string().required("Link of uploaded bill is required").min(1).trim(),
+    description: Yup.string().max(400, "Expense Description must not exceed 400 characters").min(1).trim(),
   });
 
   const formik = useFormik({
@@ -40,6 +40,22 @@ export const AddExpense = () => {
   });
 
   const {isSuccess, isError, isLoading, appErr, serverErr} = useSelector(state => state.expense);
+
+  useEffect(() => {
+    
+    const handleBeforeUnload = (e) => {
+        const confirmationMessage = "Are you sure you want to leave? Your changes may not be saved.";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+
+  }, []);
 
   useEffect(() => {
 
@@ -81,7 +97,7 @@ export const AddExpense = () => {
             </p>
             <form onSubmit={formik.handleSubmit}>
               <div className="mb-3 mt-4">
-                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
+                <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                   Name
                 </label>
                 <div className="input-group">
@@ -103,7 +119,7 @@ export const AddExpense = () => {
               </div>
 
               <div className="mb-3 mt-4">
-                <label htmlFor="date" className="form-label text-dark" style={{ fontSize: "22px" }}>
+                <label htmlFor="date" className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                   Date
                 </label>
                 <div className="input-group">
@@ -124,7 +140,7 @@ export const AddExpense = () => {
               </div>
 
               <div className="mb-3 mt-4">
-                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
+                <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                   Category
                 </label>
                 <div className="input-group">
@@ -153,7 +169,7 @@ export const AddExpense = () => {
               </div>
 
               <div className="mb-3 mt-4">
-                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
+                <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                   Amount
                 </label>
                 <div className="input-group">
@@ -175,7 +191,7 @@ export const AddExpense = () => {
               </div>
 
               <div className="mb-3 mt-4">
-                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
+                <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                   Link of uploaded bill
                 </label>
                 <div className="input-group">
@@ -197,7 +213,7 @@ export const AddExpense = () => {
               </div>
 
               <div className="mb-3 mt-4">
-                <label className="form-label text-dark" style={{ fontSize: "22px" }}>
+                <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                   Description
                 </label>
                 <div className="input-group">
@@ -233,10 +249,10 @@ export const AddExpense = () => {
                 <button
                   type="button"
                   className="btn btn-dark rounded-pill shadow-lg"
-                  onClick={() => formik.resetForm()}
+                  onClick={() => navigate(`/projects/${projectId}/expenses`)}
                   style={{ fontSize: "22px" }}
                 >
-                  Clear
+                  Cancel
                 </button>
               </div>
             </form>

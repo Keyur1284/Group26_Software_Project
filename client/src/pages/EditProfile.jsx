@@ -27,7 +27,7 @@ export const EditProfile = () => {
         /^[A-z][A-z0-9\s-_]*$/,
         "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
       )
-      .required("First Name is required"),
+      .required("First Name is required").trim(),
     lastName: Yup.string()
       .min(4, "Username must be at least 4 characters")
       .max(24, "Username must not exceed 24 characters")
@@ -35,14 +35,14 @@ export const EditProfile = () => {
         /^[A-z][A-z0-9\s-_]*$/,
         "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
       )
-      .required("Last Name is required"),
+      .required("Last Name is required").trim(),
     email: Yup.string()
       .email("Invalid email format")
-      .required("Email is required"),
+      .required("Email is required").trim(),
     dob: Yup.date().required("Birth Date is required"),
     contactNo: Yup.string()
       .matches(/^[6-9]\d{9}$/, "Contact Number must be 10 digits long and start with 9,8,7,6 only")
-      .required("Contact Number is required"),  });
+      .required("Contact Number is required"),  }).trim();
 
   const formik = useFormik({
     initialValues: {
@@ -62,6 +62,22 @@ export const EditProfile = () => {
     },
     validationSchema: formSchema,
   });
+
+  useEffect(() => {
+    
+    const handleBeforeUnload = (e) => {
+        const confirmationMessage = "Are you sure you want to leave? Your changes may not be saved.";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+
+  }, []);
 
   useEffect(() => {
 
@@ -148,13 +164,19 @@ export const EditProfile = () => {
               />
             </div>
 
-            <div className="d-flex border col-12 flex-column m-2 p-2">
+            <div className="d-flex col-12 flex-column m-2 p-2">
               <form
                 className="d-flex flex-column"
                 onSubmit={formik.handleSubmit}
               >
                 <div className="gap-3 d-flex mb-2">
                   <div>
+                    <label
+                        className="form-label text-dark"
+                        style={{ fontSize: "20px", fontWeight:"600" }}
+                      >
+                      First Name
+                    </label>
                     <input
                       className="col-md-3 text-center"
                       style={{
@@ -179,6 +201,12 @@ export const EditProfile = () => {
                     )}
                   </div>
                   <div>
+                    <label
+                          className="form-label text-dark"
+                          style={{ fontSize: "20px", fontWeight:"600" }}
+                        >
+                      Last Name
+                    </label>
                     <input
                       className="col-md-3 text-center"
                       style={{
@@ -204,6 +232,12 @@ export const EditProfile = () => {
                   </div>
                 </div>
                 <div>
+                      <label
+                        className="form-label text-dark"
+                        style={{ fontSize: "20px", fontWeight:"600" }}
+                      >
+                      Email
+                    </label>
                   <input
                     disabled
                     className="mt-2 mb-2 col-md-12 text-center"
@@ -224,6 +258,12 @@ export const EditProfile = () => {
                 </div>
                 <div className="gap-3 d-flex mt-2">
                   <div>
+                      <label
+                        className="form-label text-dark"
+                        style={{ fontSize: "20px", fontWeight:"600" }}
+                      >
+                      Date of birth
+                    </label>
                     <input
                       className="col-md-3 text-center"
                       style={{
@@ -248,6 +288,12 @@ export const EditProfile = () => {
                     )}
                   </div>
                   <div>
+                      <label
+                        className="form-label text-dark"
+                        style={{ fontSize: "20px", fontWeight:"600" }}
+                      >
+                      Contact Number
+                    </label>
                     <input
                       className="col-md-3 text-center"
                       style={{

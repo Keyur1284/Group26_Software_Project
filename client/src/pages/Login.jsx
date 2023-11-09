@@ -15,10 +15,8 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const formSchema = Yup.object({
-    email: Yup.string()
-      .email("Invalid email format")
-      .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    email: Yup.string().email("Invalid email format").required("Email is required").min(1).trim(),
+    password: Yup.string().required("Password is required").min(1).trim(),
   });
 
   const formik = useFormik({
@@ -39,6 +37,22 @@ export const Login = () => {
 
 
   const {isSuccess, isError, isLoading, appErr, serverErr, user} = useSelector(state => state.auth);
+
+  useEffect(() => {
+    
+    const handleBeforeUnload = (e) => {
+        const confirmationMessage = "Are you sure you want to leave? Your changes may not be saved.";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+
+  }, []);
 
   useEffect(() => {
 
