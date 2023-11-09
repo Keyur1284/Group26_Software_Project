@@ -2,7 +2,7 @@ import Chart from "react-apexcharts";
 import PropTypes from 'prop-types';
 import { useSelector } from "react-redux";
 
-export const EmpDistributionPie = () => {
+export const EmpDistributionPie = ({ size, labelcolor, justifycontent }) => {
 
   const { employeeWiseExpenseArray } = useSelector(state => state.statistic);
 
@@ -13,7 +13,7 @@ export const EmpDistributionPie = () => {
   ]
  
   const optionsDoughnut = {
-    labels: employeeWiseExpenseArray?.map((employee) => `${employee.employeeName}`),
+    labels: employeeWiseExpenseArray?.map((employee) => `${employee.employeeName} (${((employee.employeeTotalMoneySpent / employeeWiseExpenseArray.reduce((acc, curr) => acc + curr.employeeTotalMoneySpent, 0)) * 100).toFixed(2)}%)`),
     responsive: [{
       options: {
         chart: {
@@ -25,7 +25,7 @@ export const EmpDistributionPie = () => {
     legend: {
       position: 'left',
       labels: {
-        colors: "#fff"
+        colors: labelcolor || "#fff"
       }
     },
     stroke: {
@@ -36,13 +36,19 @@ export const EmpDistributionPie = () => {
   const seriesDoughnut = employeeWiseExpenseArray?.map((employee) => employee.employeeTotalMoneySpent);
 
   return (
-    <div className={`mt-5 d-flex flex-row justify-content-center ms-1`}>
+    <div className={`mt-5 d-flex flex-row ${justifycontent || 'justify-content-end'} me-5`}>
       <Chart
         options={optionsDoughnut}
         series={seriesDoughnut}
         type="donut"
-        width={390}
+        width={size || 430}
       />
     </div>
   );
+};
+
+EmpDistributionPie.propTypes = {
+  size: PropTypes.number,
+  labelcolor: PropTypes.string,
+  justifycontent: PropTypes.string
 };
