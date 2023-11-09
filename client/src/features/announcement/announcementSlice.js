@@ -61,6 +61,7 @@ const announcementSlice = createSlice({
         },
         clearAnnouncements: (state) => {
             state.announcements = [];
+            state.project = null;
         }
     },
     extraReducers: (builder) => {
@@ -93,6 +94,7 @@ const announcementSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.announcements = action.payload.announcements;
+                state.project = action.payload.project;
                 state.projectName = action.payload.projectName;
                 state.managerName = action.payload.managerName;
                 state.message = action.payload.message;
