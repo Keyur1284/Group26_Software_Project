@@ -419,8 +419,8 @@ export const Register = () => {
                 style={{ fontSize: "18px" }}
               >
                 <p>
+                  <Link to="/login" className="text-white text-decoration-none">
                   Already Registered? {"   "}
-                  <Link to="/login" className="text-white">
                     Sign In
                   </Link>{" "}
                 </p>
