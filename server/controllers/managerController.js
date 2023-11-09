@@ -1,5 +1,6 @@
-const Manager = require('../models/managerModel');
 const asyncHandler = require('express-async-handler');
+const Manager = require('../models/managerModel');
+const ResetPassword = require('../models/resetPasswordModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const nodemailer = require("nodemailer");
@@ -251,107 +252,96 @@ const forgotPasswordController = asyncHandler( async (req, res) => {
 
     const { email } = req.body;
 
+    const oldUser = await Manager.findOne({ email });
 
-      const oldUser = await Manager.findOne({ email });
-
-      if (!oldUser) {
-        return res.json({ status: "User Not Exists!!" });
-      }
-
-      const secret = process.env.JWT_SECRET + oldUser.password;
-
-      const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
-        expiresIn: "5m",
-      });
-
-      const link = `http://localhost:5173/reset-password/${oldUser._id}/${token}`;
-
-      var transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: "hims132003@gmail.com",
-          pass: "sukfiheljowippsq",
-        },
-      });
-  
-      var mailOptions = {
-        from: "hims132003@gmail.com",
-        to: email,
-        subject: "Password Reset",
-        html: `<h2>Please click on given link to reset your password</h2>
-                <a href="${link}">Click here to reset your password</a>`,
-      };
-  
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Email sent: " + info.response);
-        }
-      });
-
-      res.status(200).json(link);
-
-});
-
-  
-const verifyIdAndTokenController = asyncHandler( async (req, res) => {
-
-    const { id, token } = req.params;
-    console.log(req.params);
-    const oldUser = await Manager.findOne({ _id: id });
-
-    if (!oldUser) {
-      return res.json({ status: "User Not Exists!!" });
+    if (!oldUser) 
+    {
+        res.status(404)
+        // res.json({success: false, message: 'User not found'});
+        throw new Error('User not found!');
     }
 
-    const secret = process.env.JWT_SECRET + oldUser.password;
+    const otp = generateRandomOTP(8);
 
-    try {
-      const verify = jwt.verify(token, secret);
+    const resetPassword = await ResetPassword.create({ otp, manager_id: oldUser._id });
 
+    const link = `http://localhost:5173/reset-password/${resetPassword._id}`;
 
+    let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+    },
+    });
+
+    let mailOptions = {
+    from: process.env.EMAIL,
+    to: email,
+    subject: "Reset your password for Xpense Tracker",
+    html: `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; padding: 20px;">
+            <h2>Xpense Tracker Password Reset</h2>
+            <p>Hello ${oldUser.firstName + " " + oldUser.lastName},</p>
+            <p>We received a request to reset your password for Xpense Tracker. If you did not make this request, please ignore this email.</p>
+            <p>Use this otp to reset your password: ${otp}</p>
+            <p>To reset your password, click on the link below:</p>
+            <p><a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #ffffff; text-decoration: none;">Reset Password</a></p>
+            <p>If the above link doesn't work, copy and paste the following URL into your browser:</p>
+            <p>${link}</p>
+            <p>This otp will expire in 5 minutes for security reasons.</p>
+            <p>To get a new otp, visit <a href="http://localhost:5173/forgot-password">this link</a> and enter your email address.</p>
+            <p>Thank you,<br>Xpense Tracker Team</p>
+        </div>`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+    if (error)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Something went wrong'});
+        throw new Error('Something went wrong');
     }
-    
-    catch (error) {
-      console.log(error);
-      res.send("Not Verified");
+    else
+    {
+        res.status(200).json({ message: "Email sent successfully!", success: true, link });
     }
-
+    });
 });
 
   
 const resetPasswordController = asyncHandler( async (req, res) => {
 
-    const { id, token } = req.params;
-    const { password } = req.body;
+    const reset_id = req.params.reset_id;
+    const { password, otp } = req.body;
 
-    const oldUser = await Manager.findOne({ _id: id });
+    const resetPassword = await ResetPassword.findById(reset_id);
 
-    if (!oldUser) {
-      return res.json({ status: "User Not Exists!!" });
+    if (!resetPassword)
+    {
+        res.status(404)
+        // res.json({success: false, message: 'Invalid reset link'});
+        throw new Error('Invalid reset link');
     }
 
-    const secret = process.env.JWT_SECRET + oldUser.password;
+    if (resetPassword.otp != otp)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid OTP'});
+        throw new Error('Invalid OTP');
+    }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const updatedUser = await Manager.findByIdAndUpdate(resetPassword.manager_id, { password: hashedPassword }, { new: true });
 
-      const verify = jwt.verify(token, secret);
-      const hashedPassword = await bcrypt.hash(password, 10);
+    if (!updatedUser)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid user data'});
+        throw new Error('Invalid user data');
+    }
 
-      await Manager.updateOne(
-        {
-          _id: id,
-        },
-        {
-          $set: {
-            password: hashedPassword,
-          },
-        }
-
-      );
-
-      res.json({ status: "verified" });
-  
+    const deleteResetPassword = await ResetPassword.findByIdAndDelete(reset_id);
+    res.status(200).json({ message: "Password updated successfully!", success: true});
 });
 
 
@@ -359,6 +349,23 @@ const generateToken = (_id) => {
     return jwt.sign({_id}, process.env.JWT_SECRET, {expiresIn: '30d'});
 }
 
+const  generateRandomOTP = (length) => {
+
+    const digits = '0123456789';
+    const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+  
+    const allCharacters = digits + uppercaseLetters + lowercaseLetters;
+  
+    let OTP = '';
+  
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * allCharacters.length);
+      OTP += allCharacters.charAt(randomIndex);
+    }
+  
+    return OTP;
+}
 
 module.exports = {
     loginController, 
@@ -366,6 +373,5 @@ module.exports = {
     getProfileController,
     editProfileController,
     forgotPasswordController,
-    verifyIdAndTokenController,
     resetPasswordController
 };
