@@ -1,4 +1,5 @@
 import p_1 from "../assets/registration-images/p_1.jpg";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { useState, useEffect } from "react";

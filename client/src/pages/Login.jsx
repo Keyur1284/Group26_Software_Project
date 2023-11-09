@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import {message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { loginEmployee, loginManager, reset } from "../features/auth/authSlice";
 import { Loading } from "../components/Loading";
 
