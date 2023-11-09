@@ -274,12 +274,13 @@ export const EditProfile = () => {
                 </div>
 
                 <div className="d-flex justify-content-end mt-2">
-                  <button className="btn btn-danger rounded-4 my-button m-2 fs-4">
+                  <button className="btn btn-danger rounded-4 my-button m-2 fs-4" onClick={() => navigate('/profile')}>
                     Cancel
                   </button>
                   <button
                     type="submit"
                     className="btn btn-primary rounded-4 my-button m-2 fs-4"
+                    disabled={!formik.isValid}
                   >
                     Save
                   </button>
