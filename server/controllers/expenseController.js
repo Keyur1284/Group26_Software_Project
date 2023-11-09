@@ -260,7 +260,7 @@ const getExpenseByIdController = asyncHandler(async (req, res) => {
 const getExpenseManagerByFilterController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    let { startDate, endDate, filter, category, employeeId } = req.body;
+    let { startDate, endDate, filter, category, employeeId, status } = req.body;
     
     startDate = new Date(startDate);
     tempEndDate = new Date(endDate);
@@ -296,7 +296,8 @@ const getExpenseManagerByFilterController = asyncHandler(async (req, res) => {
         project_id,
         category: category == "all" ? { $ne: null } : category,
         date: filter == "all" ? { $ne: null } : filter == "custom" ? { $gte: startDate, $lt: endDate } : { $gte: istDate.setDate(istDate.getDate() - Number(filter)) },
-        employee_id : employeeId == "all" ? { $ne: null } : employeeId
+        employee_id : employeeId == "all" ? { $ne: null } : employeeId,
+        status: status == "all" ? { $ne: null } : status
 
     }).populate('employee_id', 'firstName lastName').sort({ createdAt: -1});
 
@@ -311,7 +312,7 @@ const getExpenseEmployeeByFilterController = asyncHandler(async (req, res) => {
 
     const employee_id = req.employee._id;
     const project_id = req.params.project_id;
-    let { startDate, endDate, filter, category } = req.body;
+    let { startDate, endDate, filter, category, status } = req.body;
 
     startDate = new Date(startDate);
     tempEndDate = new Date(endDate);
@@ -347,7 +348,8 @@ const getExpenseEmployeeByFilterController = asyncHandler(async (req, res) => {
         employee_id,
         project_id,
         category: category == "all" ? { $ne: null } : category,
-        date: filter == "all" ? { $ne: null } : filter == "custom" ? { $gte: startDate, $lt: endDate } : { $gte: istDate.setDate(istDate.getDate() - Number(filter)) }
+        date: filter == "all" ? { $ne: null } : filter == "custom" ? { $gte: startDate, $lt: endDate } : { $gte: istDate.setDate(istDate.getDate() - Number(filter)) },
+        status: status == "all" ? { $ne: null } : status
 
     }).populate('employee_id', 'firstName lastName').sort({ createdAt: -1 });
 
@@ -363,16 +365,44 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
     const manager_id = req.manager._id;
     const manager = await Manager.findById(manager_id);
     const expense_id = req.params.expense_id;
-    const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Approved' }, { new: true });
-    const project_id = expense.project_id;
+
+    const currentExpense = await Expense.findById(expense_id);
+    const project_id = currentExpense.project_id;
     const project = await Project.findById(project_id);
 
+    const expenses = await Expense.find({ project_id, status: 'Approved' });
+    let totalMoneySpent = expenses.reduce((total, expense) => total + expense.amount, 0);
+    let totalBudget = project.budget;
+
+    if (totalMoneySpent + currentExpense.amount > totalBudget) {
+        res.status(400)
+        // res.json({success: false, message: 'Total budget exceeded, cannot approve this expense'});
+        throw new Error('Total budget exceeded, cannot approve this expense. Please update the budget if required.');
+    }
+
+    totalMoneySpent += currentExpense.amount;
+
+    const percentageUsed = (totalMoneySpent / totalBudget) * 100;
+    let alertLimit = project.alertLimit;
+
+    if (percentageUsed >= alertLimit) {
+
+        const notification = await managerNotification.create({
+            manager_id: manager_id,
+            project_id: project_id,
+            message: `Your project ${project.name} has reached ${alertLimit}% of the budget. Please update the budget if required.`
+        });
+    }
+
+    
+    const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Approved' }, { new: true });
+    
     if (expense) {
 
         const notification = await employeeNotification.create({
             employee_id: expense.employee_id,
             expense_id: expense._id,
-            project_id: expense.project_id,
+            project_id: project_id,
             message: `${manager.firstName + " " + manager.lastName} has accepted the expense request in ${project.name}`
         });
 
