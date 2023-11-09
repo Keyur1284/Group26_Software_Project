@@ -135,10 +135,46 @@ export const forgotPasswordEmployee = createAsyncThunk('/auth/forgotPasswordEmpl
     }
 })
 
+export const forgotPasswordManager = createAsyncThunk('/auth/forgotPasswordManager', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.forgotPasswordManager(userData);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
 export const resetPasswordEmployee = createAsyncThunk('/auth/resetPasswordEmployee', async (userData, thunkAPI) => {
 
     try {
         const response = await authService.resetPasswordEmployee(userData);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+export const resetPasswordManager = createAsyncThunk('/auth/resetPasswordManager', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.resetPasswordManager(userData);
         return response;
     }
 
@@ -315,6 +351,22 @@ const authSlice = createSlice({
                 state.serverErr = action.error?.message;
             })
 
+            .addCase(forgotPasswordManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(forgotPasswordManager.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+
+            .addCase(forgotPasswordManager.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message
+                state.serverErr = action.error?.message;
+            })
+
             .addCase(resetPasswordEmployee.pending, (state) => {
                 state.isLoading = true;
             })
@@ -325,6 +377,22 @@ const authSlice = createSlice({
             })
 
             .addCase(resetPasswordEmployee.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(resetPasswordManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(resetPasswordManager.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+
+            .addCase(resetPasswordManager.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message

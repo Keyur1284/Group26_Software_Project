@@ -88,6 +88,19 @@ const forgotPasswordEmployee = async (userData) => {
 }
 
 
+const forgotPasswordManager = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const response = await axios.post(`${baseURL}/managers/forgot-password`, userData, config);
+    return response.data;
+}
+
+
 const resetPasswordEmployee = async (userData) => {
 
     const config = {
@@ -99,6 +112,21 @@ const resetPasswordEmployee = async (userData) => {
     const { resetId } = userData;
 
     const response = await axios.post(`${baseURL}/employees/reset-password/${resetId}`, userData, config);
+    return response.data;
+}
+
+
+const resetPasswordManager = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const { resetId } = userData;
+
+    const response = await axios.post(`${baseURL}/managers/reset-password/${resetId}`, userData, config);
     return response.data;
 }
 
@@ -162,7 +190,9 @@ export const authService = {
   loginEmployee,
   loginManager,
   forgotPasswordEmployee,
+  forgotPasswordManager,
   resetPasswordEmployee,
+  resetPasswordManager,
   getEmployeeProfile,
   editEmployeeProfile,
   getManagerProfile,
