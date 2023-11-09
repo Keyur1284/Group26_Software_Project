@@ -20,6 +20,7 @@ export const Expense = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedEmployee, setSelectedEmployee] = useState("all");
 
   const handleDateOptionChange = (event) => {
     const newDateOption = event.target.value;
@@ -53,7 +54,6 @@ export const Expense = () => {
     setSelectedEmployee(newEmployee);
   };
 
-  const [selectedEmployee, setSelectedEmployee] = useState("all");
   const { user } = useSelector((state) => state.auth);
   const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
 
@@ -366,27 +366,7 @@ export const Expense = () => {
                   </div>
                 )}
 
-                <div className="d-flex align-items-center" style={{ marginLeft: "0px" }}>
-                  <select
-                    value={selectedEmployee}
-                    onChange={handleEmployeeChange}
-                    className="form-select form-select-lg rounded-pill"
-                    style={{
-                      backgroundColor: "white",
-                      color: "#000000",
-                      cursor: "pointer",
-                      }}
-                    >
-                      <option value="all">All Employees</option>
-                        {empName.map((employee) => (
-                          <option key={employee} value={employee}>
-                            {employee}
-                      </option>
-                      ))}
-                    </select>
-                  </div>
-
-                <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
+                <div className="d-flex align-items-center">
                   <select
                     value={selectedCategory}
                     onChange={handleCategoryChange}
@@ -421,6 +401,29 @@ export const Expense = () => {
                     />
                   </div>
                 )}
+
+
+                <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
+                  <select
+                    value={selectedEmployee}
+                    onChange={handleEmployeeChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#000000",
+                      cursor: "pointer",
+                      }}
+                    >
+                      <option value="all">All Employees</option>
+                        {empName.map((employee) => (
+                          <option key={employee} value={employee}>
+                            {employee}
+                      </option>
+                      ))}
+                    </select>
+                  </div>
+
+
               </div>
             </div>
             {expenses?.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
