@@ -67,6 +67,49 @@ const createProjectController = asyncHandler(async (req, res) => {
     }
 })
 
+const editProjectController = asyncHandler(async (req, res) => {
+
+    const {name, description, budget, alertLimit} = req.body;
+
+    if (!name || !budget || !alertLimit)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Please fill all the fields'});
+        throw new Error('Please fill all the fields');
+    }
+
+    if (budget <= 0)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Budget must be greater than 0'});
+        throw new Error('Budget must be greater than 0');
+    }
+
+    if (alertLimit <= 0 || alertLimit >= 100)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Alert limit must be greater than 0 and less than 100'});
+        throw new Error('Alert limit must be greater than 0 and less than 100');
+    }
+
+    const project_id = req.params.project_id;
+    const updatedProject = await Project.findByIdAndUpdate(project_id, req.body, {new: true});
+
+    if (updatedProject)
+    {
+        res.status(200).json({
+            success: true,
+            updatedProject
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
+    }
+});
 
 const findEmployeesController = asyncHandler(async (req, res) => {
 
@@ -170,8 +213,8 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
 
 const getMembersController = asyncHandler(async (req, res) => {
     
-    const projectId = req.params.projectId;
-    const project = await Project.findById(projectId).populate('employees');
+    const project_id = req.params.project_id;
+    const project = await Project.findById(project_id).populate('employees');
     const employees = project.employees;
     const manager = await Manager.findById(project.manager_id);
 
@@ -212,6 +255,7 @@ const getMembersController = asyncHandler(async (req, res) => {
 module.exports = {
     findEmployeesController, 
     createProjectController, 
+    editProjectController,
     getProjectsEmployeeController,
     getProjectsManagerController,
     getMembersController
