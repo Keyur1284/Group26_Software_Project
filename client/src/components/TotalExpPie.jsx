@@ -6,7 +6,7 @@ export const TotalExpPie = () => {
   const { totalMoneySpent, project } = useSelector(state => state.statistic);
 
   const optionsDoughnut = {
-    labels: ["Used", "Unused"],
+    labels: ["Used Budget", "Remaining Budget"],
     responsive: [{
       options: {
         chart: {
@@ -29,12 +29,12 @@ export const TotalExpPie = () => {
   const seriesDoughnut = [totalMoneySpent, project?.budget - totalMoneySpent];
 
   return (
-    <div className="mt-5 d-flex flex-row justify-content-end me-5">
+    <div className="mt-4 d-flex flex-row justify-content-center">
       <Chart
         options={optionsDoughnut}
         series={seriesDoughnut}
         type="donut"
-        width="350"
+        width="420"
       />
     </div>
   );

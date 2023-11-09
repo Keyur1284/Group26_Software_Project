@@ -6,9 +6,6 @@ export const EmpDistributionPie = ({ size, labelcolor, justifycontent }) => {
 
   const { employeeWiseExpenseArray } = useSelector(state => state.statistic);
 
-  const labels = employeeWiseExpenseArray?.map((employee) => employee.employeeName);
-
-
   const color_palette = ["#64B5F6", "#2196F3", "#1976D2", "#0D47A1",  //blue
     "#E0AAFF", "#C77DFF", "#9D4EDD", "#5A189A", "#310055", //purple
     "#FFE0E9", "#FF9EBB", "#E05780", "#8A2846", "#522E38", //pink
@@ -16,7 +13,7 @@ export const EmpDistributionPie = ({ size, labelcolor, justifycontent }) => {
   ]
  
   const optionsDoughnut = {
-    labels: labels,
+    labels: employeeWiseExpenseArray?.map((employee) => `${employee.employeeName} (${((employee.employeeTotalMoneySpent / employeeWiseExpenseArray.reduce((acc, curr) => acc + curr.employeeTotalMoneySpent, 0)) * 100).toFixed(2)}%)`),
     responsive: [{
       options: {
         chart: {
