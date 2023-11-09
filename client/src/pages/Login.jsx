@@ -39,22 +39,6 @@ export const Login = () => {
   const {isSuccess, isError, isLoading, appErr, serverErr, user} = useSelector(state => state.auth);
 
   useEffect(() => {
-    
-    const handleBeforeUnload = (e) => {
-        const confirmationMessage = "Are you sure you want to leave? Your changes may not be saved.";
-        e.returnValue = confirmationMessage;
-        return confirmationMessage;
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-
-  }, []);
-
-  useEffect(() => {
 
     if (isSuccess && user)
     {
