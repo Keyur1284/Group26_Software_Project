@@ -1,6 +1,8 @@
 const Manager = require('../models/managerModel');
 const Employee = require('../models/employeeModel');
 const Project = require('../models/projectModel');
+const Expense = require('../models/expenseModel');
+const ManagerNotification = require('../models/managerNotificationModel');
 const asyncHandler = require('express-async-handler');
 
 
@@ -93,7 +95,29 @@ const editProjectController = asyncHandler(async (req, res) => {
     }
 
     const project_id = req.params.project_id;
+    const project = await Project.findById(project_id);
+    const expenses = await Expense.find({project_id, status: 'Approved'});
+    const totalMoneySpent = expenses.reduce((total, expense) => total + expense.amount, 0);
+
+    if (totalMoneySpent > budget)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Budget cannot be less than the total money spent'});
+        throw new Error('Budget cannot be less than the total money spent');
+    }
+
     const updatedProject = await Project.findByIdAndUpdate(project_id, req.body, {new: true});
+
+    const usedPercentage = (totalMoneySpent / budget) * 100;
+
+    if (usedPercentage >= alertLimit)
+    {
+        const notification = await ManagerNotification.create({
+            manager_id: req.manager._id,
+            project_id,
+            message: `Your project ${project.name} has reached ${alertLimit}% of the budget. Please update the budget if required.`
+        });
+    }
 
     if (updatedProject)
     {
