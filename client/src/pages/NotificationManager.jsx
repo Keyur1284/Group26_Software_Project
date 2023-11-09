@@ -156,7 +156,7 @@ export const NotificationManager = () => {
                 )}
                 {!notification?.expense_id && notification?.project_id?._id && (
                   <Link
-                    to={`/projects/${notification?.project_id?._id}/announcements`}
+                    to={`/projects/${notification?.project_id?._id}/dashboard`}
                     style={{ textDecoration: "none", color: "white" }}
                   >
                     <button
