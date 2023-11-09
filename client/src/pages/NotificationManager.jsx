@@ -103,7 +103,6 @@ export const NotificationManager = () => {
             className="card"
             style={{
               margin: "10px",
-              height: "17vh",
               borderRadius: "20px",
               background:
                 "linear-gradient(180deg, #5B89C8 0%, rgba(255, 255, 255, 0.00) 70%)",
@@ -111,7 +110,7 @@ export const NotificationManager = () => {
             }}
           >
             <div className="card-body">
-              <h3 className="card-title px-4">
+              <h3 className="card-title px-4 w-75">
                 <CircleRoundedIcon sx={{ color: "#013E8F" }} />
                 <span style={{ marginLeft: 17 }}>{notification?.message}</span>
               </h3>
@@ -141,17 +140,33 @@ export const NotificationManager = () => {
               >
                 {notification?.expense_id?.name && (
                   <Link
-                    to={`/projects/${notification?.project_id._id}/expenses/${notification?.expense_id?._id}`}
+                    to={`/projects/${notification?.project_id?._id}/expenses/${notification?.expense_id?._id}`}
                     style={{ textDecoration: "none", color: "white" }}
                   >
                     <button
-                      className="btn text-white"
+                      className="btn text-white mt-2"
                       style={{
                         borderRadius: "25px",
                         backgroundColor: "#013E8F",
                       }}
                     >
                       <h5> {notification?.expense_id?.name}</h5>
+                    </button>
+                  </Link>
+                )}
+                {!notification?.expense_id && notification?.project_id?._id && (
+                  <Link
+                    to={`/projects/${notification?.project_id?._id}/announcements`}
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    <button
+                      className="btn text-white mt-2"
+                      style={{
+                        borderRadius: "25px",
+                        backgroundColor: "#013E8F",
+                      }}
+                    >
+                      <h5> View Project </h5>
                     </button>
                   </Link>
                 )}
