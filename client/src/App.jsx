@@ -10,6 +10,7 @@ import { Expense } from "./pages/Expense";
 import { AddExpense } from "./pages/AddExpense";
 import { Project } from "./pages/Project";
 import { AddProject } from "./pages/AddProject";
+import { EditProject } from "./pages/EditProject";
 import { EditExpense } from "./pages/EditExpense";
 import { Er401 } from "./pages/Er401";
 import { Er403 } from "./pages/Er403";
@@ -35,7 +36,7 @@ function App() {
     <>
       <Router>
         {user ? (
-          user.role == "employee" ? (
+          user?.role == "employee" ? (
             <>
               <Header />
               <Routes>
@@ -74,6 +75,7 @@ function App() {
                 <Route path="/projects/:projectId/expenses" element={<Expense />} />
                 <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />
+                <Route path="/projects/:projectId/edit-project" element={<EditProject />} />
                 <Route path='/profile' element={<MyProfile />} />
                 <Route path='/edit-profile' element={<EditProfile />} />
                 <Route path='/projects/:projectId/invite-employee' element={<EmployeeSearch />} />
