@@ -40,7 +40,7 @@ export const ProjectDashboard = () => {
 
     }, [dispatch, isSuccess, isError])
 
-    if (isLoading) {
+    if (isLoading && !project) {
 
         return (
             <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>
