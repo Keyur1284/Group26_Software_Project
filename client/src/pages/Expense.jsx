@@ -48,6 +48,12 @@ export const Expense = () => {
     setSelectedCategory(newCategory);
   };
 
+  const handleEmployeeChange = (event) => {
+    const newEmployee = event.target.value;
+    setSelectedEmployee(newEmployee);
+  };
+
+  const [selectedEmployee, setSelectedEmployee] = useState("all");
   const { user } = useSelector((state) => state.auth);
   const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
 
@@ -147,6 +153,11 @@ export const Expense = () => {
 
   const categoryOptions = ["Accommodation", "Advertising", "Entertainment", "Food", "Gifts", "Miscellaneous", "OfficeSupplies", "Technology", "Travel", "Utilities"]
   
+  const empName = [
+    "Employee 1",
+    "Employee 2",
+  ];
+
   if (user?.role == "employee")
   {
     return (
@@ -354,6 +365,27 @@ export const Expense = () => {
                     />
                   </div>
                 )}
+
+                <div className="d-flex align-items-center" style={{ marginLeft: "0px" }}>
+                  <select
+                    value={selectedEmployee}
+                    onChange={handleEmployeeChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#000000",
+                      cursor: "pointer",
+                      }}
+                    >
+                      <option value="all">All Employees</option>
+                        {empName.map((employee) => (
+                          <option key={employee} value={employee}>
+                            {employee}
+                      </option>
+                      ))}
+                    </select>
+                  </div>
+
                 <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
                   <select
                     value={selectedCategory}
