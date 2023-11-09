@@ -2,37 +2,101 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import ep from "../assets/edit-project/ep.jpg";
-
+import { Hamburger4 } from "../components/Hamburger_4";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { editProject, reset } from "../features/project/projectSlice";
+import { message } from "antd";
+import { Loading } from "../components/Loading";
+import { useEffect } from "react";
 
 export const EditProject = () => {
 
+  const { projectId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { projects, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.project);
+
+  const project = projects?.find((project) => project._id === projectId);
+
   const formSchema = Yup.object({
-    name: Yup.string().required("Project Name is required").max(30, "Project Name must not exceed 30 characters"),
+    name: Yup.string().required("Project Name is required").max(30, "Project Name must not exceed 30 characters").min(1).trim(),
     budget: Yup.number().required("Project Amount is required"),
     alertLimit: Yup.number().required("Alert Limit is required"),
-    description: Yup.string().max(400, "Project Description must not exceed 400 characters")
+    description: Yup.string().max(400, "Project Description must not exceed 400 characters").min(1).trim(),
   });
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      description: "",
-      budget: "",
-      alertLimit: "",
+      name: project?.name,
+      description: project?.description,
+      budget: project?.budget,
+      alertLimit: project?.alertLimit
     },
     onSubmit: (values) => {
-      console.log(values);
+      const data = {
+        projectId: projectId,
+        name: values.name,
+        description: values.description,
+        budget: values.budget,
+        alertLimit: values.alertLimit
+      };
+      
+      dispatch(editProject(data));
     },
     validationSchema: formSchema,
   });
 
+  useEffect(() => {
+    
+    const handleBeforeUnload = (e) => {
+        const confirmationMessage = "Are you sure you want to leave? Your changes may not be saved.";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+
+  }, []);
+
+  useEffect(() => {
+
+    if (isSuccess)
+    {
+      message.success("Project edited successfully!");
+      navigate(`/projects/${projectId}/announcements`);
+      dispatch(reset());
+    }
+
+    if (isError)
+    {
+      message.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [isSuccess, isError, dispatch]);
+
+  if (isLoading)
+  {
+    return (
+      <Loading />
+    )
+  }
+
   return (
     <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>
     <div className="row" style={{ backgroundImage: `url(${mainbg})` }}>
-        <div className="col-md-3"></div>
+        <div className="col-md-3">
 
+          <Hamburger4 />
+
+        </div>
         <div
-          className="col-md-9 mt-3 mb-3 rounded-4"
+          className="col-md-9 mb-3 rounded-4"
           style={{backgroundImage: `url(${ep})`,backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}
         >
           <div className="row px-5">
@@ -53,7 +117,7 @@ export const EditProject = () => {
                   <div className="mb-3 mt-4">
                     <label
                       className="form-label text-dark"
-                      style={{ fontSize: "25px",fontWeight:"bold" }}
+                      style={{ fontSize: "20px", fontWeight:"600" }}
                     >
                       Project Name
                     </label>
@@ -67,7 +131,6 @@ export const EditProject = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         style={{
-                          fontSize: "25px",
                           background:
                             "linear-gradient(-90deg, rgb(45, 145, 230) 0%, rgba(81.53, 129.63, 193.46, 0) 90%)",
                         }}
@@ -83,7 +146,7 @@ export const EditProject = () => {
                   <div className="mb-3 mt-4">
                     <label
                       className="form-label text-dark"
-                      style={{ fontSize: "25px",fontWeight:"bold" }}
+                      style={{ fontSize: "20px",fontWeight:"600" }}
                     >
                       Budget
                     </label>
@@ -97,7 +160,6 @@ export const EditProject = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         style={{
-                          fontSize: "25px",
                           background:
                             "linear-gradient(90deg, rgb(45, 145, 230) 0%, rgba(81.53, 129.63, 193.46, 0) 90%)",
                         }}
@@ -113,7 +175,7 @@ export const EditProject = () => {
                   <div className="mb-3 mt-4">
                     <label
                       className="form-label text-dark"
-                      style={{ fontSize: "25px",fontWeight:"bold" }}
+                      style={{ fontSize: "20px",fontWeight:"600" }}
                     >
                       Alert Limit
                     </label>
@@ -127,7 +189,6 @@ export const EditProject = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         style={{
-                          fontSize: "25px",
                           background:
                             "linear-gradient(-90deg, rgb(45, 145, 230) 0%, rgba(81.53, 129.63, 193.46, 0) 90%)",
                         }}
@@ -143,7 +204,7 @@ export const EditProject = () => {
                   <div className="mb-3 mt-4">
                     <label
                       className="form-label text-dark font"
-                      style={{ fontSize: "25px",fontWeight:"bold" }}
+                      style={{ fontSize: "20px",fontWeight:"600" }}
                     >
                       Description
                     </label>
@@ -157,8 +218,6 @@ export const EditProject = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         style={{
-                          minHeight: "200px",
-                          fontSize: "25px",
                           background:
                             "linear-gradient(90deg, rgb(45, 145, 230) 0%, rgba(81.53, 129.63, 193.46, 0) 90%)",
                         }}
@@ -169,10 +228,10 @@ export const EditProject = () => {
                     <button
                       type="button"
                       className="btn col-3 btn-danger rounded-pill shadow-lg"
-                      onClick={() => formik.resetForm()}
+                      onClick={() => navigate(`/projects/${projectId}/announcements`)}
                       style={{ fontSize: "25px" }}
                     >
-                      Clear
+                      Cancel
                     </button>
 
                     <button
