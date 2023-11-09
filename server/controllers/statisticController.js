@@ -23,6 +23,10 @@ const getManagerDashboardController = asyncHandler(async (req, res) => {
         const employee = project.employees[i];
         const employeeExpenses = await Expense.find({project_id, employee_id: employee._id, status: 'Approved'});
         const employeeTotalMoneySpent = employeeExpenses.reduce((total, expense) => total + expense.amount, 0);
+
+        if (employeeTotalMoneySpent == 0)
+            continue;
+
         employeeWiseExpenseArray.push({
             employee_id: employee._id,
             employeeName: employee.firstName + ' ' + employee.lastName,
@@ -104,6 +108,10 @@ const getManagerAnalyticsController = asyncHandler(async (req, res) => {
         const employee = project.employees[i];
         const employeeExpenses = await Expense.find({project_id, employee_id: employee._id, status: 'Approved'});
         const employeeTotalMoneySpent = employeeExpenses.reduce((total, expense) => total + expense.amount, 0);
+
+        if (employeeTotalMoneySpent == 0)
+            continue;
+
         employeeWiseExpenseArray.push({
             employee_id: employee._id,
             employeeName: employee.firstName + ' ' + employee.lastName,
