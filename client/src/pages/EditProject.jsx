@@ -15,9 +15,8 @@ export const EditProject = () => {
   const { projectId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { projects, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.project);
-
-  const project = projects?.find((project) => project._id === projectId);
+  const { isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.project);
+  const { project } = useSelector((state) => state.announcement);
 
   const formSchema = Yup.object({
     name: Yup.string().required("Project Name is required").max(30, "Project Name must not exceed 30 characters").min(1).trim(),
