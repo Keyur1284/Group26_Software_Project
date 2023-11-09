@@ -9,6 +9,7 @@ import {
 import { getExpenseContribution } from "../features/statistic/statisticSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { message } from "antd";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { PortionInTotalPie } from "../components/PortionInTotalPie";
 import bg1 from "../assets/expense-details/bg1.jpg";
@@ -33,7 +34,7 @@ import Skeleton from "@mui/material/Skeleton";
 export const ExpenseDetails = () => {
   const { expenseId } = useParams();
   const dispatch = useDispatch();
-  const { expenseById, isSuccess, isError, isLoading } = useSelector(
+  const { expenseById, isSuccess, isError, isLoading, appErr, serverErr } = useSelector(
     (state) => state.expense
   );
   const { user } = useSelector((state) => state.auth);
@@ -47,7 +48,13 @@ export const ExpenseDetails = () => {
     if (isSuccess || isError) {
       dispatch(reset());
     }
-  }, [isSuccess, isError, dispatch]);
+
+    if (isError)
+    {
+      message.error(appErr || serverErr);
+    }
+
+  }, [isSuccess, isError, dispatch, appErr, serverErr]);
 
 const categoryIcons = {
   Travel: <FlightTakeoffIcon style={{ color: "#fff", fontSize: 35 }}/>,
