@@ -199,7 +199,7 @@ export const Expense = () => {
                       marginRight: "10px"
                     }}
                   >
-                    <option value="all">None</option>
+                    <option value="all">All Expenses</option>
                     <option value="7">Last 7 days</option>
                     <option value="30">Last 30 days</option>
                     <option value="custom">Custom Date</option>
@@ -244,7 +244,7 @@ export const Expense = () => {
                       cursor: "pointer",
                     }}>
 
-                    <option value="all">None</option>
+                    <option value="all">All Categories</option>
                     {categoryOptions.map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -331,7 +331,7 @@ export const Expense = () => {
                       marginRight: "10px"
                     }}
                   >
-                    <option value="all">None</option>
+                    <option value="all">All Expenses</option>
                     <option value="7">Last 7 days</option>
                     <option value="30">Last 30 days</option>
                     <option value="custom">Custom Date</option>
@@ -377,7 +377,7 @@ export const Expense = () => {
                       cursor: "pointer",
                     }}>
 
-                    <option value="all">None</option>
+                    <option value="all">All Categories</option>
                     {categoryOptions.map((category) => (
                       <option key={category} value={category}>
                         {category}
