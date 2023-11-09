@@ -394,6 +394,14 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
         });
     }
 
+    if (totalMoneySpent == totalBudget) {
+
+        const notification = await managerNotification.create({
+            manager_id: manager_id,
+            project_id: project_id,
+            message: `Your project ${project.name} has exhausted the budget. Please update the budget if required.`
+        });
+    }
     
     const expense = await Expense.findByIdAndUpdate(expense_id, { status: 'Approved' }, { new: true });
     
