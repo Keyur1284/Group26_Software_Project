@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { resetPasswordEmployee, reset } from "../features/auth/authSlice";
+import { resetPasswordEmployee, resetPasswordManager, reset } from "../features/auth/authSlice";
 
 export const ResetPassword = () => {
 
@@ -43,9 +43,14 @@ export const ResetPassword = () => {
     },
     onSubmit: (values) => {
         
+      values.resetId = resetId;
+      
       if (values.userType === "employee") {
-        values.resetId = resetId;
         dispatch(resetPasswordEmployee(values));
+      }
+
+      else if (values.userType === "manager") {
+        dispatch(resetPasswordManager(values));
       }
     },
     validationSchema: formSchema,

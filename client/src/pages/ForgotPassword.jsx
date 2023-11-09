@@ -5,7 +5,7 @@ import { Loading } from "../components/Loading";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { forgotPasswordEmployee, reset } from "../features/auth/authSlice";
+import { forgotPasswordEmployee, forgotPasswordManager, reset } from "../features/auth/authSlice";
 
 export const ForgotPassword = () => {
 
@@ -30,6 +30,10 @@ export const ForgotPassword = () => {
         dispatch(forgotPasswordEmployee(values));
       }
       
+      else if (values.userType === "manager") {
+        dispatch(forgotPasswordManager(values));
+      }
+
     },
     validationSchema: formSchema,
   });
