@@ -260,7 +260,7 @@ const getExpenseByIdController = asyncHandler(async (req, res) => {
 const getExpenseManagerByFilterController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    let { startDate, endDate, filter, category } = req.body;
+    let { startDate, endDate, filter, category, employeeId } = req.body;
     
     startDate = new Date(startDate);
     tempEndDate = new Date(endDate);
@@ -295,7 +295,8 @@ const getExpenseManagerByFilterController = asyncHandler(async (req, res) => {
         
         project_id,
         category: category == "all" ? { $ne: null } : category,
-        date: filter == "all" ? { $ne: null } : filter == "custom" ? { $gte: startDate, $lt: endDate } : { $gte: istDate.setDate(istDate.getDate() - Number(filter)) }
+        date: filter == "all" ? { $ne: null } : filter == "custom" ? { $gte: startDate, $lt: endDate } : { $gte: istDate.setDate(istDate.getDate() - Number(filter)) },
+        employee_id : employeeId == "all" ? { $ne: null } : employeeId
 
     }).populate('employee_id', 'firstName lastName').sort({ createdAt: -1});
 
