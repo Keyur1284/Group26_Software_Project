@@ -1,11 +1,6 @@
 import { Hamburger4 } from "../components/Hamburger_4";
 import { useParams } from "react-router-dom";
-import {
-  getExpenseById,
-  acceptExpense,
-  rejectExpense,
-  reset,
-} from "../features/expense/expenseSlice";
+import { getExpenseById, acceptExpense, rejectExpense, reset} from "../features/expense/expenseSlice";
 import { getExpenseContribution } from "../features/statistic/statisticSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -28,6 +23,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import CategoryIcon from '@mui/icons-material/Category';
 import PersonIcon from '@mui/icons-material/Person';
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import Skeleton from "@mui/material/Skeleton";
 
 
@@ -35,6 +31,7 @@ export const ExpenseDetails = () => {
   const { expenseId } = useParams();
   const dispatch = useDispatch();
   const { expenseById, isSuccess, isError, isLoading, appErr, serverErr } = useSelector((state) => state.expense);
+  const { totalMoneySpent, project, isLoading: statsLoading } = useSelector(state => state.statistic);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -70,7 +67,7 @@ const categoryIcons = {
   Miscellaneous: <MoreVertIcon style={{ color: "#fff", fontSize: 35 }} />
 };
 
-  if (isLoading) {
+  if (isLoading || statsLoading) {
     return (
       <>
         <div
@@ -133,15 +130,26 @@ const categoryIcons = {
                       height="6vh"
                     />
                   </div>
-                  <div className="d-flex w-100">
+                  <div className="d-flex justify-content-between w-100">
+                  <div className="d-flex w-50">
                     <Skeleton
                       sx={{ backgroundColor: "white", opacity: 0.2 }}
                       variant="rounded"
                       animation="wave"
-                      width="40%"
-                      height="4vh"
+                      width="80%"
+                      height="6vh"
                     />
                   </div>
+                  <div className="d-flex w-50 justify-content-end rounded align-items-center">
+                    <Skeleton
+                      sx={{ backgroundColor: "white", opacity: 0.2 }}
+                      variant="rounded"
+                      animation="wave"
+                      width="90%"
+                      height="6vh"
+                    />
+                  </div>
+               </div>
                 </div>
               </div>
               <div className="row gap-5">
@@ -343,15 +351,28 @@ const categoryIcons = {
                   {expenseById?.amount}
                 </h2>
               </div>
-              <div className="d-flex">
-              <PersonIcon style={{ color: "#fff", fontSize: 40 }} /> 
-                <h2
-                  className="rounded ms-2 px-2"
-                  style={{ backgroundColor: "#fff" }}
-                >
-                  {expenseById?.employee_id?.firstName}{" "}
-                  {expenseById?.employee_id?.lastName}
-                </h2>
+              <div className="d-flex justify-content-between w-100">
+                  <div className="d-flex">
+                <PersonIcon style={{ color: "#fff", fontSize: 40 }} /> 
+                  <h2
+                    className="rounded ms-2 px-2"
+                    style={{ backgroundColor: "#fff" }}
+                  >
+                    {expenseById?.employee_id?.firstName}{" "}
+                    {expenseById?.employee_id?.lastName}
+                  </h2>
+                  </div>
+                  <div className="d-flex bg-white rounded align-items-center">
+                  <AccountBalanceWalletIcon style={{ fontSize: 40 }} /> 
+                  <h2
+                    className="rounded ms-2 px-2"
+                    style={{ backgroundColor: "#fff" }}
+                  >
+                    Remaining Budget :
+                    &#8377;
+                    {project?.budget - totalMoneySpent} 
+                  </h2>
+                  </div>
               </div>
             </div>
           </div>
