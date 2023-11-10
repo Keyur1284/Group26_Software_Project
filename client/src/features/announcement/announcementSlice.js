@@ -6,6 +6,7 @@ const initialState = {
     isLoading: false,
     isSuccess: false,
     message: "",
+    result: "",
     appErr: undefined,
     serverErr: undefined,
     announcements: [],
@@ -56,6 +57,7 @@ const announcementSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = false;
             state.message = "";
+            state.result = "";
             state.appErr = "";
             state.serverErr = "";
         },
@@ -76,7 +78,7 @@ const announcementSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.announcements = [action.payload.announcement, ...state.announcements];
-                state.message = action.payload.message;
+                state.result = action.payload.message;
             })
 
             .addCase(createAnnouncement.rejected, (state, action) => {
