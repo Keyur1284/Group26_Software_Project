@@ -411,7 +411,7 @@ const acceptExpenseController = asyncHandler(async (req, res) => {
             employee_id: expense.employee_id,
             expense_id: expense._id,
             project_id: project_id,
-            message: `${manager.firstName + " " + manager.lastName} has accepted the expense request in ${project.name}`
+            message: `${manager.firstName + " " + manager.lastName} has approved your expense request in ${project.name}`
         });
 
         const deletedNotification = await managerNotification.findOneAndDelete({ expense_id });
@@ -456,7 +456,7 @@ const rejectExpenseController = asyncHandler(async (req, res) => {
             employee_id: expense.employee_id,
             expense_id: expense._id,
             project_id: expense.project_id,
-            message: `${manager.firstName + " " + manager.lastName} has rejected the expense request in ${project.name}`
+            message: `${manager.firstName + " " + manager.lastName} has rejected your expense request in ${project.name}`
         });
 
         const deletedNotification = await managerNotification.findOneAndDelete({ expense_id });
