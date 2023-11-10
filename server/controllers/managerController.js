@@ -263,6 +263,7 @@ const forgotPasswordController = asyncHandler( async (req, res) => {
 
     const otp = generateRandomOTP(8);
 
+    const deleteResetPassword = await ResetPassword.deleteMany({ manager_id: oldUser._id });
     const resetPassword = await ResetPassword.create({ otp, manager_id: oldUser._id });
 
     const link = `http://localhost:5173/reset-password/${resetPassword._id}`;
@@ -283,7 +284,7 @@ const forgotPasswordController = asyncHandler( async (req, res) => {
             <h2>Xpense Tracker Password Reset</h2>
             <p>Hello ${oldUser.firstName + " " + oldUser.lastName},</p>
             <p>We received a request to reset your password for Xpense Tracker. If you did not make this request, please ignore this email.</p>
-            <p>Use this otp to reset your password: ${otp}</p>
+            <p>Use this otp to reset your password: <strong> ${otp} </strong> </p>
             <p>To reset your password, click on the link below:</p>
             <p><a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #ffffff; text-decoration: none;">Reset Password</a></p>
             <p>If the above link doesn't work, copy and paste the following URL into your browser:</p>
