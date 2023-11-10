@@ -203,6 +203,7 @@ const statisticSlice = createSlice({
                 state.isSuccess = true;
                 state.contribution = action.payload.contribution;
                 state.totalMoneySpent = action.payload.totalMoneySpent;
+                state.project = action.payload.project;
             })
 
             .addCase(getExpenseContribution.rejected, (state, action) => {

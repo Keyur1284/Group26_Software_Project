@@ -92,7 +92,8 @@ const getExpenseContibutionController = asyncHandler(async (req, res) => {
     res.status(200).json({
         success: true,
         contribution,
-        totalMoneySpent
+        totalMoneySpent,
+        project
     });
 })
 
