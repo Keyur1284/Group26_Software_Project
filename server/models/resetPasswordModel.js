@@ -27,5 +27,5 @@ const resetPasswordSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Reset = mongoose.model('Reset', resetPasswordSchema);
-module.exports = Reset;
+const resetPassword = mongoose.model('Reset-Password', resetPasswordSchema);
+module.exports = resetPassword;
