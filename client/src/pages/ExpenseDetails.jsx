@@ -9,7 +9,7 @@ import {
 import { getExpenseContribution } from "../features/statistic/statisticSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { PortionInTotalPie } from "../components/PortionInTotalPie";
 import bg1 from "../assets/expense-details/bg1.jpg";
@@ -34,9 +34,7 @@ import Skeleton from "@mui/material/Skeleton";
 export const ExpenseDetails = () => {
   const { expenseId } = useParams();
   const dispatch = useDispatch();
-  const { expenseById, isSuccess, isError, isLoading, appErr, serverErr } = useSelector(
-    (state) => state.expense
-  );
+  const { expenseById, isSuccess, isError, isLoading, appErr, serverErr } = useSelector((state) => state.expense);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -45,16 +43,19 @@ export const ExpenseDetails = () => {
   }, [dispatch, expenseId, expenseById?.status]);
 
   useEffect(() => {
-    if (isSuccess || isError) {
+    
+    if (isSuccess) 
+    {
       dispatch(reset());
     }
 
     if (isError)
     {
-      message.error(appErr || serverErr);
+      toast.error(appErr || serverErr);
+      dispatch(reset());
     }
 
-  }, [isSuccess, isError, dispatch, appErr, serverErr]);
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
 const categoryIcons = {
   Travel: <FlightTakeoffIcon style={{ color: "#fff", fontSize: 35 }}/>,

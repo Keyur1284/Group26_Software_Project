@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { getMembers, reset } from "../features/team/teamSlice";
 
 export const TeamMembers = () => {
@@ -32,7 +32,7 @@ export const TeamMembers = () => {
 
     if (isError)
     {
-      message.error(appErr || serverErr);
+      toast.error(appErr || serverErr);
       dispatch(reset());
     }
     

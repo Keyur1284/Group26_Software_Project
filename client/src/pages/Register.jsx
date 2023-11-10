@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { useState, useEffect } from "react";
 import * as Yup from "yup";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { registerEmployee, registerManager, reset } from "../features/auth/authSlice";
 import { Loading } from "../components/Loading";
@@ -98,20 +98,24 @@ export const Register = () => {
 
   useEffect(() => {
   
-      if(user){
+      if(user)
+      {
         navigate("/");
       }
 
-      if (isSuccess) {
-        message.success("User Registered Successfully!");
+      if (isSuccess) 
+      {
+        toast.success("User Registered Successfully!");
         dispatch(reset());
         navigate("/login");
       }
   
-      if (isError) {
-        message.error(appErr || serverErr);
+      if (isError) 
+      {
+        toast.error(appErr || serverErr);
         dispatch(reset());
       }
+
   }, [dispatch, isSuccess, isError, appErr, serverErr, user])
 
   const [showPassword, setShowPassword] = useState(false);

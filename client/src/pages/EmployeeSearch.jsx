@@ -1,27 +1,15 @@
 import { useState, useEffect } from "react";
 import { Hamburger4 } from "../components/Hamburger_4";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getEmployees,
-  sendInvite,
-  reset,
-} from "../features/invite/inviteSlice";
+import { getEmployees, sendInvite, reset } from "../features/invite/inviteSlice";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { useParams } from "react-router-dom";
-import { message } from "antd";
+import { toast } from "react-toastify";
 
 export const EmployeeSearch = () => {
   const { projectId } = useParams();
   const dispatch = useDispatch();
-  const {
-    employees,
-    isSuccess,
-    result,
-    isLoading,
-    isError,
-    appErr,
-    serverErr,
-  } = useSelector((state) => state.invite);
+  const { employees, isSuccess, result, isLoading, isError, appErr, serverErr } = useSelector((state) => state.invite);
 
   const { employees: employees2 } = useSelector((state) => state.team);
 
@@ -77,14 +65,24 @@ export const EmployeeSearch = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isSuccess && result) {
-      message.success(result);
-    }
 
-    if (isSuccess || isError) {
+    if (isSuccess)
+    {
       dispatch(reset());
     }
-  }, [isSuccess, isError]);
+
+    if (isSuccess && result) 
+    {
+      toast.success(result);
+      dispatch(reset());
+    }
+
+    if (isError) 
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
 
   if (isLoading && employees?.length > 0) {

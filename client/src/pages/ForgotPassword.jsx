@@ -2,7 +2,7 @@ import ForgetPassImg3 from "../assets/ForgetPassword-images/ForgetPassImg3.jpg";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Loading } from "../components/Loading";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { forgotPasswordEmployee, forgotPasswordManager, reset } from "../features/auth/authSlice";
@@ -40,14 +40,16 @@ export const ForgotPassword = () => {
 
   useEffect(() => {
     
-    if (isSuccess) {
+    if (isSuccess) 
+    {
+      toast.success("Reset link has been sent to your email address");
       dispatch(reset());
-      message.success("Reset link has been sent to your email address");
     }
 
-    if (isError) {
+    if (isError) 
+    {
+      toast.error(appErr || serverErr);
       dispatch(reset());
-      message.error(appErr || serverErr);
     }
 
   }, [isSuccess, isError, appErr, serverErr, dispatch]);

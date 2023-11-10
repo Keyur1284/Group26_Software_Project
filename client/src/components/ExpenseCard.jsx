@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteExpense } from "../features/expense/expenseSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteExpense, reset } from "../features/expense/expenseSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlaneDeparture,
@@ -18,12 +18,15 @@ import {
   faEllipsisH
 
 } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export const ExpenseCard = (props) => {
 
   const { projectId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isSuccess, isLoading, isError, appErr, serverErr, result } = useSelector((state) => state.expense);
 
   const categoryIcons = {
     Travel: faPlaneDeparture,
@@ -44,6 +47,26 @@ export const ExpenseCard = (props) => {
   const cardColors = ["#163763", "#3452B9", "#005483", "#8E8E8E", "#3C3C3C"];
 
   const newColor = cardColors[props.ind % cardColors.length];
+
+  useEffect(() => {
+
+    if (isSuccess)
+    {
+      dispatch(reset());
+    }
+
+    if (isSuccess && result)
+    {
+      toast.success(result);
+      dispatch(reset());
+    }
+
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
   
   if(props.userType == "employee")
   {

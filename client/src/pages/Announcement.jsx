@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
 import Skeleton from '@mui/material/Skeleton';
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { createAnnouncement, getAnnouncements, reset } from "../features/announcement/announcementSlice"; 
 
 
@@ -18,7 +18,7 @@ export const Announcement = () => {
   const { projectId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { announcements, isLoading, isSuccess, isError, appErr, serverErr, projectName, managerName } = useSelector(state => state.announcement);
+  const { announcements, result, isLoading, isSuccess, isError, appErr, serverErr, projectName, managerName } = useSelector(state => state.announcement);
   const { user } = useSelector(state => state.auth);
 
   const formSchema = Yup.object({
@@ -51,18 +51,24 @@ export const Announcement = () => {
 
   useEffect(() => {
 
-    if (isSuccess) 
+    if (isSuccess)
     {
+      dispatch(reset());
+    }
+
+    if (isSuccess && result) 
+    {
+      toast.success(result);
       dispatch(reset());
     }
 
     if (isError)
     {
-      message.error(appErr || serverErr);
+      toast.error(appErr || serverErr);
       dispatch(reset());
     }
 
-  }, [dispatch, isSuccess, isError]);
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   if (isLoading && !managerName) {
     return (

@@ -6,11 +6,11 @@ import { Hamburger4 } from "../components/Hamburger_4";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getExpenseEmployee, getExpenseManager, getExpenseManagerByFilter, getExpenseEmployeeByFilter, reset } from "../features/expense/expenseSlice";
+import { getExpenseManagerByFilter, getExpenseEmployeeByFilter, reset } from "../features/expense/expenseSlice";
 import { getMembers, reset as teamReset } from "../features/team/teamSlice";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
-import { message } from "antd";
+import { toast } from "react-toastify";
 
 export const Expense = () => {
 
@@ -102,43 +102,35 @@ export const Expense = () => {
 
   }, [selectedDateOption, startDate, endDate, selectedCategory, selectedEmployee, selectedStatus, dispatch, projectId, user?.role]);
 
-  // useEffect(() => {
-
-  //   if (user.role == "employee")
-  //     dispatch(getExpenseEmployee(projectId));
-
-  //   else if (user.role == "manager")
-  //     dispatch(getExpenseManager(projectId));
-    
-  // }, [dispatch, projectId, user.role]);
-
   useEffect(() => {
 
-    if (isSuccess || isError)
+    if (isSuccess)
     {
       dispatch(reset());
     }
 
     if (isError)
     {
-      message.error(appErr || serverErr);
+      toast.error(appErr || serverErr);
+      dispatch(reset());
     }
 
-  }, [isSuccess, isError]);
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   useEffect(() => {
 
-    if (teamSuccess || teamError)
+    if (teamSuccess)
     {
       dispatch(teamReset());
     }
 
     if (teamError)
     {
-      message.error(teamAppErr || teamServerErr);
+      toast.error(teamAppErr || teamServerErr);
+      dispatch(teamReset());
     }
 
-  }, [teamSuccess, teamError]);
+  }, [dispatch, teamSuccess, teamError, teamAppErr, teamServerErr]);
 
   if (isLoading || teamLoading)
   {

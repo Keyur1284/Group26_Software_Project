@@ -8,7 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { Loading } from "../components/Loading";
 import { useEffect } from "react";
 import { editEmployeeProfile, editManagerProfile, reset } from "../features/auth/authSlice";
@@ -82,19 +82,23 @@ export const EditProfile = () => {
 
   useEffect(() => {
 
-    if (isSuccess) {
+    if (isSuccess) 
+    {
+      toast.success("Profile Updated Successfully!");
       dispatch(reset());
       navigate("/profile");
     }
 
-    if (isError) {
-      message.error(appErr || serverErr);
+    if (isError) 
+    {
+      toast.error(appErr || serverErr);
       dispatch(reset());
     }
 
-  }, [isSuccess, isError]);
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
-  if (isLoading) {
+  if (isLoading) 
+  {
     return (
       <Loading />
     )

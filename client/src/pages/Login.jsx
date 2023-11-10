@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {message} from "antd";
+import { toast } from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { loginEmployee, loginManager, reset } from "../features/auth/authSlice";
@@ -42,7 +42,7 @@ export const Login = () => {
 
     if (isSuccess && user)
     {
-      message.success("User Logged In Successfully!");
+      toast.success("User Logged In Successfully!");
       navigate("/projects");
       dispatch(reset());
     }
@@ -54,7 +54,7 @@ export const Login = () => {
 
     if(isError)
     {
-      message.error(appErr||serverErr);
+      toast.error(appErr||serverErr);
       dispatch(reset());
     }
 

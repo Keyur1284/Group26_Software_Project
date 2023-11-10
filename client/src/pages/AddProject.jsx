@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import projectImage from "../assets/addProject-images/AddProject-pic.png"; 
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createProject, reset } from "../features/project/projectSlice";
@@ -56,14 +56,14 @@ export const AddProject = () => {
 
     if (isSuccess)
     {
-      message.success("Project Created Successfully!");
+      toast.success("Project Created Successfully!");
       dispatch(reset());
       navigate('/projects')
     }
 
     if (isError)
     {
-      message.error(appErr||serverErr);
+      toast.error(appErr||serverErr);
       dispatch(reset())
     }
 

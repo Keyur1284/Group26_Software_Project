@@ -6,7 +6,7 @@ import { Hamburger4 } from "../components/Hamburger_4";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { editProject, reset } from "../features/project/projectSlice";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { Loading } from "../components/Loading";
 import { useEffect } from "react";
 
@@ -66,18 +66,18 @@ export const EditProject = () => {
 
     if (isSuccess)
     {
-      message.success("Project edited successfully!");
+      toast.success("Project edited successfully!");
       navigate(`/projects/${projectId}/announcements`);
       dispatch(reset());
     }
 
     if (isError)
     {
-      message.error(appErr || serverErr);
+      toast.error(appErr || serverErr);
       dispatch(reset());
     }
 
-  }, [isSuccess, isError, dispatch]);
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   if (isLoading)
   {

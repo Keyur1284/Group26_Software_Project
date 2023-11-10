@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordEmployee, resetPasswordManager, reset } from "../features/auth/authSlice";
 
@@ -71,15 +71,15 @@ export const ResetPassword = () => {
 
     if (isSuccess)
     {
+      toast.success("Password has been reset successfully!");
       dispatch(reset());
-      message.success("Password has been reset successfully!");
       navigate("/login");
     }
 
     if (isError)
     {
+      toast.error(appErr || serverErr);
       dispatch(reset());
-      message.error(appErr || serverErr);
     }
 
   }, [isSuccess, isError, appErr, serverErr, dispatch, navigate]);

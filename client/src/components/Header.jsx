@@ -13,7 +13,7 @@ import { clearTeam } from "../features/team/teamSlice";
 import { clearExpenses } from "../features/expense/expenseSlice";
 import { clearNotification, getEmployeeNotifications, getManagerNotifications } from "../features/notification/notificationSlice";
 import { clearStatistics } from "../features/statistic/statisticSlice";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import "../css/Homepage.css";
 
 export const Header = () => {
@@ -40,14 +40,13 @@ export const Header = () => {
       dispatch(clearNotification())
       dispatch(clearStatistics())
       await dispatch(logout())
-      message.success("User Logged Out Successfully!")
+      toast.success("User Logged Out Successfully!")
       navigate('/login')
     }
 
     catch (error)
     {
-      console.error("Logout error: ", error)
-      message.error("Logout failed")
+      toast.error(error.message)
     }
 
   }
