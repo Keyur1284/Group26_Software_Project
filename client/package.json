@@ -27,6 +27,8 @@
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.11.0",
     "formik": "^2.4.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "mdb-react-ui-kit": "^6.3.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
