@@ -95,7 +95,7 @@ export const AboutUs = () => {
                     style={{ height: "40vh", width: "25vw" }}
                   />
                   <div className="card-body py-3" style={{color:"white"}}>
-                    <h5 className="mb-0" style={{fontSize:25}}>Ayush Patel</h5>
+                    <h5 className="mb-0" style={{fontSize:25}}>Aayush Patel</h5>
                     <span>202101476</span>
                   </div>
                 </div>
