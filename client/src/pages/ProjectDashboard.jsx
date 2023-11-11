@@ -1,4 +1,4 @@
-import '../css/ProjectDashboard.css'
+import '../styles/ProjectDashboard.css'
 import bg1 from '../assets/project-dashboard/bg-1.png'
 import bg2 from '../assets/project-dashboard/bg-2.jpg'
 import bg3 from '../assets/project-dashboard/bg-3.jpg'

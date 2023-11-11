@@ -3,7 +3,7 @@ import Profile_pic from "../assets/MyProfile-img/Profile.png";
 import { Hamburger2 } from "../components/Hamburger_2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpenText, faUser, faUserEdit} from "@fortawesome/free-solid-svg-icons";
-import '../css/Profile.css';
+import '../styles/Profile.css';
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";

@@ -9,7 +9,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Skeleton from '@mui/material/Skeleton';
 import { useEffect } from 'react'
 import { getManagerAnalytics, getEmployeeAnalytics, reset } from '../features/statistic/statisticSlice'
-import '../css/Analytics.css'
+import '../styles/Analytics.css'
 
 export const Analytics = () => {
 

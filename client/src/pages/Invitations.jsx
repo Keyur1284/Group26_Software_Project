@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { faEnvelopeOpenText , faUser, faUserEdit} from "@fortawesome/free-solid-svg-icons";
-import '../css/Profile.css';
+import '../styles/Profile.css';
 import {InviteCard} from '../components/InviteCard'
 
 export const Invitations = () => {

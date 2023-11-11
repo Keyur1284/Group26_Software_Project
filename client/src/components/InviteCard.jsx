@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import '../css/Invites.css';
+import '../styles/Invites.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInvites, reset, acceptInvite } from '../features/invite/inviteSlice';

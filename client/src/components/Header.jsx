@@ -14,7 +14,7 @@ import { clearExpenses } from "../features/expense/expenseSlice";
 import { clearNotification, getEmployeeNotifications, getManagerNotifications } from "../features/notification/notificationSlice";
 import { clearStatistics } from "../features/statistic/statisticSlice";
 import { toast } from "react-toastify";
-import "../css/Homepage.css";
+import "../styles/Homepage.css";
 
 export const Header = () => {
   const dispatch = useDispatch();

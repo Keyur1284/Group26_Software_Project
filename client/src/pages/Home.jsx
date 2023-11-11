@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../css/Homepage.css';
+import '../styles/Homepage.css';
 import 'animate.css'
 import p_1 from '../assets/dashboard-img/p_1.jpg';
 import p_2 from '../assets/dashboard-img/p_2.jpg';
@@ -30,27 +30,27 @@ export const Home = () => {
                     <div className={`carousel-item ${activeSlide === 0 ? 'active' : ''} c-item animated fadeIn`}>
                         <img src={p_1} className="d-block w-100 c-img" alt="..." />
                         <div className="carousel-caption">
-                            <div className="container rounded-3 display-6 p-2 w-75" style={{ textShadow: "1px 1px #11303F", backgroundColor: "white", opacity: "75%", color: "#11303F" }}>
+                            <div className="container rounded-3 display-6 p-2" style={{ textShadow: "1px 1px #11303F", backgroundColor: "white", opacity: "75%", color: "#11303F" }}>
                                 <p className="animate__animated animate__lightSpeedInRight text-uppercase" style={{ fontWeight: "bold" }}> Xpense Tracker </p>
-                                <p className="animate__animated animate__lightSpeedInLeft">Expense Management Made Effortless</p>
+                                <p className="animate__animated animate__lightSpeedInLeft">Empower Your Business, Track Expenses with Ease</p>
                             </div>
                         </div>
                     </div>
                     <div className={`carousel-item ${activeSlide === 1 ? 'active' : ''} c-item animated fadeIn`}>
                         <img src={p_2} className="d-block w-100 c-img" alt="..." />
                         <div className="carousel-caption">
-                            <div className="container rounded-3 display-6 p-2 w-75" style={{ textShadow: "1px 1px #11303F", backgroundColor: "white", opacity: "75%", color: "#11303F" }}>
+                            <div className="container rounded-3 display-6 p-2" style={{ textShadow: "1px 1px #11303F", backgroundColor: "white", opacity: "75%", color: "#11303F" }}>
                                 <p className="animate__animated animate__lightSpeedInRight text-uppercase" style={{ fontWeight: "bold" }}> Xpense Tracker </p>
-                                <p className="animate__animated animate__lightSpeedInLeft">Expense Management Made Effortless</p>
+                                <p className="animate__animated animate__lightSpeedInLeft">Simplify Expense Management, Amplify Your Success</p>
                             </div>
                         </div>
                     </div>
                     <div className={`carousel-item ${activeSlide === 2 ? 'active' : ''} c-item animated fadeIn`}>
                         <img src={p_3} className="d-block w-100 c-img" alt="..." />
                         <div className="carousel-caption">
-                            <div className="container rounded-3 display-6 p-2 w-75" style={{ textShadow: "1px 1px #11303F", backgroundColor: "white", opacity: "75%", color: "#11303F" }}>
+                            <div className="container rounded-3 display-6 p-2" style={{ textShadow: "1px 1px #11303F", backgroundColor: "white", opacity: "75%", color: "#11303F" }}>
                                 <p className="animate__animated animate__lightSpeedInRight text-uppercase" style={{ fontWeight: "bold" }}> Xpense Tracker </p>
-                                <p className="animate__animated animate__lightSpeedInLeft">Expense Management Made Effortless</p>
+                                <p className="animate__animated animate__lightSpeedInLeft">Effortless Expense Monitoring for Business Evolution</p>
                             </div>
                         </div>
                     </div>
