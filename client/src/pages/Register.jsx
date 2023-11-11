@@ -16,19 +16,19 @@ export const Register = () => {
 
   const formSchema = Yup.object({
     firstName: Yup.string()
-      .min(4, "Username must be at least 4 characters")
-      .max(24, "Username must not exceed 24 characters")
+      .min(2, "First Name must be at least 2 characters")
+      .max(24, "First Name must not exceed 24 characters")
       .matches(
-        /^[A-z][A-z0-9\s-_]*$/,
-        "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
+        /^[A-Z][a-z]*$/,
+        "First Name must start with a capital letter and contain only letters"
       )
       .required("First Name is required").trim(),
       lastName: Yup.string()
-      .min(4, "Username must be at least 4 characters")
-      .max(24, "Username must not exceed 24 characters")
+      .min(2, "Last Name must be at least 2 characters")
+      .max(24, "Last Name must not exceed 24 characters")
       .matches(
-        /^[A-z][A-z0-9\s-_]*$/,
-        "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
+        /^[A-Z][a-z]*$/,
+        "Last Name must start with a capital letter and contain only letters"
       )
       .required("Last Name is required").trim(),
     email: Yup.string()
