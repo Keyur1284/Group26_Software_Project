@@ -11,7 +11,7 @@ import { clearEmployeesAndInvitations } from "../features/invite/inviteSlice";
 import { clearProjects } from "../features/project/projectSlice";
 import { clearTeam } from "../features/team/teamSlice";
 import { clearExpenses } from "../features/expense/expenseSlice";
-import { clearNotification, getEmployeeNotifications, getManagerNotifications } from "../features/notification/notificationSlice";
+import { clearNotification, getEmployeeNotifications, getManagerNotifications, reset } from "../features/notification/notificationSlice";
 import { clearStatistics } from "../features/statistic/statisticSlice";
 import { toast } from "react-toastify";
 import "../styles/Homepage.css";
@@ -20,11 +20,11 @@ export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector((state) => state.auth);
+  const { isLoading, user } = useSelector((state) => state.auth);
   const { isLoading: isLoadingAnnouncement} = useSelector((state) => state.announcement)
   const { isLoading: isLoadingExpense} = useSelector((state) => state.expense)
   const { isLoading: isLoadingInvite} = useSelector((state) => state.invite)
-  const { notifications } = useSelector((state) => state.notification)
+  const { notifications, isSuccess, isError, appErr, serverErr } = useSelector((state) => state.notification)
   const { isLoading: isLoadingProject} = useSelector((state) => state.project)
   const { isLoading: isLoadingStatistic} = useSelector((state) => state.statistic)
   const { isLoading: isLoadingTeam} = useSelector((state) => state.team)
@@ -69,6 +69,21 @@ export const Header = () => {
     isLoadingStatistic,
     isLoadingTeam
   ])
+
+  useEffect(() => {
+
+    if (isSuccess)
+    {
+      dispatch(reset());
+    }
+
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr])
 
   return (
     <nav

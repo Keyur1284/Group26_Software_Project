@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
+import { toast } from "react-toastify";
 import { reset, getEmployeeProfile, getManagerProfile } from "../features/auth/authSlice";
 
 const inlineStyles1 = {
@@ -40,12 +41,18 @@ export const MyProfile = () => {
 
   useEffect(() => {
     
-    if (isSuccess || isError)
+    if (isSuccess)
     {
       dispatch(reset());
     }
 
-  }, [isSuccess, isError, appErr, serverErr]);
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   if(isLoading && !profile){
     return (
