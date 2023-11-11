@@ -58,7 +58,7 @@ function App() {
                 <Route path='/edit-profile' element={<EditProfile />} />
                 <Route path='/invites' element={<Invitations />} />
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
-                <Route path='/projects/:projectId/analytics' element={<Analytics />} />
+                <Route path='/projects/:projectId/analytics' element={<Er403 />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
                 <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
                 <Route path='/notifications' element={<NotificationEmployee/>} />
