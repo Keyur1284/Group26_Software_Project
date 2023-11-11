@@ -101,7 +101,34 @@ const getExpenseContibutionController = asyncHandler(async (req, res) => {
 const getManagerAnalyticsController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+    let project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+
+    project.employees.sort((a, b) => {
+        if (a.firstName < b.firstName)
+        {
+            return -1;
+        }
+        else if (a.firstName > b.firstName)
+        {
+            return 1;
+        }
+        else
+        {
+            if (a.lastName < b.lastName)
+            {
+                return -1;
+            }
+            else if (a.lastName > b.lastName)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    });
+
     const expenses = await Expense.find({project_id}).populate('employee_id', 'firstName lastName').sort({date: 1});
 
     const employeeWiseExpenseArray = [];
@@ -163,7 +190,34 @@ const getEmployeeAnalyticsController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
     const employee_id = req.employee._id;
-    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+    let project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+
+    project.employees.sort((a, b) => {
+        if (a.firstName < b.firstName)
+        {
+            return -1;
+        }
+        else if (a.firstName > b.firstName)
+        {
+            return 1;
+        }
+        else
+        {
+            if (a.lastName < b.lastName)
+            {
+                return -1;
+            }
+            else if (a.lastName > b.lastName)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    });
+
     const expenses = await Expense.find({project_id, employee_id}).populate('employee_id', 'firstName lastName').sort({date: 1});
 
     const categoryWiseExpenseArray = [];
