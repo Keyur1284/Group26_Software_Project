@@ -21,7 +21,7 @@ export const ExpenseTable = () => {
   
     return (
       <div className="table-container text-center" style={{ maxHeight: "60vh", overflowY: "auto" }}>
-  <table className="table table-responsive table-hover">
+  <table className="table table-responsive table-hover" id="expense-history-table">
     <thead>
       <tr>
         <th>Sr No.</th>
