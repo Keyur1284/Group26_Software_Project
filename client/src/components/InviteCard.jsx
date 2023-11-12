@@ -37,7 +37,6 @@ export const InviteCard = () => {
     if (isSuccess && result)
     {
       toast.success(result);
-      dispatch(reset());
       navigate('/projects');
     }
 

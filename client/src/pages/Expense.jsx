@@ -62,7 +62,7 @@ export const Expense = () => {
   };
 
   const { user } = useSelector((state) => state.auth);
-  const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
+  const { expenses, isSuccess, isLoading, isError, appErr, serverErr, result } = useSelector((state) => state.expense);
   const { employees, isLoading: teamLoading, isSuccess: teamSuccess, isError: teamError, appErr: teamAppErr, serverErr: teamServerErr } = useSelector((state) => state.team);
 
   useEffect(() => {
@@ -107,6 +107,11 @@ export const Expense = () => {
     if (isSuccess)
     {
       dispatch(reset());
+    }
+
+    if (isSuccess && result)
+    {
+      toast.success(result);
     }
 
     if (isError)

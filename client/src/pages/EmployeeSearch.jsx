@@ -74,7 +74,6 @@ export const EmployeeSearch = () => {
     if (isSuccess && result) 
     {
       toast.success(result);
-      dispatch(reset());
     }
 
     if (isError) 
