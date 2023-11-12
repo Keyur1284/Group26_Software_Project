@@ -27,7 +27,7 @@ const createAnnouncementController = asyncHandler(async (req, res) => {
     {
         res.status(200).json({
             success: true,
-            message: 'Announcement created successfully!',
+            message: 'Announcement sent successfully!',
             announcement
         });
     }
