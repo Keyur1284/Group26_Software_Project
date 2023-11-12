@@ -44,13 +44,25 @@ export const Analytics = () => {
         html2canvas(element, { scrollY: height, scrollX: width }).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF('p', 'px', [width + (pdfMargin * 2), height + (pdfMargin * 2)]);
-            
-            pdf.setFontSize(50);
-            const textWidth = pdf.getStringUnitWidth(`${project?.name} Report`) * 50;
-            const textXPos = (pdf.internal.pageSize.getWidth() / 2) - (textWidth / 2) + pdfMargin/2;
-    
-            pdf.text(`${project?.name} Report`, textXPos, pdfMargin - 20);
 
+            const date = new Date().toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "numeric",
+                year: "numeric",
+            });
+
+            const text = `${project?.name} Report (${new Date(project?.createdAt).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "numeric",
+              year: "numeric",
+            })} - ${date})`
+
+            pdf.setFontSize(50);
+            const textWidth = pdf.getStringUnitWidth(text) * 50;
+            const textXPos = (pdf.internal.pageSize.getWidth() / 2) - (textWidth / 2) + pdfMargin + 10;
+    
+            pdf.text(text, textXPos, pdfMargin - 20);
+            
             const imgProps = pdf.getImageProperties(imgData);
 
             let pdfWidth = pdf.internal.pageSize.getWidth() - (pdfMargin * 2);
