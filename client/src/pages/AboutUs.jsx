@@ -112,8 +112,8 @@ export const AboutUs = () => {
       </style>
       <div className="row align-items-center">
         <div className="col-lg-12 mt-3 mb-3">
-          <span className="h2 d-block text-center mt-5" style={{ color: "white", fontSize: 64 }}>
-            Meet our Clonify Team
+          <span className="display-1 d-block text-center mt-5 fw-normal" style={{ color: "white", fontSize: "8vh" }}>
+          The Collaborative Force Driving Xpense Tracker
           </span>
         </div>
       </div>
