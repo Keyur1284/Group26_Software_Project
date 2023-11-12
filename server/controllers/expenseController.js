@@ -299,7 +299,7 @@ const getExpenseManagerByFilterController = asyncHandler(async (req, res) => {
         employee_id : employeeId == "all" ? { $ne: null } : employeeId,
         status: status == "all" ? { $ne: null } : status
 
-    }).populate('employee_id', 'firstName lastName').sort({ createdAt: -1});
+    }).populate('employee_id', 'firstName lastName').sort({ date: -1});
 
     res.status(200).json({
         success: true,
@@ -351,7 +351,7 @@ const getExpenseEmployeeByFilterController = asyncHandler(async (req, res) => {
         date: filter == "all" ? { $ne: null } : filter == "custom" ? { $gte: startDate, $lt: endDate } : { $gte: istDate.setDate(istDate.getDate() - Number(filter)) },
         status: status == "all" ? { $ne: null } : status
 
-    }).populate('employee_id', 'firstName lastName').sort({ createdAt: -1 });
+    }).populate('employee_id', 'firstName lastName').sort({ date: -1 });
 
     res.status(200).json({
         success: true,
