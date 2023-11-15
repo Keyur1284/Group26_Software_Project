@@ -75,7 +75,7 @@ export const Home = () => {
                     <div className="col-lg-6">
                         <div className="container-fluid p-5" style={{marginLeft: "-40px"}}>
                             <p className='display-5' style={{fontWeight: "400"}} >Managing and Tracking expense for growing businesses </p>
-                            <p className='display-6' style={{fontSize: "20px"}}>Welcome to Xpense Track, where we revolutionize the way businesses manage and
+                            <p className='display-6' style={{fontSize: "3vh"}}>Welcome to Xpense Track, where we revolutionize the way businesses manage and
                                 track employee expenses. Our cutting-edge expense management platform offers a
                                 seamless and efficient solution for businesses of all sizes to effortlessly monitor and control
                                 employee expenditures.</p>
