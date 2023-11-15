@@ -6,9 +6,10 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import MailIcon from "@mui/icons-material/Mail";
-import BusinessIcon from "@mui/icons-material/Business";
 import PhoneIcon from "@mui/icons-material/Phone";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import PlaceIcon from '@mui/icons-material/Place';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 
 export const Footer = () => {
   return (
@@ -17,7 +18,7 @@ export const Footer = () => {
         <div className="container-fluid">
           <div className="row d-flex align-items-center">
             <div className="col-6 mt-3">
-              <div className="mx-3 display-6">Follow us</div>
+              <div className="mx-3 display-6"> <ConnectWithoutContactIcon sx={{fontSize: 40}} /> Connect with us</div>
             </div>
 
             <div className="col-6 mt-3 text-end">
@@ -94,7 +95,7 @@ export const Footer = () => {
       <section className="p-5">
         <div className="container-fluid">
           <div className="row d-flex">
-            <div className="col-4">
+            <div className="col-3">
               <p className="display-6">
                 <a
                   href="https://github.com/Keyur1284/Group26_Software_Project"
@@ -110,25 +111,42 @@ export const Footer = () => {
                 Xpense Tracker
               </p>
               <p>
-                Welcome to Xpense Track, where we revolutionize the way
+                Welcome to Xpense Tracker, where we revolutionize the way
                 businesses manage and track employee expenses.
               </p>
             </div>
 
-            <div className="col-4"></div>
+            <div className="col-5 mx-5">
 
-            <div className="col-4">
+            <i className="fas fa-map-marker-alt" />
+            <p className="display-6 mb-4 text-center"> <PlaceIcon sx={{fontSize: 37, marginBottom: 1.5}}/> Company Address</p>
+              <div className="d-flex gap-3">
+                  <p className="w-100"> Dhirubhai Ambani Institute of Information and Communication Technology, Near Indroda Circle, Gandhinagar - 382 007, Gujarat (India)</p>
+                 <div className="w-100"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3667.4972641895024!2d72.6263405749077!3d23.18854191011498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395c2a3c9618d2c5%3A0xc54de484f986b1fa!2sDA-IICT!5e0!3m2!1sen!2sin!4v1699774054316!5m2!1sen!2sin"
+                width="100%" height="100%"
+                className="rounded-3"
+                style={{ border: "0" }} allowfullscreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade" /></div>
+              </div>
+            </div>
+
+            <div className="col-3 mx-2">
               <div className="container mx-3">
-                <p className="display-6 mb-4">Contact Us</p>
-                <p>
-                  <BusinessIcon className="me-2" />
-                  Gujarat, India
+                <p className="display-6 mb-4">
+                  Contact Information
                 </p>
                 <p>
-                  <MailIcon className="me-2" /> 20210xxxx@daiict.ac.in
+                  <MailIcon className="me-2" /> 
+                  <a href="mailto:" className="text-white text-decoration-none" target="_blank">
+                    xpensetracker26@gmail.com
+                  </a>
                 </p>
                 <p>
-                  <PhoneIcon className="me-2" /> +91 9876543210
+                  <PhoneIcon className="me-2" />
+                  <a href="tel:" className="text-white text-decoration-none" target="_blank">
+                    +91 9510554403
+                  </a>
                 </p>
               </div>
             </div>
