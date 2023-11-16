@@ -289,7 +289,7 @@ const forgotPasswordController = asyncHandler( async (req, res) => {
             <p><a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #ffffff; text-decoration: none;">Reset Password</a></p>
             <p>If the above link doesn't work, copy and paste the following URL into your browser:</p>
             <p>${link}</p>
-            <p>This otp will expire in 5 minutes for security reasons.</p>
+            <p>This otp will expire in 10 minutes for security reasons.</p>
             <p>To get a new otp, visit <a href="https://xpensetracker.vercel.app/forgot-password">this link</a> and enter your email address.</p>
             <p>Thank you,<br>Xpense Tracker Team</p>
         </div>`
