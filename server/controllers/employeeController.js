@@ -266,7 +266,7 @@ const forgotPasswordController = asyncHandler( async (req, res) => {
     const deleteResetPassword = await ResetPassword.deleteMany({ employee_id: oldUser._id });
     const resetPassword = await ResetPassword.create({ otp, employee_id: oldUser._id });
 
-    const link = `http://localhost:5173/reset-password/${resetPassword._id}`;
+    const link = `https://xpensetracker.vercel.app/reset-password/${resetPassword._id}`;
 
     let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -290,7 +290,7 @@ const forgotPasswordController = asyncHandler( async (req, res) => {
             <p>If the above link doesn't work, copy and paste the following URL into your browser:</p>
             <p>${link}</p>
             <p>This otp will expire in 5 minutes for security reasons.</p>
-            <p>To get a new otp, visit <a href="http://localhost:5173/forgot-password">this link</a> and enter your email address.</p>
+            <p>To get a new otp, visit <a href="https://xpensetracker.vercel.app/forgot-password">this link</a> and enter your email address.</p>
             <p>Thank you,<br>Xpense Tracker Team</p>
         </div>`
     };
