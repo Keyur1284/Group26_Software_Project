@@ -44,8 +44,8 @@ export const Register = () => {
       .min(8, "Password must be at least 8 characters")
       .max(24, "Password must not exceed 24 characters")
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*]).{8,24}$/,
-        "Password must include uppercase and lowercase letters, a number, and a special character"
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,24}$/,
+        "Password must include uppercase and lowercase letters, a number, and a special character (!@#$%^&*)"
       )
       .required("Password is required")
       .trim(),
