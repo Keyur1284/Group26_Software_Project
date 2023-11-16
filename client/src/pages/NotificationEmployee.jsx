@@ -5,26 +5,30 @@ import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import {
-  getEmployeeNotifications,
-  deleteNotificationEmployee,
-  reset,
-} from "../features/notification/notificationSlice";
+import { getEmployeeNotifications, deleteNotificationEmployee, reset } from "../features/notification/notificationSlice";
+import { toast } from "react-toastify";
 
 export const NotificationEmployee = () => {
   const dispatch = useDispatch();
-  const { notifications, isLoading, isSuccess, isError, appErr, serverErr } =
-    useSelector((state) => state.notification);
+  const { notifications, isLoading, isSuccess, isError, appErr, serverErr } = useSelector((state) => state.notification);
 
   useEffect(() => {
     dispatch(getEmployeeNotifications());
   }, [dispatch]);
 
   useEffect(() => {
-    if (isSuccess || isError) {
+    if (isSuccess) 
+    {
       dispatch(reset());
     }
-  }, [dispatch, isSuccess, isError]);
+
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   if (isLoading && notifications?.length == 0) {
     return (

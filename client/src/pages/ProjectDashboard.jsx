@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getManagerDashboard, getEmployeeDashboard, reset } from '../features/statistic/statisticSlice'
 import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 
 export const ProjectDashboard = () => {
@@ -33,12 +34,18 @@ export const ProjectDashboard = () => {
 
     useEffect(() => {
 
-        if (isSuccess || isError)
+        if (isSuccess)
         {
             dispatch(reset());
         }
 
-    }, [dispatch, isSuccess, isError])
+        if (isError)
+        {
+            toast.error(appErr || serverErr);
+            dispatch(reset());
+        }
+
+    }, [dispatch, isSuccess, isError, appErr, serverErr])
 
     if (isLoading && !project) {
 

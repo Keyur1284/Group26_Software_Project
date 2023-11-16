@@ -1,7 +1,7 @@
 import { Hamburger4 } from "../components/Hamburger_4";
 import { useParams } from "react-router-dom";
 import { getExpenseById, acceptExpense, rejectExpense, reset} from "../features/expense/expenseSlice";
-import { getExpenseContribution } from "../features/statistic/statisticSlice";
+import { getExpenseContribution, reset as statsReset } from "../features/statistic/statisticSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -31,7 +31,7 @@ export const ExpenseDetails = () => {
   const { expenseId } = useParams();
   const dispatch = useDispatch();
   const { expenseById, isSuccess, isError, isLoading, appErr, serverErr } = useSelector((state) => state.expense);
-  const { totalMoneySpent, project, isLoading: statsLoading } = useSelector(state => state.statistic);
+  const { totalMoneySpent, project, isLoading: statsLoading, isSuccess: statsSuccess, isError: statsError, appErr: statsAppErr, serverErr: statsServerErr } = useSelector((state) => state.statistic);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -53,6 +53,21 @@ export const ExpenseDetails = () => {
     }
 
   }, [dispatch, isSuccess, isError, appErr, serverErr]);
+
+  useEffect(() => {
+
+    if (statsSuccess)
+    {
+      dispatch(statsReset());
+    }
+
+    if (statsError)
+    {
+      toast.error(statsAppErr || statsServerErr);
+      dispatch(statsReset());
+    }
+
+  }, [dispatch, statsSuccess, statsError, statsAppErr, statsServerErr]);
 
 const categoryIcons = {
   Travel: <FlightTakeoffIcon style={{ color: "#fff", fontSize: 35 }}/>,

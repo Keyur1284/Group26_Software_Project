@@ -13,7 +13,7 @@ export const EditExpense = () => {
   const { projectId, expenseId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { expenses } = useSelector(state => state.expense);
+  const { expenses, isSuccess, isError, isLoading, appErr, serverErr } = useSelector(state => state.expense);
 
   const expense = expenses?.find((expense) => expense._id === expenseId);
 
@@ -42,8 +42,6 @@ export const EditExpense = () => {
     },
     validationSchema: formSchema,
   });
-
-  const {isSuccess, isError, isLoading, appErr, serverErr} = useSelector(state => state.expense);
     
   useEffect(() => {
     
