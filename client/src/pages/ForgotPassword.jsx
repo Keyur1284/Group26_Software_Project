@@ -42,7 +42,7 @@ export const ForgotPassword = () => {
     
     if (isSuccess) 
     {
-      toast.success("Reset link has been sent to your email address");
+      toast.success("Reset link has been sent to your email address. Please wait for a while!");
       dispatch(reset());
     }
 
