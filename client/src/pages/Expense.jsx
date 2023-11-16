@@ -137,7 +137,7 @@ export const Expense = () => {
 
   }, [dispatch, teamSuccess, teamError, teamAppErr, teamServerErr]);
 
-  if (isLoading || teamLoading)
+  if ((isLoading || teamLoading) && expenses?.length == 0 && employees?.length == 0)
   {
     return (
       <>
