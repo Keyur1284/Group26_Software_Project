@@ -132,7 +132,13 @@ export const NotificationEmployee = () => {
             >
               <h5>
                 <strong>
-                  {new Date(notification?.createdAt).toLocaleString()}
+                  {new Date(notification?.createdAt).toLocaleString("en-GB", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                              hour: "numeric",
+                              minute: "numeric",
+                            })}
                 </strong>
               </h5>
             </div>

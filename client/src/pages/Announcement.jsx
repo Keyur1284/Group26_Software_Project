@@ -304,7 +304,7 @@ export const Announcement = () => {
                         <p className="card-text">
                           <small className="text-muted">
                             {announcement?.name} | {
-                            // Display date in dd/mm/yyyy format with time
+                            
                             new Date(announcement?.createdAt).toLocaleString("en-GB", {
                               day: "numeric",
                               month: "short",
