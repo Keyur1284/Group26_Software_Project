@@ -72,22 +72,25 @@ const cardData = [
 const generateCard = (card) => {
   return (
     <div className="col-md-3 d-flex" key={card.name}>
-      <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor: "#013E8F" }}>
+      <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor: "#013E8F", display: "flex", flexDirection: "column", justifyContent: "center" }}>
         <img
           className="card-img-top img-fluid rounded-top-5"
           src={card.imgSrc}
           alt={card.name}
           style={{ height: "40vh", width: "25vw" }}
         />
-        <div className="card-body py-3" style={{ color: "white" }}>
-          <h5 className="mb-0" style={{ fontSize: 25 }}>{card.name}</h5>
-          <span>{card.rollNumber}</span>
+        <div className="card-body py-3" style={{ color: "white", maxWidth: "100%" }}>
+          <h5 className="mb-0" style={{ fontSize: 25, overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", textAlign: "left" }}>
+            {card.name}
+          </h5>
+          <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", textAlign: "left" }}>
+            {card.rollNumber}
+          </span>
         </div>
       </div>
     </div>
   );
 };
-
 
 export const AboutUs = () => {
   return (
