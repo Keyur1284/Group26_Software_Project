@@ -15,56 +15,67 @@ const cardData = [
     name: 'Vedant Pandya',
     rollNumber: '202101063',
     imgSrc: pic_1,
+    role: 'Frontend Developer',
   },
   {
     name: 'Jainil Patel',
     rollNumber: '202101416',
     imgSrc: pic_2,
+    role: 'Frontend Developer',
   },
   {
     name: 'Himanshu Vachhani',
     rollNumber: '202101475',
     imgSrc: pic_3,
+    role: 'Full Stack Developer'
   },
   {
     name: 'Aayush Patel',
     rollNumber: '202101476',
     imgSrc: pic_4,
+    role: 'Frontend Developer',
   },
   {
     name: 'Nancy Patel',
     rollNumber: '202101491',
     imgSrc: pic_5,
+    role: 'Frontend Developer',
   },
   {
     name: 'Keyur Govrani',
     rollNumber: '202101498',
     imgSrc: pic_6,
+    role: 'Full Stack Developer',
   },
   {
     name: 'Kashish Patel',
     rollNumber: '202101502',
     imgSrc: pic_7,
+    role: 'Frontend Developer',
   },
   {
     name: 'Akhil Patoliya',
     rollNumber: '202101505',
     imgSrc: pic_8,
+    role: 'UI/UX Designer',
   },
   {
     name: 'Hardik Mehta',
     rollNumber: '202101506',
     imgSrc: pic_9,
+    role: 'Frontend Developer',
   },
   {
     name: 'Sahil Bhadesiya',
     rollNumber: '202101511',
     imgSrc: pic_10,
+    role: 'UI/UX Designer',
   },
   {
     name: 'Ishita Rathod',
     rollNumber: '202101516',
     imgSrc: pic_11,
+    role: 'UI/UX Designer',
   },
 ];
 
@@ -79,13 +90,16 @@ const generateCard = (card) => {
           alt={card.name}
           style={{ height: "40vh", width: "25vw" }}
         />
-        <div className="card-body py-3" style={{ color: "white", maxWidth: "100%" }}>
-          <h5 className="mb-0" style={{ fontSize: 25, overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", textAlign: "left" }}>
+        <div className="card-body text-center" style={{ color: "white", maxWidth: "100%", marginTop: "-1vh"}}>
+          <h5 className="mb-0" style={{fontSize: "3vh"}}>
             {card.name}
           </h5>
-          <span style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", textAlign: "left" }}>
-            {card.rollNumber}
-          </span>
+          <div>
+            ({card.rollNumber})
+          </div>
+          <div>
+            {card.role}
+          </div>
         </div>
       </div>
     </div>
@@ -115,7 +129,7 @@ export const AboutUs = () => {
       </style>
       <div className="row align-items-center">
         <div className="col-lg-12 mt-3 mb-3">
-          <span className="display-1 d-block text-center mt-5 fw-normal" style={{ color: "white", fontSize: "8vh" }}>
+          <span className="display-1 d-block text-center mt-3 fw-normal" style={{ color: "white", fontSize: "8vh" }}>
           The Collaborative Force Driving Xpense Tracker
           </span>
         </div>
