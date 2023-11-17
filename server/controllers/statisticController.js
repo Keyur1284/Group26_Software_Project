@@ -7,8 +7,38 @@ const asyncHandler = require('express-async-handler');
 const getManagerDashboardController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email');
+    let project = await Project.findById(project_id).populate('employees', 'firstName lastName email')
     
+    project.employees.sort((a, b) => {
+        if (a.firstName < b.firstName)
+        {
+            return -1;
+        }
+
+        else if (a.firstName > b.firstName)
+        {
+            return 1;
+        }
+
+        else
+        {
+            if (a.lastName < b.lastName)
+            {
+                return -1;
+            }
+
+            else if (a.lastName > b.lastName)
+            {
+                return 1;
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+    });
+
     const approvedExpensesCount = await Expense.countDocuments({project_id, status: 'Approved'});
     const pendingExpensesCount = await Expense.countDocuments({project_id, status: 'Pending'});
     
@@ -51,7 +81,37 @@ const getManagerDashboardController = asyncHandler(async (req, res) => {
 const getEmployeeDashboardController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email');
+    let project = await Project.findById(project_id).populate('employees', 'firstName lastName email');
+
+    project.employees.sort((a, b) => {
+        if (a.firstName < b.firstName)
+        {
+            return -1;
+        }
+
+        else if (a.firstName > b.firstName)
+        {
+            return 1;
+        }
+
+        else
+        {
+            if (a.lastName < b.lastName)
+            {
+                return -1;
+            }
+            
+            else if (a.lastName > b.lastName)
+            {
+                return 1;
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+    });
     
     const employee_id = req.employee._id;
     const approvedExpensesCount = await Expense.countDocuments({employee_id, project_id, status: 'Approved'});
