@@ -22,7 +22,11 @@ export const EditExpense = () => {
     category: Yup.string().required("Category is required"),
     amount: Yup.number().required("Amount is required"),
     date: Yup.date().required("Date is required"),
-    driveLink: Yup.string().required("Link of uploaded bill is required").min(1).trim(),
+    driveLink: Yup.string().required("Link of uploaded bill is required").min(1).trim()
+      .matches(
+        /^https:\/\/[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$/,
+        "Please enter a valid URL link of uploaded bill"
+      ),
     description: Yup.string().max(400, "Expense Description must not exceed 400 characters").min(1).trim(),
   });
 
