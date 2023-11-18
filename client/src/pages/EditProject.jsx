@@ -19,7 +19,7 @@ export const EditProject = () => {
   const { project } = useSelector((state) => state.announcement);
 
   const formSchema = Yup.object({
-    name: Yup.string().required("Project Name is required").max(30, "Project Name must not exceed 30 characters").min(1).trim(),
+    name: Yup.string().required("Project Name is required").max(100, "Project Name must not exceed 100 characters").min(1).trim(),
     budget: Yup.number().required("Project Amount is required"),
     alertLimit: Yup.number().required("Alert Limit is required"),
     description: Yup.string().max(400, "Project Description must not exceed 400 characters").min(1).trim(),
