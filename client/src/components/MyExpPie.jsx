@@ -75,8 +75,10 @@ export const MyExpPie = () => {
     return Math.round((num + Number.EPSILON) * 100) / 100;
   };
 
-  const seriesRadial = [round(employeeExpenses / totalMoneySpent * 100)];
-
+  let seriesRadial = [0];
+  
+  if (totalMoneySpent > 0)
+    seriesRadial = [round(employeeExpenses / totalMoneySpent * 100)];
   
   return (
     <div className="d-flex flew-row justify-content-end">
