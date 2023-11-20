@@ -1,6 +1,6 @@
 import pic_1 from '../assets/AboutUs-images/Vedant.jpg';
 import pic_2 from '../assets/AboutUs-images/Jainil.jpg';
-import pic_3 from '../assets/AboutUs-images/Himanshu_photo.jpg';
+import pic_3 from '../assets/AboutUs-images/Himanshu.jpg';
 import pic_4 from '../assets/AboutUs-images/Ayush.jpg';
 import pic_5 from '../assets/AboutUs-images/Nancy.jpg';
 import pic_6 from '../assets/AboutUs-images/Keyur.jpeg';
@@ -82,19 +82,16 @@ const cardData = [
 
 const generateCard = (card) => {
   return (
-    <div className="col-sm-6 col-md-4 col-lg-3 mb-4" key={card.name}>
-      <div className="card mb-3 me-3 rounded-5 card-hover" style={{ backgroundColor: "#013E8F", height: "100%" }}>
-        <div
+    <div className="col-md-3 d-flex" key={card.name}>
+      <div className="card mb-3 me-3 rounded-5 card-hover" style={{ height: "52vh", width: "25vw", backgroundColor: "#013E8F", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <img
           className="card-img-top img-fluid rounded-top-5"
-          style={{
-            backgroundImage: `url(${card.imgSrc})`,
-            backgroundSize: '100% 100%', 
-            backgroundPosition: 'center',
-            height: '300px',
-          }}
+          src={card.imgSrc}
+          alt={card.name}
+          style={{ height: "40vh", width: "25vw" }}
         />
-        <div className="card-body text-center" style={{ color: "white", maxWidth: "80%", margin: "auto" }}>
-          <h5 className="mb-0">
+        <div className="card-body text-center" style={{ color: "white", maxWidth: "100%", marginTop: "-1vh"}}>
+          <h5 className="mb-0" style={{fontSize: "3vh"}}>
             {card.name}
           </h5>
           <div>
@@ -117,23 +114,23 @@ export const AboutUs = () => {
           body {
             background: radial-gradient(circle, #00b3b3, #0066cc);
           }
-
+        `}
+        {`
           .card-hover {
             transform: scale(1);
             transition: transform 0.4s, box-shadow 0.2s;
           }
 
           .card-hover:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
           }
         `}
       </style>
-
       <div className="row align-items-center">
-        <div className="col-12 mt-3 mb-3">
-          <span className="display-1 d-block text-center mt-3 fw-normal" style={{ color: "white", fontSize: "3rem" }}>
-            The Collaborative Force Driving Xpense Tracker
+        <div className="col-lg-12 mt-3 mb-3">
+          <span className="display-1 d-block text-center mt-3 fw-normal" style={{ color: "white", fontSize: "8vh" }}>
+          The Collaborative Force Driving Xpense Tracker
           </span>
         </div>
       </div>
@@ -142,13 +139,14 @@ export const AboutUs = () => {
         {cardData.slice(0, 4).map(generateCard)}
       </div>
 
-      <div className="row justify-content-center ps-4 pe-4 mt-3">
+      <div className="row justify-content-center ps-4 pe-4 mt-5">
         {cardData.slice(4, 7).map(generateCard)}
       </div>
 
-      <div className="row justify-content-center ps-4 pe-4 mt-3 mb-5">
+      <div className="row justify-content-center ps-4 pe-4 mt-5 mb-5">
         {cardData.slice(7, 11).map(generateCard)}
       </div>
     </div>
   );
 };
+
