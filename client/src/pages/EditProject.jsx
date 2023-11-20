@@ -130,8 +130,7 @@ export const EditProject = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         style={{
-                          background:
-                            "linear-gradient(-90deg, rgb(45, 145, 230) 0%, rgba(81.53, 129.63, 193.46, 0) 90%)",
+                          backgroundColor:"#7dbef5"
                         }}
                       />
                     </div>
@@ -159,8 +158,7 @@ export const EditProject = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         style={{
-                          background:
-                            "linear-gradient(90deg, rgb(45, 145, 230) 0%, rgba(81.53, 129.63, 193.46, 0) 90%)",
+                          backgroundColor:"#7dbef5"
                         }}
                       />
                     </div>
@@ -188,8 +186,7 @@ export const EditProject = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         style={{
-                          background:
-                            "linear-gradient(-90deg, rgb(45, 145, 230) 0%, rgba(81.53, 129.63, 193.46, 0) 90%)",
+                          backgroundColor:"#7dbef5"
                         }}
                       />
                     </div>
@@ -217,8 +214,7 @@ export const EditProject = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         style={{
-                          background:
-                            "linear-gradient(90deg, rgb(45, 145, 230) 0%, rgba(81.53, 129.63, 193.46, 0) 90%)",
+                          backgroundColor:"#7dbef5",
                         }}
                       />
                     </div>
