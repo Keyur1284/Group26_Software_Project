@@ -248,10 +248,7 @@ export const Analytics = () => {
                   </ol>
                 </div>
                 <div className="mt-3 display-6 fw-normal">Employees</div>
-                <div
-                  className="overflow-auto scroll"
-                  style={{ maxHeight: "350px" }}
-                >
+                <div>
                   <ol className="list-group mt-3 list-group-numbered">
                     {project?.employees?.map((employee, index) => {
                       return (
