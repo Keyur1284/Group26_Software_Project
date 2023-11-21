@@ -1,8 +1,10 @@
-# React + Vite
+# Xpense Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Xpense Tracker is a cutting-edge expense management platform designed to revolutionize the way businesses manage and track employee expenses. This full-stack web development project utilizes the MERN (MongoDB, Express.js, React.js, Node.js) stack to provide a seamless and efficient solution for businesses of all sizes.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication:** Secure user authentication system to manage user access.
+- **Expense Tracking:** Effortlessly monitor and control employee expenditures with a user-friendly interface.
+- **Dashboard:** A centralized dashboard for a quick overview of expenses and financial insights.
+- **Reporting:** Generate detailed reports for expense analysis and decision-making.
