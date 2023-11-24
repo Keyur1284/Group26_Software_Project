@@ -15,6 +15,7 @@ import { clearNotification, getEmployeeNotifications, getManagerNotifications, r
 import { clearStatistics } from "../features/statistic/statisticSlice";
 import { toast } from "react-toastify";
 import "../styles/Homepage.css";
+import Logo from '../assets/Logo.jpeg';
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -97,10 +98,10 @@ export const Header = () => {
             className="navbar-brand"
         >        
               <img
-                src="https://static.dezeen.com/uploads/2023/07/x-logo-twitter-elon-musk_dezeen_2364_col_0-1-600x600.jpg"
+                src={Logo}
                 alt="logo"
                 className="rounded-circle"
-                style={{ height: "35px", width: "35px" }}
+                style={{ height: "45px", width: "45px" }}
               />
         </a>
         <Link className="navbar-brand" to="/">

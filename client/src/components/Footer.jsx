@@ -10,6 +10,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import PlaceIcon from '@mui/icons-material/Place';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+import Logo from '../assets/Logo.jpeg';
 
 export const Footer = () => {
   return (
@@ -24,10 +25,10 @@ export const Footer = () => {
                   target="_blank"
                 >
                   <img
-                    src="https://static.dezeen.com/uploads/2023/07/x-logo-twitter-elon-musk_dezeen_2364_col_0-1-600x600.jpg"
+                    src={Logo}
                     alt="logo"
                     className="rounded-circle me-3"
-                    style={{ height: "50px", width: "50px" }}
+                    style={{ height: "60px", width: "60px" }}
                   />
                 </a>
                 Xpense Tracker
@@ -54,14 +55,14 @@ export const Footer = () => {
                   Contact Information
                 </p>
                 <p>
+                <a href="mailto:xpensetracker26@gmail.com" className="text-white text-decoration-none" target="_blank">
                   <MailIcon className="me-2" /> 
-                  <a href="mailto:" className="text-white text-decoration-none" target="_blank">
                     xpensetracker26@gmail.com
                   </a>
                 </p>
                 <p>
+                <a href="tel:+919510554403" className="text-white text-decoration-none" target="_blank">
                   <PhoneIcon className="me-2" />
-                  <a href="tel:" className="text-white text-decoration-none" target="_blank">
                     +91 9510554403
                   </a>
                 </p>
