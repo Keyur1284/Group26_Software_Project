@@ -1,8 +1,11 @@
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {ToastContainer} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'; 
 import { Home } from "./pages/Home";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
+import { ForgotPassword } from "./pages/ForgotPassword";
+import { ResetPassword } from "./pages/ResetPassword";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { ProjectDashboard } from "./pages/ProjectDashboard";
@@ -10,12 +13,14 @@ import { Expense } from "./pages/Expense";
 import { AddExpense } from "./pages/AddExpense";
 import { Project } from "./pages/Project";
 import { AddProject } from "./pages/AddProject";
+import { EditProject } from "./pages/EditProject";
 import { EditExpense } from "./pages/EditExpense";
 import { Er401 } from "./pages/Er401";
 import { Er403 } from "./pages/Er403";
 import { Er404 } from "./pages/Er404";
 import { useSelector } from "react-redux";
 import { MyProfile} from './pages/MyProfile'
+import { EditProfile } from "./pages/EditProfile";
 import { ExpenseDetails } from "./pages/ExpenseDetails";
 import { Analytics } from "./pages/Analytics";
 import { EmployeeSearch } from "./pages/EmployeeSearch";
@@ -34,7 +39,7 @@ function App() {
     <>
       <Router>
         {user ? (
-          user.role == "employee" ? (
+          user?.role == "employee" ? (
             <>
               <Header />
               <Routes>
@@ -50,9 +55,10 @@ function App() {
                 <Route path="/add-project" element={<Er403 />} />
                 <Route path='/employee-search' element={<Er403 />} />
                 <Route path='/profile' element={<MyProfile />} />
+                <Route path='/edit-profile' element={<EditProfile />} />
                 <Route path='/invites' element={<Invitations />} />
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
-                <Route path='/projects/:projectId/analytics' element={<Analytics />} />
+                <Route path='/projects/:projectId/analytics' element={<Er403 />} />
                 <Route path='/projects/:projectId/announcements' element={<Announcement />} />
                 <Route path='/projects/:projectId/team-members' element={<TeamMembers />} />
                 <Route path='/notifications' element={<NotificationEmployee/>} />
@@ -68,10 +74,13 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/projects/:projectId/dashboard" element={<ProjectDashboard />} />
+                <Route path="/projects/:projectId/add-expense" element={<Er403 />} />
                 <Route path="/projects/:projectId/expenses" element={<Expense />} />
                 <Route path="/projects" element={<Project />} />
                 <Route path="/add-project" element={<AddProject />} />
+                <Route path="/projects/:projectId/edit-project" element={<EditProject />} />
                 <Route path='/profile' element={<MyProfile />} />
+                <Route path='/edit-profile' element={<EditProfile />} />
                 <Route path='/projects/:projectId/invite-employee' element={<EmployeeSearch />} />
                 <Route path='/projects/:projectId/expenses/:expenseId' element={<ExpenseDetails />} />
                 <Route path='/projects/:projectId/analytics' element={<Analytics />} />
@@ -89,6 +98,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password/:resetId" element={<ResetPassword />} />
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="*" element={<Er401 />} />
             </Routes>
@@ -97,6 +108,7 @@ function App() {
         
         <Footer />
       </Router>
+      <ToastContainer />
     </>
   );
 }

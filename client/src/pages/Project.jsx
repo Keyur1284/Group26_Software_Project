@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import { getProjectsManager, getProjectsEmployee, reset } from "../features/project/projectSlice";
+import { toast } from "react-toastify";
 
 export const Project = () => {
 
@@ -27,13 +28,18 @@ export const Project = () => {
   }, [dispatch, user?.role]);
 
   useEffect(() => {
-    
-    if (isSuccess || isError)
+    if (isSuccess) 
     {
       dispatch(reset());
     }
 
-  }, [isSuccess, isError, appErr, serverErr]);
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   if (isLoading && projects?.length == 0)
   {

@@ -5,8 +5,6 @@ export const ExpByCategory = () => {
 
   const { categoryWiseExpenseArray } = useSelector(state => state.statistic)
 
-  const labels = categoryWiseExpenseArray?.map((category) => category.category)
-
   const color_palette = ["#BBDEFB", "#64B5F6", "#2196F3", "#1976D2", "#0D47A1",  //blue
     "#E0AAFF", "#C77DFF", "#9D4EDD", "#5A189A", "#310055", //purple
     "#FFE0E9", "#FF9EBB", "#E05780", "#8A2846", "#522E38", //pink
@@ -14,7 +12,7 @@ export const ExpByCategory = () => {
   ]
 
   const optionsDoughnut = {
-    labels: labels,
+    labels: categoryWiseExpenseArray?.map((category) => `${category.category} (${((category.categoryTotalMoneySpent / categoryWiseExpenseArray.reduce((acc, curr) => acc + curr.categoryTotalMoneySpent, 0)) * 100).toFixed(2)}%)`),
     responsive: [{
       options: {
         chart: {
@@ -31,7 +29,7 @@ export const ExpByCategory = () => {
     },
     stroke: {
       width: 1
-    }
+    },
   };
 
   const seriesDoughnut = categoryWiseExpenseArray?.map((category) => category.categoryTotalMoneySpent)

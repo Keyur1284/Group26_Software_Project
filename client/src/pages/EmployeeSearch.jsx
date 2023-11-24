@@ -1,29 +1,18 @@
 import { useState, useEffect } from "react";
 import { Hamburger4 } from "../components/Hamburger_4";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getEmployees,
-  sendInvite,
-  reset,
-} from "../features/invite/inviteSlice";
+import { getEmployees, sendInvite, reset } from "../features/invite/inviteSlice";
+import { getMembers, reset as teamReset } from "../features/team/teamSlice";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { useParams } from "react-router-dom";
-import { message } from "antd";
+import { toast } from "react-toastify";
 
 export const EmployeeSearch = () => {
   const { projectId } = useParams();
   const dispatch = useDispatch();
-  const {
-    employees,
-    isSuccess,
-    result,
-    isLoading,
-    isError,
-    appErr,
-    serverErr,
-  } = useSelector((state) => state.invite);
+  const { employees, isSuccess, result, isLoading, isError, appErr, serverErr } = useSelector((state) => state.invite);
 
-  const { employees: employees2 } = useSelector((state) => state.team);
+  const { employees: employees2, isLoading: teamLoading, isSuccess: teamSuccess, isError: teamError, appErr: teamAppErr, serverErr: teamServerErr } = useSelector((state) => state.team);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [matchingEmployees, setMatchingEmployees] = useState([]);
@@ -77,17 +66,45 @@ export const EmployeeSearch = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isSuccess && result) {
-      message.success(result);
+    dispatch(getMembers(projectId));
+  }, [dispatch, projectId]);
+
+  useEffect(() => {
+
+    if (teamSuccess)
+    {
+      dispatch(teamReset());
     }
 
-    if (isSuccess || isError) {
+    if (teamError)
+    {
+      toast.error(teamAppErr || teamServerErr);
+      dispatch(teamReset());
+    }
+
+  }, [dispatch, teamSuccess, teamError, teamAppErr, teamServerErr]);
+
+  useEffect(() => {
+
+    if (isSuccess)
+    {
       dispatch(reset());
     }
-  }, [isSuccess, isError]);
+
+    if (isSuccess && result) 
+    {
+      toast.success(result);
+    }
+
+    if (isError) 
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
 
-  if (isLoading && employees?.length > 0) {
+  if (isLoading || teamLoading) {
     return (
       <>
         <div
@@ -114,11 +131,11 @@ export const EmployeeSearch = () => {
                 style={{ width: "90%" }}
               />
             
-            <div className="mt-2 d-flex justify-content-center align-items-center gap-3" style={{ width: "90%" }}>
+            {/* <div className="mt-2 d-flex justify-content-center align-items-center gap-3" style={{ width: "90%" }}>
               <div className="display-6 fw-normal">Sending Invitations</div>
               <div className="spinner-border" style={{width: "3rem", height: "3rem"}} role="status">
               </div>
-            </div>
+            </div> */}
           
           </div>
 

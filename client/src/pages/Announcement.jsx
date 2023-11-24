@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import ig from "../assets/announcement-images/announcementbg.png";
 import mainbg from '../assets/project-dashboard/main-bg.jpg'
 import { Hamburger4 } from "../components/Hamburger_4";
@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
 import Skeleton from '@mui/material/Skeleton';
+import { toast } from "react-toastify";
 import { createAnnouncement, getAnnouncements, reset } from "../features/announcement/announcementSlice"; 
 
 
@@ -16,11 +17,12 @@ export const Announcement = () => {
   
   const { projectId } = useParams();
   const dispatch = useDispatch();
-  const { announcements, isLoading, isSuccess, isError, appErr, serverErr, projectName, managerName } = useSelector(state => state.announcement);
+  const navigate = useNavigate();
+  const { announcements, result, isLoading, isSuccess, isError, appErr, serverErr, projectName, managerName } = useSelector(state => state.announcement);
   const { user } = useSelector(state => state.auth);
 
   const formSchema = Yup.object({
-    message: Yup.string()
+    message: Yup.string().min(1).trim(),
   });  
 
   const formik = useFormik({
@@ -49,13 +51,25 @@ export const Announcement = () => {
 
   useEffect(() => {
 
-    if (isSuccess || isError) 
+    if (isSuccess)
     {
       dispatch(reset());
     }
-  }, [dispatch, isSuccess, isError]);
 
-  if ( isLoading && !managerName) {
+    if (isSuccess && result) 
+    {
+      toast.success(result);
+    }
+
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
+
+  if (isLoading && !managerName) {
     return (
       <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat", minHeight: "92vh" }}>
       <div className="row">
@@ -102,6 +116,22 @@ export const Announcement = () => {
                     <Typography component="div" variant="h1" style={{marginTop: "2vh"}}>
                       <Skeleton variant="rounded" animation="wave" width="35%" height="5vh" />
                     </Typography>
+                    {user?.role == "manager" && <div 
+                      className="edit-button m-2 d-flex rounded"
+                      style={{
+                        position: "absolute",
+                        bottom: "10px",
+                        right: "10px",
+                        fontWeight: "bold",
+                        color: "blue",
+                        border: "none",
+                        width: "13vw"
+                      }}
+                    >
+                      
+                      <Skeleton variant="rounded" animation="wave" width="100%" height="5vh" />
+
+                    </div>}
                   </div>
                 </div>
               </div>
@@ -119,7 +149,7 @@ export const Announcement = () => {
                     value={formik.values.message}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    className="form-control"
+                    className="form-control rounded"
                     placeholder="Type your announcement here"
                   />
                   <div className="input-group-append px-2">
@@ -130,6 +160,7 @@ export const Announcement = () => {
                       }}
                       className="btn btn-primary"
                       onClick={formik.handleSubmit}
+                      disabled={!formik.isValid}
                     >
                       Submit
                     </button>
@@ -207,7 +238,7 @@ export const Announcement = () => {
       <div className="card-body d-flex flex-column text-white">
         <h3 className="card-title mt-auto mb-2">{projectName}</h3>
         <h5>{managerName}</h5>
-        <button 
+        {user?.role == "manager" && <button 
           className="edit-button m-2 btn d-flex rounded"
           style={{
             position: "absolute",
@@ -218,11 +249,11 @@ export const Announcement = () => {
             color: "blue",
             border: "none",
           }}
-          onClick={() => console.log(projectId)}
+          onClick={() => navigate(`/projects/${projectId}/edit-project`)}
         >
           <EditIcon sx={{marginRight: 1}} />  
         Edit Project
-        </button>
+        </button>}
       </div>
     </div>
   </div>
@@ -240,7 +271,7 @@ export const Announcement = () => {
                   value={formik.values.message}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="form-control"
+                  className="form-control rounded"
                   placeholder="Type your announcement here"
                 />
                 <div className="input-group-append px-2">
@@ -251,6 +282,7 @@ export const Announcement = () => {
                     }}
                     className="btn btn-primary"
                     onClick={formik.handleSubmit}
+                    disabled={!formik.isValid}
                   >
                     Submit
                   </button>
@@ -271,7 +303,16 @@ export const Announcement = () => {
                         <h5 className="card-title">{announcement?.message}</h5>
                         <p className="card-text">
                           <small className="text-muted">
-                            {announcement?.name} | {new Date(announcement?.createdAt).toLocaleString()}
+                            {announcement?.name} | {
+                            
+                            new Date(announcement?.createdAt).toLocaleString("en-GB", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                              hour: "numeric",
+                              minute: "numeric",
+                            })
+                            }
                           </small>
                         </p>
                       </div>

@@ -7,8 +7,38 @@ const asyncHandler = require('express-async-handler');
 const getManagerDashboardController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email');
+    let project = await Project.findById(project_id).populate('employees', 'firstName lastName email')
     
+    project.employees.sort((a, b) => {
+        if (a.firstName < b.firstName)
+        {
+            return -1;
+        }
+
+        else if (a.firstName > b.firstName)
+        {
+            return 1;
+        }
+
+        else
+        {
+            if (a.lastName < b.lastName)
+            {
+                return -1;
+            }
+
+            else if (a.lastName > b.lastName)
+            {
+                return 1;
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+    });
+
     const approvedExpensesCount = await Expense.countDocuments({project_id, status: 'Approved'});
     const pendingExpensesCount = await Expense.countDocuments({project_id, status: 'Pending'});
     
@@ -23,6 +53,10 @@ const getManagerDashboardController = asyncHandler(async (req, res) => {
         const employee = project.employees[i];
         const employeeExpenses = await Expense.find({project_id, employee_id: employee._id, status: 'Approved'});
         const employeeTotalMoneySpent = employeeExpenses.reduce((total, expense) => total + expense.amount, 0);
+
+        if (employeeTotalMoneySpent == 0)
+            continue;
+
         employeeWiseExpenseArray.push({
             employee_id: employee._id,
             employeeName: employee.firstName + ' ' + employee.lastName,
@@ -30,6 +64,8 @@ const getManagerDashboardController = asyncHandler(async (req, res) => {
             employeeTotalMoneySpent
         });
     }
+
+    employeeWiseExpenseArray.sort((a, b) => b.employeeTotalMoneySpent - a.employeeTotalMoneySpent);
 
     res.status(200).json({
         success: true,
@@ -45,7 +81,37 @@ const getManagerDashboardController = asyncHandler(async (req, res) => {
 const getEmployeeDashboardController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email');
+    let project = await Project.findById(project_id).populate('employees', 'firstName lastName email');
+
+    project.employees.sort((a, b) => {
+        if (a.firstName < b.firstName)
+        {
+            return -1;
+        }
+
+        else if (a.firstName > b.firstName)
+        {
+            return 1;
+        }
+
+        else
+        {
+            if (a.lastName < b.lastName)
+            {
+                return -1;
+            }
+            
+            else if (a.lastName > b.lastName)
+            {
+                return 1;
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+    });
     
     const employee_id = req.employee._id;
     const approvedExpensesCount = await Expense.countDocuments({employee_id, project_id, status: 'Approved'});
@@ -86,7 +152,8 @@ const getExpenseContibutionController = asyncHandler(async (req, res) => {
     res.status(200).json({
         success: true,
         contribution,
-        totalMoneySpent
+        totalMoneySpent,
+        project
     });
 })
 
@@ -94,7 +161,34 @@ const getExpenseContibutionController = asyncHandler(async (req, res) => {
 const getManagerAnalyticsController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
-    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+    let project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+
+    project.employees.sort((a, b) => {
+        if (a.firstName < b.firstName)
+        {
+            return -1;
+        }
+        else if (a.firstName > b.firstName)
+        {
+            return 1;
+        }
+        else
+        {
+            if (a.lastName < b.lastName)
+            {
+                return -1;
+            }
+            else if (a.lastName > b.lastName)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    });
+
     const expenses = await Expense.find({project_id}).populate('employee_id', 'firstName lastName').sort({date: 1});
 
     const employeeWiseExpenseArray = [];
@@ -104,6 +198,10 @@ const getManagerAnalyticsController = asyncHandler(async (req, res) => {
         const employee = project.employees[i];
         const employeeExpenses = await Expense.find({project_id, employee_id: employee._id, status: 'Approved'});
         const employeeTotalMoneySpent = employeeExpenses.reduce((total, expense) => total + expense.amount, 0);
+
+        if (employeeTotalMoneySpent == 0)
+            continue;
+
         employeeWiseExpenseArray.push({
             employee_id: employee._id,
             employeeName: employee.firstName + ' ' + employee.lastName,
@@ -111,6 +209,8 @@ const getManagerAnalyticsController = asyncHandler(async (req, res) => {
             employeeTotalMoneySpent
         });
     }
+
+    employeeWiseExpenseArray.sort((a, b) => b.employeeTotalMoneySpent - a.employeeTotalMoneySpent);
 
     const categoryWiseExpenseArray = [];
 
@@ -134,6 +234,8 @@ const getManagerAnalyticsController = asyncHandler(async (req, res) => {
         });
     }
 
+    categoryWiseExpenseArray.sort((a, b) => b.categoryTotalMoneySpent - a.categoryTotalMoneySpent);
+
     res.status(200).json({
         success: true,
         project,
@@ -148,7 +250,34 @@ const getEmployeeAnalyticsController = asyncHandler(async (req, res) => {
 
     const project_id = req.params.project_id;
     const employee_id = req.employee._id;
-    const project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+    let project = await Project.findById(project_id).populate('employees', 'firstName lastName email').populate('manager_id', 'firstName lastName email');
+
+    project.employees.sort((a, b) => {
+        if (a.firstName < b.firstName)
+        {
+            return -1;
+        }
+        else if (a.firstName > b.firstName)
+        {
+            return 1;
+        }
+        else
+        {
+            if (a.lastName < b.lastName)
+            {
+                return -1;
+            }
+            else if (a.lastName > b.lastName)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    });
+
     const expenses = await Expense.find({project_id, employee_id}).populate('employee_id', 'firstName lastName').sort({date: 1});
 
     const categoryWiseExpenseArray = [];
@@ -172,6 +301,8 @@ const getEmployeeAnalyticsController = asyncHandler(async (req, res) => {
             categoryTotalMoneySpent
         });
     }
+
+    categoryWiseExpenseArray.sort((a, b) => b.categoryTotalMoneySpent - a.categoryTotalMoneySpent);
 
     res.status(200).json({
         success: true,

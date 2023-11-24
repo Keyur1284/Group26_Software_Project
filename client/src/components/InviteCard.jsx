@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import '../css/Invites.css';
+import '../styles/Invites.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInvites, reset, acceptInvite } from '../features/invite/inviteSlice';
 import Skeleton from '@mui/material/Skeleton';
-import { message } from 'antd';
+import { toast } from 'react-toastify';
 
 const CardStyle = {
   backgroundColor: "#295CAA",
@@ -29,17 +29,23 @@ export const InviteCard = () => {
 
   useEffect(() => {
 
-    if (isSuccess && result)
-    {
-      message.success(result);
-      navigate('/projects');
-    }
-
-    if (isSuccess || isError) 
+    if (isSuccess)
     {
       dispatch(reset());
     }
-  }, [dispatch, isSuccess, isError]);
+
+    if (isSuccess && result)
+    {
+      toast.success(result);
+      navigate('/projects');
+    }
+
+    if (isError) 
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   if (isLoading && invitations?.length == 0)
   {

@@ -11,20 +11,21 @@ import { clearEmployeesAndInvitations } from "../features/invite/inviteSlice";
 import { clearProjects } from "../features/project/projectSlice";
 import { clearTeam } from "../features/team/teamSlice";
 import { clearExpenses } from "../features/expense/expenseSlice";
-import { clearNotification, getEmployeeNotifications, getManagerNotifications } from "../features/notification/notificationSlice";
+import { clearNotification, getEmployeeNotifications, getManagerNotifications, reset } from "../features/notification/notificationSlice";
 import { clearStatistics } from "../features/statistic/statisticSlice";
-import { message } from "antd";
-import "../css/Homepage.css";
+import { toast } from "react-toastify";
+import "../styles/Homepage.css";
+import Logo from '../assets/Logo.jpeg';
 
 export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector((state) => state.auth);
+  const { isLoading, user } = useSelector((state) => state.auth);
   const { isLoading: isLoadingAnnouncement} = useSelector((state) => state.announcement)
   const { isLoading: isLoadingExpense} = useSelector((state) => state.expense)
   const { isLoading: isLoadingInvite} = useSelector((state) => state.invite)
-  const { notifications } = useSelector((state) => state.notification)
+  const { notifications, isSuccess, isError, appErr, serverErr } = useSelector((state) => state.notification)
   const { isLoading: isLoadingProject} = useSelector((state) => state.project)
   const { isLoading: isLoadingStatistic} = useSelector((state) => state.statistic)
   const { isLoading: isLoadingTeam} = useSelector((state) => state.team)
@@ -40,14 +41,13 @@ export const Header = () => {
       dispatch(clearNotification())
       dispatch(clearStatistics())
       await dispatch(logout())
-      message.success("User Logged Out Successfully!")
+      toast.success("User Logged Out Successfully!")
       navigate('/login')
     }
 
     catch (error)
     {
-      console.error("Logout error: ", error)
-      message.error("Logout failed")
+      toast.error(error.message)
     }
 
   }
@@ -71,6 +71,21 @@ export const Header = () => {
     isLoadingTeam
   ])
 
+  useEffect(() => {
+
+    if (isSuccess)
+    {
+      dispatch(reset());
+    }
+
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr])
+
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark bg-dark p-2"
@@ -83,10 +98,10 @@ export const Header = () => {
             className="navbar-brand"
         >        
               <img
-                src="https://static.dezeen.com/uploads/2023/07/x-logo-twitter-elon-musk_dezeen_2364_col_0-1-600x600.jpg"
+                src={Logo}
                 alt="logo"
                 className="rounded-circle"
-                style={{ height: "35px", width: "35px" }}
+                style={{ height: "45px", width: "45px" }}
               />
         </a>
         <Link className="navbar-brand" to="/">

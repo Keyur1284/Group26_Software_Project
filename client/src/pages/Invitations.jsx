@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { faEnvelopeOpenText , faUser, faUserEdit} from "@fortawesome/free-solid-svg-icons";
-import '../css/Profile.css';
+import '../styles/Profile.css';
 import {InviteCard} from '../components/InviteCard'
 
 export const Invitations = () => {
@@ -46,7 +46,7 @@ export const Invitations = () => {
                 <Link
                   className="nav-link"
                   style={{ color: "black", fontSize: "20px" }}
-                  to="/profile"
+                  to="/edit-profile"
                 >
                   <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
                   Edit Profile

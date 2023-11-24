@@ -1,14 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const {loginController, registerController, getEmployeeProfileController, forgotPasswordController, verifyIdAndTokenController, resetPasswordController} = require('../controllers/employeeController');
-const {employeeAuthMiddleware} = require('../middlewares/authMiddleware');
+const {
+  loginController,
+  registerController,
+  getProfileController,
+  editProfileController,
+  forgotPasswordController,
+  resetPasswordController,
+} = require("../controllers/employeeController");
+const { employeeAuthMiddleware } = require("../middlewares/authMiddleware");
 
-router.post('/register', registerController);
-router.post('/login', loginController);
-router.get('/profile', employeeAuthMiddleware, getEmployeeProfileController);
-router.post('/forgot-password', forgotPasswordController);
-router.get('/reset-password/:id/:token', verifyIdAndTokenController);
-router.post('/reset-password/:id/:token', resetPasswordController);
-
+router.post("/register", registerController);
+router.post("/login", loginController);
+router.get("/profile", employeeAuthMiddleware, getProfileController);
+router.patch("/edit-profile", employeeAuthMiddleware, editProfileController);
+router.post("/forgot-password", forgotPasswordController);
+router.post("/reset-password/:reset_id", resetPasswordController);
 
 module.exports = router;

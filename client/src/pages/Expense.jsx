@@ -6,10 +6,11 @@ import { Hamburger4 } from "../components/Hamburger_4";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getExpenseEmployee, getExpenseManager, getExpenseManagerByFilter, getExpenseEmployeeByFilter, reset } from "../features/expense/expenseSlice";
+import { getExpenseManagerByFilter, getExpenseEmployeeByFilter, reset } from "../features/expense/expenseSlice";
+import { getMembers, reset as teamReset } from "../features/team/teamSlice";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
-import { message } from "antd";
+import { toast } from "react-toastify";
 
 export const Expense = () => {
 
@@ -20,6 +21,8 @@ export const Expense = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedEmployee, setSelectedEmployee] = useState("all");
+  const [selectedStatus, setSelectedStatus] = useState("all");
 
   const handleDateOptionChange = (event) => {
     const newDateOption = event.target.value;
@@ -48,8 +51,26 @@ export const Expense = () => {
     setSelectedCategory(newCategory);
   };
 
+  const handleEmployeeChange = (event) => {
+    const newEmployee = event.target.value;
+    setSelectedEmployee(newEmployee);
+  };
+
+  const handleStatusChange = (event) => {
+    const newStatus = event.target.value;
+    setSelectedStatus(newStatus);
+  };
+
   const { user } = useSelector((state) => state.auth);
-  const { expenses, isSuccess, isLoading, isError, appErr, serverErr } = useSelector((state) => state.expense);
+  const { expenses, isSuccess, isLoading, isError, appErr, serverErr, result } = useSelector((state) => state.expense);
+  const { employees, isLoading: teamLoading, isSuccess: teamSuccess, isError: teamError, appErr: teamAppErr, serverErr: teamServerErr } = useSelector((state) => state.team);
+
+  useEffect(() => {
+
+    if (user?.role == "manager")
+      dispatch(getMembers(projectId));
+
+  }, [dispatch, projectId, user?.role]);
 
   useEffect(() => {
 
@@ -58,7 +79,9 @@ export const Expense = () => {
       startDate: startDate,
       endDate: endDate,
       category: selectedCategory,
-      projectId: projectId
+      projectId: projectId,
+      employeeId: user?.role == "manager" ? selectedEmployee : null,
+      status: selectedStatus
     }
 
     if (user?.role == "manager")
@@ -77,33 +100,44 @@ export const Expense = () => {
       dispatch(getExpenseEmployeeByFilter(filterData));
     }
 
-  }, [selectedDateOption, startDate, endDate, selectedCategory]);
-
-  // useEffect(() => {
-
-  //   if (user.role == "employee")
-  //     dispatch(getExpenseEmployee(projectId));
-
-  //   else if (user.role == "manager")
-  //     dispatch(getExpenseManager(projectId));
-    
-  // }, [dispatch, projectId, user.role]);
+  }, [selectedDateOption, startDate, endDate, selectedCategory, selectedEmployee, selectedStatus, dispatch, projectId, user?.role]);
 
   useEffect(() => {
 
-    if (isSuccess || isError)
+    if (isSuccess)
     {
       dispatch(reset());
     }
 
-    if (isError)
+    if (isSuccess && result)
     {
-      message.error(appErr || serverErr);
+      toast.success(result);
     }
 
-  }, [isSuccess, isError]);
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
 
-  if (isLoading)
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
+
+  useEffect(() => {
+
+    if (teamSuccess)
+    {
+      dispatch(teamReset());
+    }
+
+    if (teamError)
+    {
+      toast.error(teamAppErr || teamServerErr);
+      dispatch(teamReset());
+    }
+
+  }, [dispatch, teamSuccess, teamError, teamAppErr, teamServerErr]);
+
+  if (isLoading || teamLoading)
   {
     return (
       <>
@@ -145,8 +179,8 @@ export const Expense = () => {
     )
   }
 
-  const categoryOptions = ["Accommodation", "Advertising", "Entertainment", "Food", "Gifts", "Miscellaneous", "OfficeSupplies", "Technology", "Travel", "Utilities"]
-  
+  const categoryOptions = ["Accommodation", "Advertising", "Entertainment", "Food", "Gifts", "Miscellaneous", "OfficeSupplies", "Technology", "Travel", "Utilities"];
+
   if (user?.role == "employee")
   {
     return (
@@ -188,7 +222,7 @@ export const Expense = () => {
                       marginRight: "10px"
                     }}
                   >
-                    <option value="all">None</option>
+                    <option value="all">All Expenses</option>
                     <option value="7">Last 7 days</option>
                     <option value="30">Last 30 days</option>
                     <option value="custom">Custom Date</option>
@@ -233,7 +267,7 @@ export const Expense = () => {
                       cursor: "pointer",
                     }}>
 
-                    <option value="all">None</option>
+                    <option value="all">All Categories</option>
                     {categoryOptions.map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -241,22 +275,23 @@ export const Expense = () => {
                     ))}
                   </select>
                 </div>
-                {selectedCategory === "category" && (
-                  <div className="d-flex align-items-center">
-                    <input
-                      type="text"
-                      value={selectedCategory}
-                      onChange={handleCategoryChange}
-                      className="form-control rounded-pill"
-                      placeholder="Category"
-                      style={{
-                        backgroundColor: "white",
-                        color: "#000000",
-                        cursor: "pointer",
+                <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
+                  <select
+                    value={selectedStatus}
+                    onChange={handleStatusChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#000000",
+                      cursor: "pointer",
                       }}
-                    />
+                    >
+                      <option value="all">Any Status</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
                   </div>
-                )}
               </div>
             </div>
             {expenses?.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>
@@ -320,7 +355,7 @@ export const Expense = () => {
                       marginRight: "10px"
                     }}
                   >
-                    <option value="all">None</option>
+                    <option value="all">All Expenses</option>
                     <option value="7">Last 7 days</option>
                     <option value="30">Last 30 days</option>
                     <option value="custom">Custom Date</option>
@@ -354,7 +389,8 @@ export const Expense = () => {
                     />
                   </div>
                 )}
-                <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
+
+                <div className="d-flex align-items-center">
                   <select
                     value={selectedCategory}
                     onChange={handleCategoryChange}
@@ -365,7 +401,7 @@ export const Expense = () => {
                       cursor: "pointer",
                     }}>
 
-                    <option value="all">None</option>
+                    <option value="all">All Categories</option>
                     {categoryOptions.map((category) => (
                       <option key={category} value={category}>
                         {category}
@@ -373,22 +409,47 @@ export const Expense = () => {
                     ))}
                   </select>
                 </div>
-                {selectedCategory === "category" && (
-                  <div className="d-flex align-items-center">
-                    <input
-                      type="text"
-                      value={selectedCategory}
-                      onChange={handleCategoryChange}
-                      className="form-control rounded-pill"
-                      placeholder="Category"
-                      style={{
-                        backgroundColor: "white",
-                        color: "#000000",
-                        cursor: "pointer",
+
+                  <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
+                  <select
+                    value={selectedStatus}
+                    onChange={handleStatusChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#000000",
+                      cursor: "pointer",
                       }}
-                    />
+                    >
+                      <option value="all">Any Status</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Approved">Approved</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
                   </div>
-                )}
+
+
+                <div className="d-flex align-items-center" style={{ marginLeft: "10px" }}>
+                  <select
+                    value={selectedEmployee}
+                    onChange={handleEmployeeChange}
+                    className="form-select form-select-lg rounded-pill"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#000000",
+                      cursor: "pointer",
+                      }}
+                    >
+                      <option value="all">All Employees</option>
+                        {employees?.map((employee) => (
+                          <option key={employee._id} value={employee._id}>
+                            {employee.firstName} {employee.lastName}
+                      </option>
+                      ))}
+                    </select>
+                  </div>
+
+
               </div>
             </div>
             {expenses?.length > 0 && <div className="text-white d-flex justify-content-end mt-2 mb-2" style={{ fontSize: "22px", height: "10vh", fontWeight: "bold" }}>

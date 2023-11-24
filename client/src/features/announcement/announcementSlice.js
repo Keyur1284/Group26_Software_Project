@@ -6,6 +6,7 @@ const initialState = {
     isLoading: false,
     isSuccess: false,
     message: "",
+    result: "",
     appErr: undefined,
     serverErr: undefined,
     announcements: [],
@@ -56,11 +57,13 @@ const announcementSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = false;
             state.message = "";
+            state.result = "";
             state.appErr = "";
             state.serverErr = "";
         },
         clearAnnouncements: (state) => {
             state.announcements = [];
+            state.project = null;
         }
     },
     extraReducers: (builder) => {
@@ -75,7 +78,7 @@ const announcementSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.announcements = [action.payload.announcement, ...state.announcements];
-                state.message = action.payload.message;
+                state.result = action.payload.message;
             })
 
             .addCase(createAnnouncement.rejected, (state, action) => {
@@ -93,6 +96,7 @@ const announcementSlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.announcements = action.payload.announcements;
+                state.project = action.payload.project;
                 state.projectName = action.payload.projectName;
                 state.managerName = action.payload.managerName;
                 state.message = action.payload.message;

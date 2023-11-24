@@ -8,7 +8,8 @@ import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getMembers } from "../features/team/teamSlice";
+import { toast } from "react-toastify";
+import { getMembers, reset } from "../features/team/teamSlice";
 
 export const TeamMembers = () => {
 
@@ -21,6 +22,21 @@ export const TeamMembers = () => {
   useEffect(() => {
     dispatch(getMembers(projectId));
   }, [dispatch, projectId]);
+
+  useEffect(() => {
+
+    if (isSuccess)
+    {
+      dispatch(reset());
+    }
+
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+    
+  }, [isSuccess, isError, appErr, serverErr, dispatch]);
 
   if (isLoading && !manager) {
     return (

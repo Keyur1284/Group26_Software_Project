@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import mainbg from "../assets/project-dashboard/main-bg.jpg";
 import projectImage from "../assets/addProject-images/AddProject-pic.png"; 
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createProject, reset } from "../features/project/projectSlice";
@@ -15,10 +15,10 @@ export const AddProject = () => {
   const navigate = useNavigate();
 
   const formSchema = Yup.object({
-    name: Yup.string().required("Project Name is required").max(30, "Project Name must not exceed 30 characters"),
+    name: Yup.string().required("Project Name is required").max(100, "Project Name must not exceed 100 characters").min(1).trim(),
     budget: Yup.number().required("Project Amount is required"),
     alertLimit: Yup.number().required("Alert Limit is required"),
-    description: Yup.string().max(400, "Project Description must not exceed 400 characters")
+    description: Yup.string().max(400, "Project Description must not exceed 400 characters").min(1).trim(),
   });
 
   const formik = useFormik({
@@ -37,17 +37,33 @@ export const AddProject = () => {
   const {isSuccess, isError, isLoading, appErr, serverErr} = useSelector(state => state.project);
 
   useEffect(() => {
+    
+    const handleBeforeUnload = (e) => {
+        const confirmationMessage = "Are you sure you want to leave? Your changes may not be saved.";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+
+  }, []);
+
+  useEffect(() => {
 
     if (isSuccess)
     {
-      message.success("Project Created Successfully!");
+      toast.success("Project Created Successfully!");
       dispatch(reset());
       navigate('/projects')
     }
 
     if (isError)
     {
-      message.error(appErr||serverErr);
+      toast.error(appErr||serverErr);
       dispatch(reset())
     }
 
@@ -85,7 +101,7 @@ export const AddProject = () => {
                 </p>
                 <form onSubmit={formik.handleSubmit}>
                   <div className="mb-3 mt-4">
-                    <label className="form-label text-dark" style={{ fontSize: "20px" }}>
+                    <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                       Project Name
                     </label>
                     <input
@@ -105,7 +121,7 @@ export const AddProject = () => {
                   </div>
 
                   <div className="mb-3 mt-4">
-                    <label className="form-label text-dark" style={{ fontSize: "20px" }}>
+                    <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                       Budget Amount
                     </label>
                     <input
@@ -125,7 +141,7 @@ export const AddProject = () => {
                   </div>
 
                   <div className="mb-3 mt-4">
-                    <label className="form-label text-dark" style={{ fontSize: "20px" }}>
+                    <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                       Alert Limit
                     </label>
                     <input
@@ -145,10 +161,10 @@ export const AddProject = () => {
                   </div>
 
                   <div className="mb-3 mt-4">
-                    <label className="form-label text-dark" style={{ fontSize: "20px" }}>
+                    <label className="form-label text-dark" style={{ fontSize: "20px", fontWeight:"600" }}>
                       Project Description
                     </label>
-                    <input
+                    <textarea
                       type="text"
                       name="description"
                       placeholder="Description"
@@ -179,10 +195,10 @@ export const AddProject = () => {
                     <button
                       type="button"
                       className="btn btn-dark rounded-pill shadow-lg"
-                      onClick={() => formik.resetForm()}
+                      onClick={() => navigate('/projects')}
                       style={{ fontSize: "22px" }}
                     >
-                      Clear
+                      Cancel
                     </button>
                   </div>
                 </form>

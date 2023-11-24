@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {message} from "antd";
+import { toast } from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { loginEmployee, loginManager, reset } from "../features/auth/authSlice";
@@ -15,10 +15,8 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const formSchema = Yup.object({
-    email: Yup.string()
-      .email("Invalid email format")
-      .required("Email is required"),
-    password: Yup.string().required("Password is required"),
+    email: Yup.string().email("Invalid email format").required("Email is required").min(1).trim(),
+    password: Yup.string().required("Password is required").min(1).trim(),
   });
 
   const formik = useFormik({
@@ -44,7 +42,7 @@ export const Login = () => {
 
     if (isSuccess && user)
     {
-      message.success("User Logged In Successfully!");
+      toast.success("User Logged In Successfully!");
       navigate("/projects");
       dispatch(reset());
     }
@@ -56,7 +54,7 @@ export const Login = () => {
 
     if(isError)
     {
-      message.error(appErr||serverErr);
+      toast.error(appErr||serverErr);
       dispatch(reset());
     }
 
@@ -214,15 +212,20 @@ export const Login = () => {
                     </button>
                   </div>
                   <div
-                    className="create-account text-center mt-3"
+                    className="create-account d-flex justify-content-evenly text-center mt-3"
                     style={{ fontSize: "18px" }}
                   >
-                    <p>
-                      Not a user? {"   "}
-                      <Link to="/register" className="text-white">
-                        Create Account
-                      </Link>{" "}
-                    </p>
+                  <div>
+                    <Link to="/forgot-password" className="text-white text-decoration-none">
+                      Forgot Password?
+                    </Link>
+                  </div>
+                  <div>
+                    <Link to="/register" className="text-white text-decoration-none">
+                    Not a user? {"   "}
+                      Create Account
+                    </Link>{" "}
+                  </div>
                   </div>
                 </form>
               </div>

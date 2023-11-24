@@ -1,6 +1,8 @@
 const Manager = require('../models/managerModel');
 const Employee = require('../models/employeeModel');
 const Project = require('../models/projectModel');
+const Expense = require('../models/expenseModel');
+const ManagerNotification = require('../models/managerNotificationModel');
 const asyncHandler = require('express-async-handler');
 
 
@@ -67,6 +69,71 @@ const createProjectController = asyncHandler(async (req, res) => {
     }
 })
 
+const editProjectController = asyncHandler(async (req, res) => {
+
+    const {name, description, budget, alertLimit} = req.body;
+
+    if (!name || !budget || !alertLimit)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Please fill all the fields'});
+        throw new Error('Please fill all the fields');
+    }
+
+    if (budget <= 0)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Budget must be greater than 0'});
+        throw new Error('Budget must be greater than 0');
+    }
+
+    if (alertLimit <= 0 || alertLimit >= 100)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Alert limit must be greater than 0 and less than 100'});
+        throw new Error('Alert limit must be greater than 0 and less than 100');
+    }
+
+    const project_id = req.params.project_id;
+    const project = await Project.findById(project_id);
+    const expenses = await Expense.find({project_id, status: 'Approved'});
+    const totalMoneySpent = expenses.reduce((total, expense) => total + expense.amount, 0);
+
+    if (totalMoneySpent > budget)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Budget cannot be less than the total money spent'});
+        throw new Error('Budget cannot be less than the total money spent');
+    }
+
+    const updatedProject = await Project.findByIdAndUpdate(project_id, req.body, {new: true});
+
+    const usedPercentage = (totalMoneySpent / budget) * 100;
+
+    if (usedPercentage >= alertLimit)
+    {
+        const notification = await ManagerNotification.create({
+            manager_id: req.manager._id,
+            project_id,
+            message: `Your project ${project.name} has reached ${alertLimit}% of the budget. Please update the budget if required.`
+        });
+    }
+
+    if (updatedProject)
+    {
+        res.status(200).json({
+            success: true,
+            updatedProject
+        });
+    }
+
+    else
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid data'});
+        throw new Error('Invalid data');
+    }
+});
 
 const findEmployeesController = asyncHandler(async (req, res) => {
 
@@ -111,6 +178,10 @@ const getProjectsEmployeeController = asyncHandler(async (req, res) => {
             modifiedProjects.push(modifiedProject);
         }
 
+        modifiedProjects.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+        });
+
         res.status(200).json({
             success: true,
             projects: modifiedProjects
@@ -150,6 +221,10 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
             modifiedProjects.push(modifiedProject);
         }
 
+        modifiedProjects.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+        });
+
         res.status(200).json({
             success: true,
             projects: modifiedProjects
@@ -170,8 +245,8 @@ const getProjectsManagerController = asyncHandler(async (req, res) => {
 
 const getMembersController = asyncHandler(async (req, res) => {
     
-    const projectId = req.params.projectId;
-    const project = await Project.findById(projectId).populate('employees');
+    const project_id = req.params.project_id;
+    const project = await Project.findById(project_id).populate('employees');
     const employees = project.employees;
     const manager = await Manager.findById(project.manager_id);
 
@@ -189,6 +264,33 @@ const getMembersController = asyncHandler(async (req, res) => {
             };
             modifiedEmployees.push(modifiedEmployee);
         }
+        
+        modifiedEmployees.sort((a, b) => {
+            if (a.firstName < b.firstName)
+            {
+                return -1;
+            }
+            else if (a.firstName > b.firstName)
+            {
+                return 1;
+            }
+            else
+            {
+                if (a.lastName < b.lastName)
+                {
+                    return -1;
+                }
+                else if (a.lastName > b.lastName)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        });
+
 
         res.status(200).json({
             success: true,
@@ -212,6 +314,7 @@ const getMembersController = asyncHandler(async (req, res) => {
 module.exports = {
     findEmployeesController, 
     createProjectController, 
+    editProjectController,
     getProjectsEmployeeController,
     getProjectsManagerController,
     getMembersController

@@ -47,7 +47,42 @@ export const registerManager = createAsyncThunk('/auth/registerManager', async (
     }
 })
 
+export const editEmployeeProfile = createAsyncThunk('/auth/editEmployeeProfile', async (userData, thunkAPI) => {
 
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await authService.editEmployeeProfile(userData, token);
+        return response;
+    }
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+export const editManagerProfile = createAsyncThunk('/auth/editManagerProfile', async (userData, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await authService.editManagerProfile(userData, token);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
 
 export const loginEmployee = createAsyncThunk('/auth/loginEmployee', async (userData, thunkAPI) => {
 
@@ -83,6 +118,76 @@ export const loginManager = createAsyncThunk('/auth/loginManager', async (userDa
     }
 })
 
+export const forgotPasswordEmployee = createAsyncThunk('/auth/forgotPasswordEmployee', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.forgotPasswordEmployee(userData);
+        return response;
+    }
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+export const forgotPasswordManager = createAsyncThunk('/auth/forgotPasswordManager', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.forgotPasswordManager(userData);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+export const resetPasswordEmployee = createAsyncThunk('/auth/resetPasswordEmployee', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.resetPasswordEmployee(userData);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+export const resetPasswordManager = createAsyncThunk('/auth/resetPasswordManager', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.resetPasswordManager(userData);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
 
 export const getManagerProfile = createAsyncThunk('/auth/getManagerProfile', async (_, thunkAPI) => {
 
@@ -158,6 +263,42 @@ const authSlice = createSlice({
                 state.serverErr = action.error?.message;
             })
 
+            .addCase(editEmployeeProfile.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(editEmployeeProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user = action.payload;
+                state.message = action.payload?.message;
+            })
+
+            .addCase(editEmployeeProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(editManagerProfile.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(editManagerProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.user = action.payload;
+                state.message = action.payload?.message;
+            })
+
+            .addCase(editManagerProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
             .addCase(loginEmployee.pending, (state) => {
                 state.isLoading = true;
             })
@@ -191,6 +332,70 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(forgotPasswordEmployee.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(forgotPasswordEmployee.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+
+            .addCase(forgotPasswordEmployee.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(forgotPasswordManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(forgotPasswordManager.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+
+            .addCase(forgotPasswordManager.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(resetPasswordEmployee.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(resetPasswordEmployee.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+
+            .addCase(resetPasswordEmployee.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(resetPasswordManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(resetPasswordManager.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+            })
+
+            .addCase(resetPasswordManager.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message
                 state.serverErr = action.error?.message;
             })
 

@@ -23,8 +23,8 @@ const managerSchema = new mongoose.Schema({
         }
     },
     dob: {
-        type: String,
-        required: [true, 'Please enter your date-of-birth'],
+        type: Date,
+        required: [true, 'Please enter your date of birth'],
     },
     contactNo: {
         type: String,

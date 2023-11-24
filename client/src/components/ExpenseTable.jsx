@@ -15,21 +15,21 @@ export const ExpenseTable = () => {
             expenseName: expense.name,
             amount: expense.amount,
             status: expense.status,
-            date: new Date(expense.date).toLocaleDateString()
+            date: new Date(expense.date).toLocaleDateString("en-GB")
         }
     })
   
     return (
       <div className="table-container text-center" style={{ maxHeight: "60vh", overflowY: "auto" }}>
-  <table className="table table-responsive table-hover">
+  <table className="table table-responsive table-hover" id="expense-history-table">
     <thead>
       <tr>
         <th>Sr No.</th>
         <th>Employee Name</th>
+        <th>Date</th>
         <th>Expense Name</th>
         <th>Amount</th>
         <th>Status</th>
-        <th>Date</th>
       </tr>
     </thead>
     <tbody>
@@ -37,10 +37,10 @@ export const ExpenseTable = () => {
         <tr key={index} onClick={() => navigate(`/projects/${projectId}/expenses/${expense._id}`)} className={getBackgroundColorClass(expense.status)} style={{cursor: "pointer"}}>
           <td>{expense.serialNumber}</td>
           <td>{expense.employeeName}</td>
+          <td>{expense.date}</td>
           <td>{expense.expenseName}</td>
           <td>&#8377; {expense.amount}</td>
           <td>{expense.status}</td>
-          <td>{expense.date}</td>
         </tr>
       ))}
     </tbody>

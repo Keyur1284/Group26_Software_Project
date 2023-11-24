@@ -1,4 +1,4 @@
-import '../css/ProjectDashboard.css'
+import '../styles/ProjectDashboard.css'
 import bg1 from '../assets/project-dashboard/bg-1.png'
 import bg2 from '../assets/project-dashboard/bg-2.jpg'
 import bg3 from '../assets/project-dashboard/bg-3.jpg'
@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getManagerDashboard, getEmployeeDashboard, reset } from '../features/statistic/statisticSlice'
 import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 
 export const ProjectDashboard = () => {
@@ -33,14 +34,20 @@ export const ProjectDashboard = () => {
 
     useEffect(() => {
 
-        if (isSuccess || isError)
+        if (isSuccess)
         {
             dispatch(reset());
         }
 
-    }, [dispatch, isSuccess, isError])
+        if (isError)
+        {
+            toast.error(appErr || serverErr);
+            dispatch(reset());
+        }
 
-    if (isLoading) {
+    }, [dispatch, isSuccess, isError, appErr, serverErr])
+
+    if (isLoading && !project?.budget) {
 
         return (
             <div className="px-3 py-3" style={{ backgroundImage: `url(${mainbg})`, backgroundRepeat: "repeat" }}>

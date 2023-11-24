@@ -1,9 +1,10 @@
 import p_1 from "../assets/registration-images/p_1.jpg";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { useState, useEffect } from "react";
 import * as Yup from "yup";
-import { message } from "antd";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { registerEmployee, registerManager, reset } from "../features/auth/authSlice";
 import { Loading } from "../components/Loading";
@@ -15,37 +16,43 @@ export const Register = () => {
 
   const formSchema = Yup.object({
     firstName: Yup.string()
-      .min(4, "Username must be at least 4 characters")
-      .max(24, "Username must not exceed 24 characters")
+      .min(2, "First Name must be at least 2 characters")
+      .max(24, "First Name must not exceed 24 characters")
       .matches(
-        /^[A-z][A-z0-9\s-_]*$/,
-        "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
+        /^[A-Z][a-z]*$/,
+        "First Name must start with a capital letter and contain only letters"
       )
-      .required("First Name is required"),
+      .required("First Name is required").trim(),
       lastName: Yup.string()
-      .min(4, "Username must be at least 4 characters")
-      .max(24, "Username must not exceed 24 characters")
+      .min(2, "Last Name must be at least 2 characters")
+      .max(24, "Last Name must not exceed 24 characters")
       .matches(
-        /^[A-z][A-z0-9\s-_]*$/,
-        "Username must start with a letter and contain only letters, numbers, underscores, and hyphens"
+        /^[A-Z][a-z]*$/,
+        "Last Name must start with a capital letter and contain only letters"
       )
-      .required("Last Name is required"),
+      .required("Last Name is required").trim(),
     email: Yup.string()
       .email("Invalid email format")
-      .required("Email is required"),
+      .required("Email is required")
+      .trim(),
     dob:Yup.date().required("Birth Date is required"),
-    contactNo:Yup.string().required("Contact Number is required"),
+    contactNo: Yup.string()
+      .matches(/^[6-9]\d{9}$/, "Contact Number must be 10 digits long and start with 9,8,7,6 only")
+      .required("Contact Number is required")
+      .trim(),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .max(24, "Password must not exceed 24 characters")
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*]).{8,24}$/,
-        "Password must include uppercase and lowercase letters, a number, and a special character"
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,24}$/,
+        "Password must include uppercase and lowercase letters, a number, and a special character (!@#$%^&*)"
       )
-      .required("Password is required"),
+      .required("Password is required")
+      .trim(),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm Password is required"),
+      .required("Confirm Password is required")
+      .trim(),
 
   });
 
@@ -74,21 +81,41 @@ export const Register = () => {
   const { isSuccess, isError, isLoading, appErr, serverErr, user } = useSelector(state => state.auth);
 
   useEffect(() => {
+    
+    const handleBeforeUnload = (e) => {
+        const confirmationMessage = "Are you sure you want to leave? Your changes may not be saved.";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+
+  }, []);
+
+  useEffect(() => {
   
-      if(user){
+      if(user)
+      {
         navigate("/");
       }
 
-      if (isSuccess) {
-        message.success("User Registered Successfully!");
+      if (isSuccess) 
+      {
+        toast.success("User Registered Successfully!");
         dispatch(reset());
         navigate("/login");
       }
   
-      if (isError) {
-        message.error(appErr || serverErr);
+      if (isError) 
+      {
+        toast.error(appErr || serverErr);
         dispatch(reset());
       }
+
   }, [dispatch, isSuccess, isError, appErr, serverErr, user])
 
   const [showPassword, setShowPassword] = useState(false);
@@ -397,8 +424,8 @@ export const Register = () => {
                 style={{ fontSize: "18px" }}
               >
                 <p>
+                  <Link to="/login" className="text-white text-decoration-none">
                   Already Registered? {"   "}
-                  <Link to="/login" className="text-white">
                     Sign In
                   </Link>{" "}
                 </p>

@@ -25,7 +25,18 @@ const registerManager = async (userData) => {
     return response.data;
 }
 
+const editEmployeeProfile = async (userData, token) => {
 
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.patch(`${baseURL}/employees/edit-profile`, userData, config);
+    return response.data;
+}
 
 const loginEmployee = async (userData) => {
 
@@ -64,6 +75,62 @@ const loginManager = async (userData) => {
 }
 
 
+const forgotPasswordEmployee = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const response = await axios.post(`${baseURL}/employees/forgot-password`, userData, config);
+    return response.data;
+}
+
+
+const forgotPasswordManager = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const response = await axios.post(`${baseURL}/managers/forgot-password`, userData, config);
+    return response.data;
+}
+
+
+const resetPasswordEmployee = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const { resetId } = userData;
+
+    const response = await axios.post(`${baseURL}/employees/reset-password/${resetId}`, userData, config);
+    return response.data;
+}
+
+
+const resetPasswordManager = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const { resetId } = userData;
+
+    const response = await axios.post(`${baseURL}/managers/reset-password/${resetId}`, userData, config);
+    return response.data;
+}
+
+
 const getManagerProfile = async (token) => {
 
     const config = {
@@ -93,8 +160,42 @@ const getEmployeeProfile = async (token) => {
 }
 
 
+const editManagerProfile = async (userData, token) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.patch(`${baseURL}/managers/edit-profile`, userData, config);
+
+    if (response.data)
+    {
+        localStorage.setItem("user", JSON.stringify(response.data));
+    }
+
+    return response.data;
+}
+
+
 const logout = async () => {
     localStorage.removeItem("user");
 }
 
-export const authService = {registerEmployee, registerManager, loginEmployee, loginManager, getEmployeeProfile, getManagerProfile, logout}
+export const authService = {
+  registerEmployee,
+  registerManager,
+  loginEmployee,
+  loginManager,
+  forgotPasswordEmployee,
+  forgotPasswordManager,
+  resetPasswordEmployee,
+  resetPasswordManager,
+  getEmployeeProfile,
+  editEmployeeProfile,
+  getManagerProfile,
+  editManagerProfile,
+  logout,
+};

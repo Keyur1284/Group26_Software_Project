@@ -9,7 +9,7 @@ const managerNotificationSchema = new mongoose.Schema({
     },
     expense_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: [true, 'Please enter the expense id'],
+        required: false,
         ref: 'Expense'
     },
     project_id: {

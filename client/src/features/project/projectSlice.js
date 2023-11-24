@@ -32,6 +32,26 @@ export const createProject = createAsyncThunk('/project/createProject', async (p
 })
 
 
+export const editProject = createAsyncThunk('/project/editProject', async (projectData, thunkAPI) => {
+
+    try {
+        const token = thunkAPI.getState().auth.user.token;
+        const response = await projectService.editProject(projectData, token);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+
 export const getProjectsManager = createAsyncThunk('/project/getProjectsManager', async (_, thunkAPI) => {
 
     try {
@@ -110,6 +130,23 @@ const projectSlice = createSlice({
             state.appErr = action.payload?.message;
             state.serverErr = action.error?.message;
         })
+
+        .addCase(editProject.pending, (state) => {
+            state.isLoading = true;
+        })
+
+        .addCase(editProject.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.projects = state.projects.map((project) => project._id === action.payload.updatedProject._id ? action.payload.updatedProject : project);
+        })
+
+        .addCase(editProject.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.appErr = action.payload?.message;
+            state.serverErr = action.error?.message;
+        })      
 
         .addCase(getProjectsManager.pending, (state) => {
             state.isLoading = true;

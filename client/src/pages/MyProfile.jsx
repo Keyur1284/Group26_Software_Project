@@ -3,12 +3,13 @@ import Profile_pic from "../assets/MyProfile-img/Profile.png";
 import { Hamburger2 } from "../components/Hamburger_2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelopeOpenText, faUser, faUserEdit} from "@fortawesome/free-solid-svg-icons";
-import '../css/Profile.css';
+import '../styles/Profile.css';
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
+import { toast } from "react-toastify";
 import { reset, getEmployeeProfile, getManagerProfile } from "../features/auth/authSlice";
 
 const inlineStyles1 = {
@@ -40,12 +41,18 @@ export const MyProfile = () => {
 
   useEffect(() => {
     
-    if (isSuccess || isError)
+    if (isSuccess)
     {
       dispatch(reset());
     }
 
-  }, [isSuccess, isError, appErr, serverErr]);
+    if (isError)
+    {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [dispatch, isSuccess, isError, appErr, serverErr]);
 
   if(isLoading && !profile){
     return (
@@ -85,7 +92,7 @@ export const MyProfile = () => {
                 <Link
                   className="nav-link"
                   style={{ color: "black", fontSize: "20px" }}
-                  to="/profile"
+                  to="/edit-profile"
                 >
                   <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
                   Edit Profile
@@ -180,7 +187,7 @@ export const MyProfile = () => {
                 <Link
                   className="nav-link"
                   style={{ color: "black", fontSize: "20px" }}
-                  to="/profile"
+                  to="/edit-profile"
                 >
                   <FontAwesomeIcon className="mx-2" icon={faUserEdit} />
                   Edit Profile
