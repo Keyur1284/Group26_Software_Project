@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
@@ -22,8 +23,13 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 8000;
+
+app.get('/loaderio-0cb98339ae74743c5f96c3703814de72/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'loaderio-0cb98339ae74743c5f96c3703814de72.txt'));
+});
 
 app.use('/api/employees', employeeRoutes);
 app.use('/api/managers', managerRoutes);
