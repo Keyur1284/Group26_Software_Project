@@ -186,7 +186,7 @@ export const ProjectDashboard = () => {
                             </div>
                             :
                             <div className="col-md-5 shadow-lg rounded-4" style={{ backgroundImage: `url(${bg2})`, backgroundPosition: "center", backgroundSize: "cover", minHeight: 400, width: 530 }}>
-                                <h3 className='mx-3 my-3 fw-bold display-6 text-white' >Exployee Expense Distribuion</h3>
+                                <h3 className='mx-3 my-3 fw-bold display-6 text-white' >Employee Expense Distribuion</h3>
                                 <div className="pie">
                                     <EmpDistributionPie/>
                                 </div>
