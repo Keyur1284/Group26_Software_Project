@@ -192,6 +192,7 @@ export const EditProfile = () => {
                         height: "60px",
                         borderRadius: "15px",
                         backgroundColor: "#7dbef5",
+                        fontWeight:"600",
                         border: "none",
                       }}
                       name="firstName"
@@ -221,6 +222,7 @@ export const EditProfile = () => {
                         height: "60px",
                         borderRadius: "15px",
                         backgroundColor: "#7dbef5",
+                        fontWeight:"600",
                         border: "none",
                       }}
                       name="lastName"
@@ -251,6 +253,7 @@ export const EditProfile = () => {
                       height: "60px",
                       borderRadius: "15px",
                       backgroundColor: "#7dbef5",
+                      fontWeight:"600",
                       border: "none",
                       width: "100%",
                     }}
@@ -276,6 +279,7 @@ export const EditProfile = () => {
                         height: "60px",
                         borderRadius: "15px",
                         backgroundColor: "#7dbef5",
+                        fontWeight:"600",
                         border: "none",
                       }}
                       name="dob"
@@ -305,6 +309,7 @@ export const EditProfile = () => {
                         height: "60px",
                         borderRadius: "15px",
                         backgroundColor: "#7dbef5",
+                        fontWeight:"600",
                         border: "none",
                       }}
                       name="contactNo"
