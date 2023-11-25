@@ -191,8 +191,7 @@ export const EditProfile = () => {
                         width: "29vw",
                         height: "60px",
                         borderRadius: "15px",
-                        background:
-                          "linear-gradient(270deg, #FF9900 0%, rgba(0, 10.18, 254.52, 0.37) 100%)",
+                        backgroundColor: "#7dbef5",
                         border: "none",
                       }}
                       name="firstName"
@@ -221,8 +220,7 @@ export const EditProfile = () => {
                         width: "29vw",
                         height: "60px",
                         borderRadius: "15px",
-                        background:
-                          "linear-gradient(270deg, #FF9900 0%, rgba(0, 10.18, 254.52, 0.37) 100%)",
+                        backgroundColor: "#7dbef5",
                         border: "none",
                       }}
                       name="lastName"
@@ -252,8 +250,7 @@ export const EditProfile = () => {
                     style={{
                       height: "60px",
                       borderRadius: "15px",
-                      background:
-                        "linear-gradient(90deg, rgba(255, 153, 0, 0.50) 0%, rgba(0, 10.18, 254.52, 0.37) 100%)",
+                      backgroundColor: "#7dbef5",
                       border: "none",
                       width: "100%",
                     }}
@@ -278,8 +275,7 @@ export const EditProfile = () => {
                         width: "29vw",
                         height: "60px",
                         borderRadius: "15px",
-                        background:
-                          "linear-gradient(270deg, #FF9900 0%, rgba(0, 10.18, 254.52, 0.37) 100%)",
+                        backgroundColor: "#7dbef5",
                         border: "none",
                       }}
                       name="dob"
@@ -308,8 +304,7 @@ export const EditProfile = () => {
                         width: "29vw",
                         height: "60px",
                         borderRadius: "15px",
-                        background:
-                          "linear-gradient(270deg, #FF9900 0%, rgba(0, 10.18, 254.52, 0.37) 100%)",
+                        backgroundColor: "#7dbef5",
                         border: "none",
                       }}
                       name="contactNo"
