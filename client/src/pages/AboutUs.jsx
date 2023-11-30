@@ -6,7 +6,7 @@ import pic_5 from '../assets/AboutUs-images/Nancy.jpg';
 import pic_6 from '../assets/AboutUs-images/Keyur.jpeg';
 import pic_7 from '../assets/AboutUs-images/Kashish.jpg';
 import pic_8 from '../assets/AboutUs-images/Akhil.jpg';
-import pic_9 from '../assets/AboutUs-images/Hardik.jpg';
+import pic_9 from '../assets/AboutUs-images/Hardik_2.jpg';
 import pic_10 from '../assets/AboutUs-images/Sahil.jpg';
 import pic_11 from '../assets/AboutUs-images/Ishita.jpg';
 
