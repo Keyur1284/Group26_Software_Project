@@ -105,9 +105,8 @@ export const Register = () => {
 
       if (isSuccess) 
       {
-        toast.success("User Registered Successfully!");
+        toast.success("Registration Successful! Please check your email to verify your account.");
         dispatch(reset());
-        navigate("/login");
       }
   
       if (isError) 
