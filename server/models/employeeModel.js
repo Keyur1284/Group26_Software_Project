@@ -44,7 +44,11 @@ const employeeSchema = new mongoose.Schema({
         ref: 'Project',
         required: false,
         default: []
-    }],   
+    }],  
+    isVerified: {
+        type: Boolean,
+        default: false
+    }, 
 }, {
     timestamps: true
 });
