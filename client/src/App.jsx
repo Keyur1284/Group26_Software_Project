@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { ForgotPassword } from "./pages/ForgotPassword";
+import { EmailVerification } from "./pages/EmailVerification";
 import { ResetPassword } from "./pages/ResetPassword";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -98,6 +99,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/verify-email/:verifyId" element={<EmailVerification />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password/:resetId" element={<ResetPassword />} />
               <Route path="/about-us" element={<AboutUs />} />
