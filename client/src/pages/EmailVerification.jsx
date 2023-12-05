@@ -1,20 +1,62 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import mainbg from "../assets/email-verification-images/main-bg1.jpg";
 import verifyIcon from "../assets/email-verification-images/verify-icon2.png";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { verifyEmailEmployee, verifyEmailManager, reset } from "../features/auth/authSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { Loading } from "../components/Loading";
+import { toast } from "react-toastify";
 
 export const EmailVerification = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { verifyId } = useParams();
+  const { isLoading, isSuccess, isError, appErr, serverErr } = useSelector(state => state.auth);
+
   const [otp, setOtp] = useState("");
 
   const formik = useFormik({
     initialValues: {
       otp: "",
+      userType: "employee",
     },
     onSubmit: (values) => {
-      // OTP verification
-      console.log("Verifying OTP:", values.otp);
+      
+      values.verifyId = verifyId;
+
+      if (values.userType === "employee") {
+        dispatch(verifyEmailEmployee(values));
+      }
+
+      else if (values.userType === "manager") {
+        dispatch(verifyEmailManager(values));
+      }
     },
   });
+
+  useEffect(() => {
+
+    if (isSuccess) {
+      toast.success("Email verified successfully");
+      dispatch(reset());
+      navigate("/login");
+    }
+
+    if (isError) {
+      toast.error(appErr || serverErr);
+      dispatch(reset());
+    }
+
+  }, [isSuccess, isError, appErr, dispatch, navigate]);
+
+  if (isLoading)
+  {
+    return (
+      <Loading />
+    )
+  }
 
   return (
     <div className="display-6">
@@ -49,6 +91,7 @@ export const EmailVerification = () => {
                   We sent you the OTP to your mail. Enter the code below to
                   confirm your email address.
                 </p>
+                <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3 mt-3">
                   <label
                     className="form-label h6"
@@ -71,6 +114,36 @@ export const EmailVerification = () => {
                     />
                   </div>
                 </div>
+                <div className="mt-3 d-flex justify-content-evenly">
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    id="employee"
+                    name="userType"
+                    value="employee"
+                    className="form-check-input"
+                    checked={formik.values.userType === "employee"}
+                    onChange={formik.handleChange}
+                  />
+                  <label htmlFor="employee" className="form-check-label" style={{ fontSize: "18px" }}>
+                    Employee
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    id="manager"
+                    name="userType"
+                    value="manager"
+                    className="form-check-input"
+                    checked={formik.values.userType === "manager"}
+                    onChange={formik.handleChange}
+                  />
+                  <label htmlFor="manager" className="form-check-label" style={{ fontSize: "18px" }}>
+                    Manager
+                  </label>
+                </div>
+                </div>
                 <div className="mt-3 text-center">
                   <button
                     type="submit"
@@ -85,6 +158,7 @@ export const EmailVerification = () => {
                     Verify
                   </button>
                 </div>
+                </form>
               </div>
             </div>
           </div>
