@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const Manager = require('../models/managerModel');
 const ResetPassword = require('../models/resetPasswordModel');
+const EmailVerification = require('../models/emailVerificationModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const nodemailer = require("nodemailer");
@@ -54,11 +55,17 @@ const registerController = asyncHandler(async (req, res) => {
 
     const managerExists = await Manager.findOne({email});
 
-    if (managerExists)
+    if (managerExists && managerExists.isVerified)
     {
         res.status(400)
         // res.json({success: false, message: 'Employee already exists'});
         throw new Error('Manager already exists');
+    }
+
+    else if (managerExists && !managerExists.isVerified)
+    {
+        const deleteEmailVerification = await EmailVerification.deleteMany({ manager_id: managerExists._id });
+        const deleteManager = await Manager.findByIdAndDelete(managerExists._id);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -86,6 +93,52 @@ const registerController = asyncHandler(async (req, res) => {
             },
             message: "Registeration Successful"
         });
+
+        const otp = generateRandomOTP(8);
+
+        const emailVerification = await EmailVerification.create({ otp, manager_id: manager._id });
+
+        const link = `https://xpensetracker.vercel.app/verify-email/${emailVerification._id}`;
+
+        let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD,
+        },
+        });
+
+        let mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "Verify your email address for Xpense Tracker",
+        html: `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; padding: 20px;">
+                <h2>Xpense Tracker Email Verification</h2>
+                <p>Hello ${manager.firstName + " " + manager.lastName},</p>
+                <p>Thank you for registering on Xpense Tracker.</p>
+                <p>Use this otp to verify your email address: <strong> ${otp} </strong> </p>
+                <p>Please verify your email address by clicking on the link below:</p>
+                <p><a href="${link}" style="display: inline-block; padding: 10px 20px; background-color: #3498db; color: #ffffff; text-decoration: none;">Verify Email</a></p>
+                <p>If the above link doesn't work, copy and paste the following URL into your browser:</p>
+                <p>${link}</p>
+                <p>This otp will expire in 10 minutes for security reasons.</p>
+                <p>To get a new otp, visit <a href="https://xpensetracker.vercel.app/register">this link</a> and enter your details.</p>
+                <p>Thank you,<br>Xpense Tracker Team</p>
+            </div>`
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+        if (error)
+        {
+            res.status(400)
+            // res.json({success: false, message: 'Something went wrong'});
+            throw new Error('Something went wrong');
+        }
+        else
+        {
+            res.status(200).json({ message: "Email sent successfully!", success: true, link });
+        }
+        });
     }
 
     else
@@ -94,6 +147,41 @@ const registerController = asyncHandler(async (req, res) => {
         // res.json({success: false, message: 'Invalid user data'});
         throw new Error('Invalid user data');
     }
+});
+
+
+const verifyEmailController = asyncHandler(async (req, res) => {
+
+    const verify_id = req.params.verify_id;
+    const { otp } = req.body;
+
+    const emailVerification = await EmailVerification.findById(verify_id);
+
+    if (!emailVerification)
+    {
+        res.status(404)
+        // res.json({success: false, message: 'Invalid verification link'});
+        throw new Error('Invalid verification link');
+    }
+
+    if (emailVerification.otp != otp)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid OTP'});
+        throw new Error('Invalid OTP');
+    }
+
+    const updatedManager = await Manager.findByIdAndUpdate(emailVerification.manager_id, { isVerified: true }, { new: true });
+
+    if (!updatedManager)
+    {
+        res.status(400)
+        // res.json({success: false, message: 'Invalid user data'});
+        throw new Error('Invalid user data');
+    }
+
+    const deleteEmailVerification = await EmailVerification.findByIdAndDelete(verify_id);
+    res.status(200).json({ message: "Email verified successfully!", success: true});
 });
 
 
@@ -117,6 +205,13 @@ const loginController = asyncHandler(async (req, res) => {
         res.status(401)
         // res.json({success: false, message: 'Invalid Credentials'});
         throw new Error('User not found');
+    }
+
+    if (!manager.isVerified)
+    {
+        res.status(401)
+        // res.json({success: false, message: 'Please register again and verify your email address'});
+        throw new Error('Please register again and verify your email address');
     }
     
     const comparePassword = await bcrypt.compare(password, manager.password);
@@ -371,6 +466,7 @@ const  generateRandomOTP = (length) => {
 module.exports = {
     loginController, 
     registerController,
+    verifyEmailController,
     getProfileController,
     editProfileController,
     forgotPasswordController,
