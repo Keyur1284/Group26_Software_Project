@@ -47,6 +47,42 @@ export const registerManager = createAsyncThunk('/auth/registerManager', async (
     }
 })
 
+export const verifyEmailEmployee = createAsyncThunk('/auth/verifyEmailEmployee', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.verifyEmailEmployee(userData);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
+export const verifyEmailManager = createAsyncThunk('/auth/verifyEmailManager', async (userData, thunkAPI) => {
+
+    try {
+        const response = await authService.verifyEmailManager(userData);
+        return response;
+    }
+
+    catch (error) {
+
+        if (!error.response)
+        {
+            throw error;
+        }
+
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+})
+
 export const editEmployeeProfile = createAsyncThunk('/auth/editEmployeeProfile', async (userData, thunkAPI) => {
 
     try {
@@ -260,6 +296,40 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.appErr = action.payload?.message;
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(verifyEmailEmployee.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(verifyEmailManager.pending, (state) => {
+                state.isLoading = true;
+            })
+
+            .addCase(verifyEmailEmployee.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.message = action.payload?.message;
+            })
+
+            .addCase(verifyEmailManager.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.message = action.payload?.message;
+            })
+
+            .addCase(verifyEmailEmployee.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message
+                state.serverErr = action.error?.message;
+            })
+
+            .addCase(verifyEmailManager.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.appErr = action.payload?.message
                 state.serverErr = action.error?.message;
             })
 

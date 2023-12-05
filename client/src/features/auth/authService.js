@@ -25,6 +25,34 @@ const registerManager = async (userData) => {
     return response.data;
 }
 
+const verifyEmailEmployee = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const { verifyId } = userData;
+
+    const response = await axios.post(`${baseURL}/employees/verify-email/${verifyId}`, userData, config);
+    return response.data;
+}
+
+const verifyEmailManager = async (userData) => {
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+
+    const { verifyId } = userData;
+
+    const response = await axios.post(`${baseURL}/managers/verify-email/${verifyId}`, userData, config);
+    return response.data;
+}
+
 const editEmployeeProfile = async (userData, token) => {
 
     const config = {
@@ -187,6 +215,8 @@ const logout = async () => {
 export const authService = {
   registerEmployee,
   registerManager,
+  verifyEmailEmployee,
+  verifyEmailManager,
   loginEmployee,
   loginManager,
   forgotPasswordEmployee,
